@@ -18,43 +18,31 @@
                                     Nombre
                                 </th>
                                 <th>
-                                    Apellido
+                                    Descripcion
                                 </th>
                                 <th>
-                                    Email
+                                    Precio
                                 </th>
                                 <th>
-                                    Colonia
-                                </th>
-                                <th>
-                                    Direccion
-                                </th>
-                                <th>
-                                    Codigo Postal
+                                    imagen
                                 </th>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let user of users">
+                                <tr *ngFor="let service of services">
                                     <td>
-                                        {{ user.id_user }}
+                                        {{ service.id_service }}
                                     </td>
                                     <td>
-                                        {{ user.first_name }}
+                                        {{ service.name_service }}
                                     </td>
                                     <td>
-                                        {{ user.last_name }}
+                                        {{ service.desc_service }}
                                     </td>
                                     <td>
-                                        {{user.email}}
+                                        {{service.price}}
                                     </td>
                                     <td>
-                                        {{user.colony}}
-                                    </td>
-                                    <td>
-                                        {{user.direction}}
-                                    </td>
-                                    <td>
-                                        {{user.cp}}
+                                        <img height="80" src="http://192.168.137.1:3000/files/{{ service.img }}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -62,9 +50,6 @@
                     </div>
                 </div>
             </div>
-            <button [routerLink]="['/user-create']">
-                Agregar usuario
-            </button>
         </div>
     </div>
 </div>

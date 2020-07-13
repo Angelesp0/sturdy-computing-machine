@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './layouts/login/login.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { ServicesComponent } from './services/services.component';
+
 
 @NgModule({
   imports: [
@@ -31,13 +34,15 @@ import { LoginComponent } from './layouts/login/login.component';
     AppComponent,
     AdminLayoutComponent,
     UsersComponent,
-    LoginComponent
+    LoginComponent,
+    CompaniesComponent,
+    ServicesComponent
 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

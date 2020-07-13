@@ -1,0 +1,102 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h5 class="title">Empresas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <!--"id_company": 1,
+        "company": "Gglobals",
+        "service": "servicios",
+        "rfc": "12345678",
+        "state": "chihuahua",
+        "city": "chihuahua",
+        "tel": "6291096562",
+        "cp": 33989,
+        "invoice": 1,
+        
+        "num_ext": 9,
+        "num_int": 2,
+        "street": "calle",
+        "colony": "cantera",
+        "name": "",
+        "last_name": "",
+        "mobile": "",
+        "email": "",
+        "users_id_user": 24,
+        "img": "icono.png"-->
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    service
+                                </th>
+                                <th>
+                                    rfc
+                                </th>
+                                <th>
+                                    state
+                                </th>
+                                <th>
+                                    city
+                                </th>
+                                <th>
+                                    tel
+                                </th>
+                                <th>
+                                    Codigo Postal
+                                </th>
+                                <th>
+                                    Factura
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of companies">
+                                    <td>
+                                        {{ company.id_company }}
+                                    </td>
+                                    <td>
+                                        {{ company.company }}
+                                    </td>
+                                    <td>
+                                        {{ company.service }}
+                                    </td>
+                                    <td>
+                                        {{company.rfc}}
+                                    </td>
+                                    <td>
+                                        {{company.state}}
+                                    </td>
+                                    <td>
+                                        {{company.city}}
+                                    </td>
+                                    <td>
+                                        {{company.tel}}
+                                    </td>
+                                    <td>
+                                        {{company.cp}}
+                                    </td>
+                                    <ng-template [ngIf]="company.invoice== 1">
+                                        <td>Si</td>
+                                    </ng-template>
+                                    <ng-template [ngIf]="company.invoice== 0">
+                                        <td>No</td>
+                                    </ng-template>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
