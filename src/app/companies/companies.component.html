@@ -5,32 +5,21 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class="title">Empresas</h5>
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title">Empresas</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-primary" (click)="open('autofocus')">
+                                <div>Agregar nueva Empresa</div>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
-                                <!--"id_company": 1,
-        "company": "Gglobals",
-        "service": "servicios",
-        "rfc": "12345678",
-        "state": "chihuahua",
-        "city": "chihuahua",
-        "tel": "6291096562",
-        "cp": 33989,
-        "invoice": 1,
-        
-        "num_ext": 9,
-        "num_int": 2,
-        "street": "calle",
-        "colony": "cantera",
-        "name": "",
-        "last_name": "",
-        "mobile": "",
-        "email": "",
-        "users_id_user": 24,
-        "img": "icono.png"-->
                                 <th>
                                     Id
                                 </th>
@@ -38,22 +27,22 @@
                                     Nombre
                                 </th>
                                 <th>
-                                    service
+
                                 </th>
                                 <th>
-                                    rfc
+                                    RFC
                                 </th>
                                 <th>
-                                    state
+                                    Estado
                                 </th>
                                 <th>
-                                    city
+                                    Ciudad
                                 </th>
                                 <th>
-                                    tel
+                                    Telefono
                                 </th>
                                 <th>
-                                    Codigo Postal
+                                    CP
                                 </th>
                                 <th>
                                     Factura
@@ -65,7 +54,7 @@
                                         {{ company.id_company }}
                                     </td>
                                     <td>
-                                        {{ company.company }}
+                                        <div type="button" (click)="open('editar', company.id_company)" class=" text-primary">{{ company.company }}</div>
                                     </td>
                                     <td>
                                         {{ company.service }}

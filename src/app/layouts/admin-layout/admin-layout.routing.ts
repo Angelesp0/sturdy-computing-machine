@@ -15,7 +15,7 @@ import { ServicesComponent } from '../../services/services.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile/:id_user',   component: UserProfileComponent },
+    { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },

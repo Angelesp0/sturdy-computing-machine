@@ -44,7 +44,7 @@ export class CompanyService {
   getCompany(id) {
     return this.http.get('http://192.168.137.1:3000/companies/' + id, this.httpOptions);
   }
-  updateCompany(id, item){
+  updateCompany(id, item) {
     const params  = new HttpParams()
       .set('rfc', item.rfc)
       .set('street', item.street )
@@ -80,25 +80,32 @@ export class CompanyService {
       );
   }
 
-/*
 
-
-  createCompany(item): Observable<User> {
+  createCompany(item): Observable<Company> {
     const params  = new HttpParams()
-    .set('first_name', item.first_name)
-    .set('last_name', item.last_name )
-    .set('direction', item.direction)
-    .set('colony', item.colony)
-    .set('cp', item.cp)
-    .set('role', item.role)
-    .set('email', item.email)
-    .set('password', item.password);
+      .set('rfc', item.rfc)
+      .set('street', item.street )
+      .set('cp', item.cp)
+      .set('city', item.city)
+      .set('tel', item.tel)
+      .set('company', item.company)
+      .set('num_ext', item.num_ext)
+      .set('num_int', item.num_int)
+      .set('state', item.state)
+      .set('colony', item.colony )
+      .set('name', item.name)
+      .set('last_name', item.last_name)
+      .set('mobile', item.mobile)
+      .set('email', item.email)
+      .set('service', item.service)
+      .set('invoice', item.invoice)
+      .set('users_id_user', '24');
     return this.http
-      .post<User>(this.base_path, item, {params})
+      .post<Company>(this.base_path, item, {params})
       .pipe(
         retry(2),
         catchError(this.handleError)
       );
-  }*/
+  }
 
 }

@@ -5,66 +5,72 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class="title">Usuarios</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class=" text-primary">
-                                <th>
-                                    Id
-                                </th>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-                                    Apellido
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Colonia
-                                </th>
-                                <th>
-                                    Direccion
-                                </th>
-                                <th>
-                                    Codigo Postal
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let user of users">
-                                    <td>
-                                        {{ user.id_user }}
-                                    </td>
-                                    <td>
-                                        {{ user.first_name }}
-                                    </td>
-                                    <td>
-                                        {{ user.last_name }}
-                                    </td>
-                                    <td>
-                                        {{user.email}}
-                                    </td>
-                                    <td>
-                                        {{user.colony}}
-                                    </td>
-                                    <td>
-                                        {{user.direction}}
-                                    </td>
-                                    <td>
-                                        {{user.cp}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title">Usuarios</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-primary" (click)="open('autofocus')">
+                                <div>Agregar Usuario</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Apellido
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Colonia
+                                    </th>
+                                    <th>
+                                        Direccion
+                                    </th>
+                                    <th>
+                                        CP
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of users">
+                                        <td>
+                                            {{ user.id_user }}
+                                        </td>
+                                        <td>
+                                            <div type="button" (click)="open('editar', user.id_user)" class=" text-primary">{{ user.first_name }}</div>
+                                        </td>
+                                        <td>
+                                            {{ user.last_name }}
+                                        </td>
+                                        <td>
+                                            {{user.email}}
+                                        </td>
+                                        <td>
+                                            {{user.colony}}
+                                        </td>
+                                        <td>
+                                            {{user.direction}}
+                                        </td>
+                                        <td>
+                                            {{user.cp}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button [routerLink]="['/user-create']">
-                Agregar usuario
-            </button>
         </div>
     </div>
 </div>

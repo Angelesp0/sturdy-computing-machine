@@ -13,11 +13,10 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent, NgbdModalConfirmAutofocus, ModalEditar } from './users/users.component';
 import { LoginComponent } from './layouts/login/login.component';
-import { CompaniesComponent } from './companies/companies.component';
+import { CompaniesComponent, ModalNuevaEmpresa, ModalEditarEmpresa } from './companies/companies.component';
 import { ServicesComponent } from './services/services.component';
-
 
 @NgModule({
   imports: [
@@ -31,9 +30,13 @@ import { ServicesComponent } from './services/services.component';
     ToastrModule.forRoot()
   ],
   declarations: [
+    ModalNuevaEmpresa,
+    ModalEditarEmpresa,
     AppComponent,
     AdminLayoutComponent,
     UsersComponent,
+    NgbdModalConfirmAutofocus,
+    ModalEditar,
     LoginComponent,
     CompaniesComponent,
     ServicesComponent

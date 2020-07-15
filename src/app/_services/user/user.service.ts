@@ -62,7 +62,7 @@ export class UserService {
     return this.http.get('http://192.168.137.1:3000/users/' + id, this.httpOptions);
   }
 
-  updateItem(id, item){
+  updateItem(id, item) {
     const params  = new HttpParams()
       .set('first_name', item.first_name)
       .set('last_name', item.last_name )
