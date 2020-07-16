@@ -17,6 +17,7 @@ import { UsersComponent, NgbdModalConfirmAutofocus, ModalEditar } from './users/
 import { LoginComponent } from './layouts/login/login.component';
 import { CompaniesComponent, ModalNuevaEmpresa, ModalEditarEmpresa } from './companies/companies.component';
 import { ServicesComponent } from './services/services.component';
+import { AddCompanyComponent } from './companies/add-company/add-company.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { ServicesComponent } from './services/services.component';
     ModalEditar,
     LoginComponent,
     CompaniesComponent,
-    ServicesComponent
+    ServicesComponent,
+    AddCompanyComponent
 
   ],
   providers: [

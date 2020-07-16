@@ -11,7 +11,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { UsersComponent } from '../../users/users.component';
 import { CompaniesComponent } from '../../companies/companies.component';
 import { ServicesComponent } from '../../services/services.component';
-
+import { AddCompanyComponent } from '../../companies/add-company/add-company.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -24,6 +24,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'users',          component: UsersComponent},
     { path: 'companies',      component: CompaniesComponent},
-    { path: 'services',      component: ServicesComponent},
+    { path: 'services',       component: ServicesComponent},
+    { path: 'add-company',    component: AddCompanyComponent},
+
 
 ];
