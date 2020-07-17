@@ -3,6 +3,9 @@ import { UserService } from './../_services/user/user.service';
 import { User } from './../models/user';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { Subject  } from 'rxjs';
+import { map  } from 'rxjs/operators';
+import { Response } from '@angular/http';
 
 // Agregar Usuario
 @Component({
@@ -94,7 +97,7 @@ export class NgbdModalConfirmAutofocus {
   <div class="modal-body">
     <div class="row">
         <div class="col-md-12">
-                <label  >Nombre</label>
+                <label>Nombre</label>
                 <input name="first_name" inputmode="text" class="form-control" placeholder="Nombre" [(ngModel)]="this.data.first_name">
         </div>
     </div>
@@ -175,34 +178,38 @@ export class UsersComponent implements OnInit {
   (click)="modal.close('Ok click')">Ok</button>`;
   users: any;
   data: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
   constructor(
     private _modalService: NgbModal,
     private userService: UserService,
+    public router: Router
     ) {
       this.data = new User();
      }
 
   ngOnInit(): void {
-    this.getAllStudents();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+    };
+    this.userService.getUsers().pipe(map(this.extractData)).subscribe(response => {
+      this.dtTrigger.next();
+      this.users  = response;
+    });
   }
 
-  getAllStudents() {
-    this.userService.getUsers()
-    .subscribe(
-      (data) => { // Success
-        this.users = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+  private extractData(res: Response) {
+    const body = res;
+    return body || {};
   }
 
   delete(id) {
     this.userService.deleteItem(id).subscribe(Response => {
-      this.getAllStudents();
     });
   }
   open(name: string, id?: number) {

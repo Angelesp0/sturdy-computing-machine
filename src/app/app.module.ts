@@ -16,11 +16,15 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { UsersComponent, NgbdModalConfirmAutofocus, ModalEditar } from './users/users.component';
 import { LoginComponent } from './layouts/login/login.component';
 import { CompaniesComponent, ModalNuevaEmpresa, ModalEditarEmpresa } from './companies/companies.component';
-import { ServicesComponent } from './services/services.component';
+import { ServicesComponent, ModalEditarServicio, ModalNuevoServicio } from './services/services.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
+
+import { DataTablesModule } from 'angular-datatables';
+
 
 @NgModule({
   imports: [
+    DataTablesModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
@@ -31,6 +35,8 @@ import { AddCompanyComponent } from './companies/add-company/add-company.compone
     ToastrModule.forRoot()
   ],
   declarations: [
+    ModalEditarServicio,
+    ModalNuevoServicio,
     ModalNuevaEmpresa,
     ModalEditarEmpresa,
     AppComponent,

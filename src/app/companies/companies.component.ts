@@ -3,6 +3,9 @@ import { CompanyService } from './../_services/company/company.service';
 import { Company } from '../../../../gglobals-ionic/gglobals/src/app/models/company';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject  } from 'rxjs';
+import { map  } from 'rxjs/operators';
+import { Response } from '@angular/http';
 
 // Agregar Empresa
 @Component({
@@ -119,7 +122,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   </div>
   `
 })
-
 export class ModalNuevaEmpresa {
   data: any;
   constructor(
@@ -191,7 +193,6 @@ export class ModalNuevaEmpresa {
   </div>
   `
 })
-
 export class ModalEditarEmpresa {
   @Input() fromParent;
   data: any;
@@ -226,6 +227,8 @@ const MODALS: {[name: string]: Type<any>} = {
 })
 
 export class CompaniesComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   withAutofocus = `<button type="button" ngbAutofocus class="btn btn-danger"
   (click)="modal.close('Ok click')">Ok</button>`;
   companies: any;
@@ -238,19 +241,21 @@ export class CompaniesComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.getAllCompanies();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+    };
+    this.companyService.getCompanies().pipe(map(this.extractData)).subscribe(response => {
+      this.dtTrigger.next();
+      this.companies  = response;
+    });
   }
-
-  getAllCompanies() {
-    this.companyService.getCompanies()
-    .subscribe(
-      (data) => { // Success
-        this.companies = data;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+  private extractData(res: Response) {
+    const body = res;
+    return body || {};
   }
   open(name: string, id?: number) {
     const modalRef = this._modalService.open(MODALS[name]);

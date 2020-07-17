@@ -18,62 +18,30 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                             <thead class=" text-primary">
-                                <th>
-                                    Id
-                                </th>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-
-                                </th>
-                                <th>
-                                    RFC
-                                </th>
-                                <th>
-                                    Estado
-                                </th>
-                                <th>
-                                    Ciudad
-                                </th>
-                                <th>
-                                    Telefono
-                                </th>
-                                <th>
-                                    CP
-                                </th>
-                                <th>
-                                    Factura
-                                </th>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Servicio</th>
+                                    <th>RFC</th>
+                                    <th>Estado</th>
+                                    <th>Ciudad</th>
+                                    <th>Telefono</th>
+                                    <th>CP</th>
+                                    <th>Factura</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let company of companies">
-                                    <td>
-                                        {{ company.id_company }}
-                                    </td>
-                                    <td>
-                                        <div type="button" (click)="open('editar', company.id_company)" class=" text-primary">{{ company.company }}</div>
-                                    </td>
-                                    <td>
-                                        {{ company.service }}
-                                    </td>
-                                    <td>
-                                        {{company.rfc}}
-                                    </td>
-                                    <td>
-                                        {{company.state}}
-                                    </td>
-                                    <td>
-                                        {{company.city}}
-                                    </td>
-                                    <td>
-                                        {{company.tel}}
-                                    </td>
-                                    <td>
-                                        {{company.cp}}
-                                    </td>
+                                <tr *ngFor="let company of companies" class="pointer">
+                                    <td (click)="open('editar', company.id_company)">{{ company.id_company }}</td>
+                                    <td (click)="open('editar', company.id_company)" class=" text-primary">{{ company.company }}</td>
+                                    <td (click)="open('editar', company.id_company)">{{ company.service }}</td>
+                                    <td (click)="open('editar', company.id_company)">{{company.rfc}}</td>
+                                    <td (click)="open('editar', company.id_company)">{{company.state}}</td>
+                                    <td (click)="open('editar', company.id_company)">{{company.city}} </td>
+                                    <td (click)="open('editar', company.id_company)">{{company.tel}}</td>
+                                    <td (click)="open('editar', company.id_company)">{{company.cp}}</td>
                                     <ng-template [ngIf]="company.invoice== 1">
                                         <td>Si</td>
                                     </ng-template>

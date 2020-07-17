@@ -17,53 +17,27 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover ">
                                 <thead class=" text-primary">
-                                    <th>
-                                        Id
-                                    </th>
-                                    <th>
-                                        Nombre
-                                    </th>
-                                    <th>
-                                        Apellido
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Colonia
-                                    </th>
-                                    <th>
-                                        Direccion
-                                    </th>
-                                    <th>
-                                        CP
-                                    </th>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Email</th>
+                                        <th>Colonia</th>
+                                        <th>Direccion</th>
+                                        <th>CP</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let user of users">
-                                        <td>
-                                            {{ user.id_user }}
-                                        </td>
-                                        <td>
-                                            <div type="button" (click)="open('editar', user.id_user)" class=" text-primary">{{ user.first_name }}</div>
-                                        </td>
-                                        <td>
-                                            {{ user.last_name }}
-                                        </td>
-                                        <td>
-                                            {{user.email}}
-                                        </td>
-                                        <td>
-                                            {{user.colony}}
-                                        </td>
-                                        <td>
-                                            {{user.direction}}
-                                        </td>
-                                        <td>
-                                            {{user.cp}}
-                                        </td>
+                                    <tr *ngFor="let user of users" class="pointer">
+                                        <td (click)="open('editar', user.id_user)">{{ user.id_user }}</td>
+                                        <td (click)="open('editar', user.id_user)" class=" text-primary">{{ user.first_name }}</td>
+                                        <td (click)="open('editar', user.id_user)">{{ user.last_name }}</td>
+                                        <td (click)="open('editar', user.id_user)">{{user.email}}</td>
+                                        <td (click)="open('editar', user.id_user)">{{user.colony}}</td>
+                                        <td (click)="open('editar', user.id_user)">{{user.direction}}</td>
+                                        <td (click)="open('editar', user.id_user)">{{user.cp}}</td>
                                     </tr>
                                 </tbody>
                             </table>
