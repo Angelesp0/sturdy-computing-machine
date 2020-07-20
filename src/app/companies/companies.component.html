@@ -23,7 +23,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>
-                                    <th>Servicio</th>
+                                    <!--<th>Servicio</th>-->
                                     <th>RFC</th>
                                     <th>Estado</th>
                                     <th>Ciudad</th>
@@ -36,7 +36,7 @@
                                 <tr *ngFor="let company of companies" class="pointer">
                                     <td (click)="open('editar', company.id_company)">{{ company.id_company }}</td>
                                     <td (click)="open('editar', company.id_company)" class=" text-primary">{{ company.company }}</td>
-                                    <td (click)="open('editar', company.id_company)">{{ company.service }}</td>
+                                    <!--<td (click)="open('editar', company.id_company)">{{ company.service }}</td>-->
                                     <td (click)="open('editar', company.id_company)">{{company.rfc}}</td>
                                     <td (click)="open('editar', company.id_company)">{{company.state}}</td>
                                     <td (click)="open('editar', company.id_company)">{{company.city}} </td>

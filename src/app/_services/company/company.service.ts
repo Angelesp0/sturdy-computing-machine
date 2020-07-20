@@ -60,7 +60,6 @@ export class CompanyService {
       .set('last_name', item.last_name)
       .set('mobile', item.mobile)
       .set('email', item.email)
-      .set('service', item.service)
       .set('invoice', item.invoice)
       .set('users_id_user', item.users_id_user);
     return this.http
@@ -97,7 +96,6 @@ export class CompanyService {
       .set('last_name', item.last_name)
       .set('mobile', item.mobile)
       .set('email', item.email)
-      .set('service', item.service)
       .set('invoice', item.invoice)
       .set('users_id_user', '24');
     return this.http

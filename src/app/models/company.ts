@@ -1,7 +1,6 @@
 export class Company {
     id_company?: number;
     company: string;
-    service: string;
     rfc: number;
     state: string;
     city: string;
@@ -39,12 +38,7 @@ export class Company {
     distribution: string;
     export: boolean;
     import: boolean;
-    percentage_main: number;
     main_activity: string;
-    percentage_secondary?: number;
-    secondary_activity?: string;
-    percentage_tertiary?: number;
-    tertiary_activity?: number;
     activity_code: number;
     employees: number;
     female_employees: number;

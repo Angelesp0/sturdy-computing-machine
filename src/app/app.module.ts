@@ -15,15 +15,18 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UsersComponent, NgbdModalConfirmAutofocus, ModalEditar } from './users/users.component';
 import { LoginComponent } from './layouts/login/login.component';
-import { CompaniesComponent, ModalNuevaEmpresa, ModalEditarEmpresa } from './companies/companies.component';
+import { CompaniesComponent, ModalEditarEmpresa } from './companies/companies.component';
 import { ServicesComponent, ModalEditarServicio, ModalNuevoServicio } from './services/services.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
 
 import { DataTablesModule } from 'angular-datatables';
-
+import {MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule,  } from '@angular/forms';
 
 @NgModule({
   imports: [
+    ReactiveFormsModule,
+    MatRadioModule,
     DataTablesModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -37,7 +40,6 @@ import { DataTablesModule } from 'angular-datatables';
   declarations: [
     ModalEditarServicio,
     ModalNuevoServicio,
-    ModalNuevaEmpresa,
     ModalEditarEmpresa,
     AppComponent,
     AdminLayoutComponent,
@@ -51,8 +53,7 @@ import { DataTablesModule } from 'angular-datatables';
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],
 })

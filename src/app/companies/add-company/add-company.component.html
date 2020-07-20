@@ -21,16 +21,14 @@
                             <input name="company" inputmode="text" class="form-control" [(ngModel)]="this.data.company">
                         </div>
                         <div class="col-md">
-                            <label>Servicio<strong><span class="text-danger">*</span></strong></label>
-                            <input name="service" inputmode="text" class="form-control" [(ngModel)]="this.data.service">
-                        </div>
-                        <div class="col-md">
                             <label>RFC<strong><span class="text-danger">*</span></strong></label>
                             <input name="rfc" inputmode="numeric" class="form-control" [(ngModel)]="this.data.rfc">
                         </div>
                         <div class="col-md">
                             <label>Usuario de la Empresa<strong><span class="text-danger">*</span></strong></label>
-                            <input name="users_id_user" inputmode="text" class="form-control" [(ngModel)]="this.data.users_id_user">
+                            <select name="users_id_user" class="form-control" inputmode="text" [(ngModel)]="this.data.users_id_user">
+                                <option [value]="user" *ngFor="let user of users">{{user}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -44,7 +42,9 @@
                         </div>
                         <div class="col-md-2">
                             <label>Tipo de colonia</label>
-                            <input name="type_colony" inputmode="text" class="form-control" [(ngModel)]="this.data.type_colony">
+                            <select name="type_colony" class="form-control" inputmode="text" [(ngModel)]="this.data.type_colony">
+                                <option [value]="tipo" *ngFor="let tipo of Tipos_de_Colonias">{{tipo}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
                             <label>Colonia<strong><span class="text-danger">*</span></strong></label>
@@ -53,38 +53,49 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Tipo de calle</label>
-                            <input name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street">
+                            <label>Tipo de vialidad</label>
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street">
+                                <option [value]="tipo" *ngFor="let tipo of Tipos_de_Vialidades">{{tipo}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
-                            <label>Calle<strong><span class="text-danger">*</span></strong></label>
+                            <label>vialidad<strong><span class="text-danger">*</span></strong></label>
                             <input name="street" inputmode="text" class="form-control" [(ngModel)]="this.data.street">
                         </div>
                         <div class="col-md-2">
-                            <label>Tipo de calle</label>
-                            <input name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">
+                            <label>Tipo de vialidad</label>
+                            <!--  <input name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">-->
+                            <select name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">
+                                <option [value]="tipo3" *ngFor="let tipo3 of Tipos_de_Vialidades">{{tipo3}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
-                            <label>Calle posterior<strong><span class="text-danger">*</span></strong></label>
+                            <label>vialidad posterior<strong><span class="text-danger">*</span></strong></label>
                             <input name="street3" inputmode="text" class="form-control" [(ngModel)]="this.data.street3">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Tipo de Calle </label>
-                            <input name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">
+                            <label>Tipo de vialidad </label>
+                            <!--      <input name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">-->
+                            <select name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">
+                                <option [value]="tipo1" *ngFor="let tipo1 of Tipos_de_Vialidades">{{tipo1}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
-                            <label>Calle derecha<strong><span class="text-danger">*</span></strong></label>
+                            <label>vialidad derecha<strong><span class="text-danger">*</span></strong></label>
                             <input name="street1" inputmode="text" class="form-control" [(ngModel)]="this.data.street1">
                         </div>
                         <div class="col-md-2">
-                            <label>Tipo de calle</label>
-                            <input name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">
+                            <label>Tipo de vialidad</label>
+                            <!--        <input name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">-->
+                            <select name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">
+                                <option [value]="tipo2" *ngFor="let tipo2 of Tipos_de_Vialidades">{{tipo2}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
-                            <label>Calle izquierda<strong><span class="text-danger">*</span></strong></label>
-                            <input name="name_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.name_mall">
+                            <label>vialidad izquierda<strong><span class="text-danger">*</span></strong></label>
+                            <input name="name_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.street2">
                         </div>
                     </div>
                     <div class="row">
@@ -120,7 +131,11 @@
                         </div>
                         <div class="col-md-2">
                             <label>¿Requiere Factura?<strong><span class="text-danger">*</span></strong></label>
-                            <input name="invoice" inputmode="tel" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.invoice">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.invoice">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <div class="col-md">
                             <label>Telefono<strong><span class="text-danger">*</span></strong></label>
@@ -154,23 +169,35 @@
                     <div class="row">
                         <div class="col-md">
                             <label>Tipo de Instalaciones</label>
-                            <input name="facilities" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">
+                            <!--        <input name="facilities" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">-->
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">
+                                <option [value]="facilities" *ngFor="let facilities of Tipos_de_Instalaciones">{{facilities}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
                             <label>Distribucion<strong><span class="text-danger">*</span></strong></label>
-                            <input name="distribution" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution">
+                            <!--        <input name="distribution" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution">-->
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution">
+                                <option [value]="instalaciones" *ngFor="let instalaciones of Tipos_de_Instalaciones">{{instalaciones}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
                             <label>Ambito de operaciones<strong><span class="text-danger">*</span></strong></label>
-                            <input name="scope_of_operations" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">
+                            <!--      <input name="scope_of_operations" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">-->
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">
+                                <option [value]="ambito" *ngFor="let ambito of Ambito_de_Operaciones">{{ambito}}</option>
+                            </select>
                         </div>
                         <div class="col-md">
                             <label>Comienzo de la empresa<strong><span class="text-danger">*</span></strong></label>
-                            <input name="company_start" inputmode="text" class="form-control" [(ngModel)]="this.data.company_start">
+                            <input name="company_start" class="form-control" [(ngModel)]="this.data.company_start" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31">
                         </div>
                         <div class="col-md">
                             <label>Rango de ventas<strong><span class="text-danger">*</span></strong></label>
-                            <input name="sales_range" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">
+                            <!--       <input name="sales_range" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">-->
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">
+                                <option [value]="ventas" *ngFor="let ventas of Rango_Ventas">{{ventas}}</option>
+                            </select>
                         </div>
                     </div>
                     <br>
@@ -181,39 +208,25 @@
                             <label>Actividad Principal<strong><span class="text-danger">*</span></strong></label>
                             <input name="main_activity" inputmode="text" class="form-control" [(ngModel)]="this.data.main_activity">
                         </div>
-                        <div class="col-md-1">
-                            <label>%<strong><span class="text-danger">*</span></strong></label>
-                            <input name="percentage_main" inputmode="text" class="form-control" [(ngModel)]="this.data.percentage_main">
-                        </div>
-                        <div class="col-md">
-                            <label>Actividad Secundaria</label>
-                            <input name="secondary_activity" inputmode="text" class="form-control" [(ngModel)]="this.data.secondary_activity">
-                        </div>
-                        <div class="col-md-1">
-                            <label>%</label>
-                            <input name="percentage_secondary" inputmode="text" class="form-control" [(ngModel)]="this.data.percentage_secondary">
-                        </div>
-                        <div class="col-md">
-                            <label>Actividad Terciaria</label>
-                            <input name="tertiary_activity" inputmode="text" class="form-control" [(ngModel)]="this.data.tertiary_activity">
-                        </div>
-                        <div class="col-md-1">
-                            <label>%</label>
-                            <input name="percentage_tertiary" inputmode="text" class="form-control" [(ngModel)]="this.data.percentage_tertiary">
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md">
                             <label>Codigo de actividad<strong><span class="text-danger">*</span></strong></label>
                             <input name="activity_code" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code">
                         </div>
-                        <div class="col-md">
+                        <div class="col-md-2">
                             <label>¿Exportan?<strong><span class="text-danger">*</span></strong></label>
-                            <input name="export" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.export">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.export">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
-                        <div class="col-md">
+                        <div class="col-md-2">
                             <label>¿Importan?<strong><span class="text-danger">*</span></strong></label>
-                            <input name="import" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.import">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.import">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
                     <br>
@@ -230,29 +243,50 @@
                         </div>
                         <div class="col-md">
                             <label>Areas de atencion</label>
-                            <input name="attention_area" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">
+                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">
+                                <option [value]="areas" *ngFor="let areas of Areas_de_Atencion">{{areas}}</option>
+                            </select>
+                            <!--    <input name="attention_area" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">-->
                         </div>
                         <div class="col-md">
                             <label>¿Creditos, Prestamos o Financiamiento?</label>
-                            <input name="financing" inputmode="text" class="form-control" [(ngModel)]="this.data.financing">
+                            <select name="type_street" inputmode="text" class="form-control">
+                                <option [value]="prestamo" *ngFor="let prestamo of Prestamos">{{prestamo}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md">
                             <label>¿Cuentan con equipo digital?<strong><span class="text-danger">*</span></strong></label>
-                            <input name="digital_equipment" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.digital_equipment">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.digital_equipment">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <div class="col-md">
                             <label>¿Cuentan con Internet?<strong><span class="text-danger">*</span></strong></label>
-                            <input name="internet" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.internet">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.internet">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <div class="col-md">
                             <label>¿han Pagado publicidad?</label>
-                            <input name="advertising" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.advertising">
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.advertising">
+                                <br>
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <div class="col-md">
                             <label>¿Recibieron capacitacion?</label>
-                            <input name="training" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.training">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.training">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
                     <br>
@@ -287,7 +321,32 @@
                         </div>
                         <div class="col-md">
                             <label>Cuentan con distintivo</label>
-                            <input name="distinctive" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.distinctive">
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.distinctive">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <br>
+                    <p><strong><span class="text-primary">SERVICIOS A CONTRATAR
+                    </span></strong></p>
+                    <div class="row">
+                        <div class="col-md">
+                            <label>Contabilidad RIF<strong><span class="text-danger">*</span></strong></label>
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.internet">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-md">
+                            <label>Contabilidad Persona Fisica<strong><span class="text-danger">*</span></strong></label>
+                            <br>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.internet">
+                                <mat-radio-button value="1">Si</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
                     <br>
