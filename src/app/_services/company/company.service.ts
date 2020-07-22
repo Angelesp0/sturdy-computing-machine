@@ -3,6 +3,7 @@ import {HttpHeaders, HttpClient, HttpErrorResponse, HttpParams } from '@angular/
 import { Observable, throwError } from 'rxjs';
 import { Company } from './../../models/company';
 import { retry, catchError } from 'rxjs/operators';
+import { CompanyServices } from './../../models/company_services';
 import { stringify } from 'querystring';
 import { map } from 'rxjs/operators';
 
@@ -97,6 +98,9 @@ export class CompanyService {
       .set('mobile', item.mobile)
       .set('email', item.email)
       .set('invoice', item.invoice)
+      .set('status', '1')
+      .set('start_date', '2020-07-20')
+      .set('end_date', '2020-08-20')
       .set('users_id_user', '24');
     return this.http
       .post<Company>(this.base_path, item, {params})
@@ -105,5 +109,16 @@ export class CompanyService {
         catchError(this.handleError)
       );
   }
+
+  company_has_service(item): Observable<CompanyServices> {
+    return this.http
+      .post<CompanyServices>('http://192.168.137.1:3000/company_services', item)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+
 
 }

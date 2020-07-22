@@ -22,6 +22,8 @@ import { AddCompanyComponent } from './companies/add-company/add-company.compone
 import { DataTablesModule } from 'angular-datatables';
 import {MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,  } from '@angular/forms';
+import { CustomDatePipe } from './pipe/customDatePipe';
+import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
 
 @NgModule({
   imports: [
@@ -38,6 +40,7 @@ import { ReactiveFormsModule,  } from '@angular/forms';
     ToastrModule.forRoot()
   ],
   declarations: [
+    CustomDatePipe,
     ModalEditarServicio,
     ModalNuevoServicio,
     ModalEditarEmpresa,
@@ -49,7 +52,8 @@ import { ReactiveFormsModule,  } from '@angular/forms';
     LoginComponent,
     CompaniesComponent,
     ServicesComponent,
-    AddCompanyComponent
+    AddCompanyComponent,
+    JsPDFComponent
 
   ],
   providers: [

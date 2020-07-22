@@ -4,8 +4,7 @@ import { Company } from '../../../../../gglobals-ionic/gglobals/src/app/models/c
 import { CompanyService } from './../../_services/company/company.service';
 import { User } from '../../../../../gglobals-ionic/gglobals/src/app/models/user';
 import { UserService } from '../../_services/user/user.service';
-import { map, filter } from 'rxjs/operators';
-
+import { CompanyServices } from './../../models/company_services';
 
 
 @Component({
@@ -14,9 +13,16 @@ import { map, filter } from 'rxjs/operators';
   styleUrls: ['./add-company.component.css']
 })
 export class AddCompanyComponent implements OnInit {
-
   data: any;
   users: any;
+  service1: number;
+  service2: number;
+  service: any;
+  todayDate: Date = new Date();
+
+
+
+
   Tipos_de_Colonias: string [] = [
     "Aeropuerto","Ampliacion","Barrio", "Canton",
     "Ciudad","Ciudad industrial","Colonia",
@@ -60,26 +66,62 @@ export class AddCompanyComponent implements OnInit {
   constructor(
     private userService: UserService,
     private companyService: CompanyService,
-    public router: Router) {
+    public router: Router,
+    ) {
       this.data = new Company();
       this.users = new User();
+      this.service = new CompanyServices();
     }
     create() {
-      console.log(this.data);
+      this.data.status = 1;
+
+      // console.log(this.data);
       this.companyService.createCompany(this.data).subscribe((response) => {
-        this.router.navigate(['companies']);
+      const id_company = response['newInf']['company_id_company'];
+      if (this.service1 == 1) {
+
+        const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+        const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
+
+        this.service.company_id_company = id_company;
+        this.service.services_id_service = "1";
+        this.service.status = "1";
+        this.service.start_date = date;
+        this.service.end_date = endDate;
+
+        this.companyService.company_has_service(this.service).subscribe((response) => {
+          console.log(response);
+        });
+      }
+      if (this.service2 == 1) {
+
+        const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+        const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
+
+        this.service.company_id_company = id_company;
+        this.service.services_id_service = "2";
+        this.service.status = "1";
+        this.service.start_date = date;
+        this.service.end_date = endDate;
+
+        this.companyService.company_has_service(this.service).subscribe((response) => {
+          console.log(response);
+        });
+      }
+
+      this.router.navigate(['generatepdf']);
       });
     }
+
   ngOnInit(): void {
+
     this.userService.getUsers().subscribe((response) => {
      const id_users = [];
       // tslint:disable-next-line: forin
       for (const i in response) {
         id_users.push(response[i].id_user);
       }
-      console.log(id_users);
       this.users =  Object.values(id_users);
-      console.log(this.users);
     });
   }
 

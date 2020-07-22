@@ -56,4 +56,9 @@ export class Company {
     productive_chain?: string;
     distinctive?: string;
     company_id_company?: string;
+
+    services_id_service?: number;
+    status?: number;
+    start_date?: Date;
+    end_date?: Date;
 }

@@ -12,6 +12,7 @@ import { UsersComponent } from '../../users/users.component';
 import { CompaniesComponent } from '../../companies/companies.component';
 import { ServicesComponent } from '../../services/services.component';
 import { AddCompanyComponent } from '../../companies/add-company/add-company.component';
+import { JsPDFComponent } from '../../companies/js-pdf/js-pdf.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -26,6 +27,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'companies',      component: CompaniesComponent},
     { path: 'services',       component: ServicesComponent},
     { path: 'add-company',    component: AddCompanyComponent},
+    { path: 'generatepdf',    component: JsPDFComponent },
 
 
 ];
