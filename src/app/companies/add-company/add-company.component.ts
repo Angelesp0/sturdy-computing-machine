@@ -15,6 +15,9 @@ import { CompanyServices } from './../../models/company_services';
 export class AddCompanyComponent implements OnInit {
   data: any;
   users: any;
+  name: any;
+  select: any;
+  last_name: any;
   service1: number;
   service2: number;
   service: any;
@@ -73,6 +76,7 @@ export class AddCompanyComponent implements OnInit {
       this.service = new CompanyServices();
     }
     create() {
+      console.log(this.data.users_id_user);
       this.data.status = 1;
 
       // console.log(this.data);
@@ -116,12 +120,16 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.getUsers().subscribe((response) => {
-     const id_users = [];
+      this.data = response;
+     // const name_users = [];
+
       // tslint:disable-next-line: forin
-      for (const i in response) {
-        id_users.push(response[i].id_user);
-      }
-      this.users =  Object.values(id_users);
+      // for (const i in response) {
+       // name_users.push(response[i].first_name);
+
+      // }
+      // this.name = Object.values(name_users);
+
     });
   }
 

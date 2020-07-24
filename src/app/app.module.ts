@@ -25,6 +25,7 @@ import { ReactiveFormsModule,  } from '@angular/forms';
 import { CustomDatePipe } from './pipe/customDatePipe';
 import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
 
+
 @NgModule({
   imports: [
     ReactiveFormsModule,

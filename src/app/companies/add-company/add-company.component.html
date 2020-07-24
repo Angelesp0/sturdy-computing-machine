@@ -17,7 +17,7 @@
                     </span></strong></p>
                     <div class="row">
                         <div class="col-md">
-                            <label>Nombre<strong><span class="text-danger">*</span></strong></label>
+                            <label>Razon Social<strong><span class="text-danger">*</span></strong></label>
                             <input name="company" inputmode="text" class="form-control" [(ngModel)]="this.data.company">
                         </div>
                         <div class="col-md">
@@ -27,7 +27,7 @@
                         <div class="col-md">
                             <label>Usuario de la Empresa<strong><span class="text-danger">*</span></strong></label>
                             <select name="users_id_user" class="form-control" inputmode="text" [(ngModel)]="this.data.users_id_user">
-                                <option [value]="user" *ngFor="let user of users">{{user}}</option>
+                                <option [value]="user.id_user" *ngFor="let user of data">{{user.first_name}} {{user.last_name}}</option>
                             </select>
                         </div>
                     </div>

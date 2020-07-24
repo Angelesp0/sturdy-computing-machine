@@ -3,22 +3,11 @@
 <div class=" main-content ">
     <div class="row ">
         <div class="col-md-8 " id="htmlData " #htmlData>
-            <table class="table table-bordered ">
-                <tr class="table-primary ">
-                    <th>Id</th>
 
-                </tr>
-                <tr *ngFor="let user of USERS ">
-                    <th>{{user.id}}</th>
-
-                </tr>
-            </table>
         </div>
-
         <div class="col-md-4 text-right ">
             <button class="btn btn-success btn-block " (click)="openPDF() ">Open PDF</button>
             <button class="btn btn-danger btn-block " (click)="downloadPDF() ">Download PDF</button>
         </div>
-
     </div>
 </div>
