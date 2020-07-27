@@ -12,348 +12,416 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <br>
-                    <p><strong><span class="text-primary">DATOS GENERALES
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Razon Social<strong><span class="text-danger">*</span></strong></label>
-                            <input name="company" inputmode="text" class="form-control" [(ngModel)]="this.data.company">
-                        </div>
-                        <div class="col-md">
-                            <label>RFC<strong><span class="text-danger">*</span></strong></label>
-                            <input name="rfc" inputmode="numeric" class="form-control" [(ngModel)]="this.data.rfc">
-                        </div>
-                        <div class="col-md">
-                            <label>Usuario de la Empresa<strong><span class="text-danger">*</span></strong></label>
-                            <select name="users_id_user" class="form-control" inputmode="text" [(ngModel)]="this.data.users_id_user">
-                                <option [value]="user.id_user" *ngFor="let user of data">{{user.first_name}} {{user.last_name}}</option>
+                    <form [formGroup]="registerCompany" (ngSubmit)="onSubmit()">
+                        <br>
+                        <p><strong><span class="text-primary">DATOS GENERALES</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Razon Social<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="company" name="company" inputmode="text" class="form-control" [(ngModel)]="this.data.company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
+                                <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                                    <div *ngIf="f.company.errors.required">La Razon social es requerida</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>RFC<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="rfc" name="rfc" inputmode="numeric" class="form-control" [(ngModel)]="this.data.rfc" [ngClass]="{ 'is-invalid': submitted && f.rfc.errors }">
+                                <div *ngIf="submitted && f.rfc.errors" class="invalid-feedback">
+                                    <div *ngIf="f.rfc.errors.required">El RFC es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Usuario de la Empresa<strong><span class="text-danger">*</span></strong></label>
+                                <select formControlName="users_id_user" name="users_id_user" class="form-control" inputmode="text" [(ngModel)]="this.data.users_id_user" [ngClass]="{ 'is-invalid': submitted && f.users_id_user.errors }">
+                                <option [value]="user.id_user" *ngFor="let user of name">{{user.first_name}} {{user.last_name}}</option>
+                                <div *ngIf="submitted && f.users_id_user.errors" class="invalid-feedback">
+                                    <div *ngIf="f.users_id_user.errors.required">Selecciona un Usuario</div>
+                                </div>
                             </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Estado<strong><span class="text-danger">*</span></strong></label>
-                            <input name="state" inputmode="text" class="form-control" [(ngModel)]="this.data.state">
-                        </div>
-                        <div class="col-md">
-                            <label>Ciudad<strong><span class="text-danger">*</span></strong></label>
-                            <input name="city" inputmode="text" class="form-control" [(ngModel)]="this.data.city">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Tipo de colonia</label>
-                            <select name="type_colony" class="form-control" inputmode="text" [(ngModel)]="this.data.type_colony">
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Estado<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="state" name="state" inputmode="text" class="form-control" [(ngModel)]="this.data.state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                                <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                    <div *ngIf="f.state.errors.required">El Estado es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Ciudad<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="city" name="city" inputmode="text" class="form-control" [(ngModel)]="this.data.city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                    <div *ngIf="f.city.errors.required">La Ciudad es requerida</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Tipo de colonia</label>
+                                <select [ngModelOptions]="{standalone: true}" name="type_colony" class="form-control" inputmode="text" [(ngModel)]="this.data.type_colony">
                                 <option [value]="tipo" *ngFor="let tipo of Tipos_de_Colonias">{{tipo}}</option>
                             </select>
+                            </div>
+                            <div class="col-md">
+                                <label>Colonia<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="colony" name="colony" inputmode="text" class="form-control" [(ngModel)]="this.data.colony" [ngClass]="{ 'is-invalid': submitted && f.colony.errors }">
+                                <div *ngIf="submitted && f.colony.errors" class="invalid-feedback">
+                                    <div *ngIf="f.colony.errors.required">La Colonia es requerida</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Colonia<strong><span class="text-danger">*</span></strong></label>
-                            <input name="colony" inputmode="text" class="form-control" [(ngModel)]="this.data.colony">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Tipo de vialidad</label>
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Tipo de vialidad</label>
+                                <select [ngModelOptions]="{standalone: true}" name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street">
                                 <option [value]="tipo" *ngFor="let tipo of Tipos_de_Vialidades">{{tipo}}</option>
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label>vialidad<strong><span class="text-danger">*</span></strong></label>
-                            <input name="street" inputmode="text" class="form-control" [(ngModel)]="this.data.street">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Tipo de vialidad</label>
-                            <!--  <input name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">-->
-                            <select name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">
+                            </div>
+                            <div class="col-md">
+                                <label>vialidad<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="street" name="street" inputmode="text" class="form-control" [(ngModel)]="this.data.street" [ngClass]="{ 'is-invalid': submitted && f.street.errors }">
+                                <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                                    <div *ngIf="f.street.errors.required">La Vialidad es requerida</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Tipo de vialidad</label>
+                                <!--  <input name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">-->
+                                <select [ngModelOptions]="{standalone: true}" name="type_street3" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street3">
                                 <option [value]="tipo3" *ngFor="let tipo3 of Tipos_de_Vialidades">{{tipo3}}</option>
                             </select>
+                            </div>
+                            <div class="col-md">
+                                <label>vialidad posterior<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="street3" name="street3" inputmode="text" class="form-control" [(ngModel)]="this.data.street3" [ngClass]="{ 'is-invalid': submitted && f.street3.errors }">
+                                <div *ngIf="submitted && f.street3.errors" class="invalid-feedback">
+                                    <div *ngIf="f.street3.errors.required">La Vialidad Posterior es requerida</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>vialidad posterior<strong><span class="text-danger">*</span></strong></label>
-                            <input name="street3" inputmode="text" class="form-control" [(ngModel)]="this.data.street3">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Tipo de vialidad </label>
-                            <!--      <input name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">-->
-                            <select name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Tipo de vialidad </label>
+                                <!--      <input name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">-->
+                                <select [ngModelOptions]="{standalone: true}" name="type_street1" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street1">
                                 <option [value]="tipo1" *ngFor="let tipo1 of Tipos_de_Vialidades">{{tipo1}}</option>
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label>vialidad derecha<strong><span class="text-danger">*</span></strong></label>
-                            <input name="street1" inputmode="text" class="form-control" [(ngModel)]="this.data.street1">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Tipo de vialidad</label>
-                            <!--        <input name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">-->
-                            <select name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">
+                            </div>
+                            <div class="col-md">
+                                <label>Vialidad Derecha<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="street1" name="street1" inputmode="text" class="form-control" [(ngModel)]="this.data.street1" [ngClass]="{ 'is-invalid': submitted && f.street1.errors }">
+                                <div *ngIf="submitted && f.street1.errors" class="invalid-feedback">
+                                    <div *ngIf="f.street1.errors.required">La Vialidad Derecha es requerida </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Tipo de vialidad</label>
+                                <!--        <input name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">-->
+                                <select [ngModelOptions]="{standalone: true}" name="type_street2" inputmode="text" class="form-control" [(ngModel)]="this.data.type_street2">
                                 <option [value]="tipo2" *ngFor="let tipo2 of Tipos_de_Vialidades">{{tipo2}}</option>
                             </select>
+                            </div>
+                            <div class="col-md">
+                                <label>vialidad izquierda<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="street2" name="street2" inputmode="text" class="form-control" [(ngModel)]="this.data.street2" [ngClass]="{ 'is-invalid': submitted && f.street2.errors }">
+                                <div *ngIf="submitted && f.street2.errors" class="invalid-feedback">
+                                    <div *ngIf="f.street2.errors.required">La Vialidad Izquierda es requerida</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>vialidad izquierda<strong><span class="text-danger">*</span></strong></label>
-                            <input name="name_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.street2">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tipo de centro comercial</label>
+                                <input [ngModelOptions]="{standalone: true}" name="type_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.type_mall">
+                            </div>
+                            <div class="col-md">
+                                <label>Nombre del centro comercial</label>
+                                <input [ngModelOptions]="{standalone: true}" name="name_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.name_mall">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Piso </label>
+                                <input [ngModelOptions]="{standalone: true}" name="floor" inputmode="numeric" class="form-control" [(ngModel)]="this.data.floor">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Numero de local</label>
+                                <input [ngModelOptions]="{standalone: true}" name="local_number" inputmode="numeric" class="form-control" [(ngModel)]="this.data.local_number">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>Tipo de centro comercial</label>
-                            <input name="type_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.type_mall">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>CP<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="cp" name="cp" inputmode="numeric" class="form-control" [(ngModel)]="this.data.cp" [ngClass]="{ 'is-invalid': submitted && f.cp.errors }">
+                                <div *ngIf="submitted && f.cp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.cp.errors.required">El Codigo Postal es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Numero ext<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="num_ext" name="num_ext" inputmode="numeric" class="form-control" [(ngModel)]="this.data.num_ext" [ngClass]="{ 'is-invalid': submitted && f.num_ext.errors }">
+                                <div *ngIf="submitted && f.num_ext.errors" class="invalid-feedback">
+                                    <div *ngIf="f.num_ext.errors.required">El Numero Exterior es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Numero int</label>
+                                <input [ngModelOptions]="{standalone: true}" name="num_int" inputmode="numeric" class="form-control" [(ngModel)]="this.data.num_int">
+                            </div>
+                            <div class="col-md-2">
+                                <label>¿Requiere Factura?<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.invoice" [ngModelOptions]="{standalone: true}">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md">
+                                <label>Telefono<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="tel" name="tel" inputmode="numeric" class="form-control" [(ngModel)]="this.data.tel" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }">
+                                <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+                                    <div *ngIf="f.tel.errors.required">El Numero Telefonico es requerido</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Nombre del centro comercial</label>
-                            <input name="name_mall" inputmode="text" class="form-control" [(ngModel)]="this.data.name_mall">
+                        <br>
+                        <p><strong><span class="text-primary">DATOS DE CONTACTO DEL ESTABLECIMIENTO PARA NEGOCIOS</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Nombre del contacto<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="contact_name" name="contact_name" inputmode="text" class="form-control" [(ngModel)]="this.data.contact_name" [ngClass]="{ 'is-invalid': submitted && f.contact_name.errors }">
+                                <div *ngIf="submitted && f.contact_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.contact_name.errors.required">El Nombre del Contacto es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Puesto<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="job" name="job" inputmode="text" class="form-control" [(ngModel)]="this.data.job" [ngClass]="{ 'is-invalid': submitted && f.job.errors }">
+                                <div *ngIf="submitted && f.job.errors" class="invalid-feedback">
+                                    <div *ngIf="f.job.errors.required">El Puesto es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Celular<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="contact_tel" name="contact_tel" inputmode="tel" class="form-control" [(ngModel)]="this.data.contact_tel" [ngClass]="{ 'is-invalid': submitted && f.contact_tel.errors }">
+                                <div *ngIf="submitted && f.contact_tel.errors" class="invalid-feedback">
+                                    <div *ngIf="f.contact_tel.errors.required">El Celular es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Email<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="contact_email" name="contact_email" inputmode="email" class="form-control" [(ngModel)]="this.data.contact_email" [ngClass]="{ 'is-invalid': submitted && f.contact_email.errors }">
+                                <div *ngIf="submitted && f.contact_email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.contact_email.errors.required">El Email es requerido</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label>Piso </label>
-                            <input name="floor" inputmode="numeric" class="form-control" [(ngModel)]="this.data.floor">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Numero de local</label>
-                            <input name="local_number" inputmode="numeric" class="form-control" [(ngModel)]="this.data.local_number">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>CP<strong><span class="text-danger">*</span></strong></label>
-                            <input name="cp" inputmode="numeric" class="form-control" [(ngModel)]="this.data.cp">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Numero ext</label>
-                            <input name="num_ext" inputmode="numeric" class="form-control" [(ngModel)]="this.data.num_ext">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Numero int</label>
-                            <input name="num_int" inputmode="numeric" class="form-control" [(ngModel)]="this.data.num_int">
-                        </div>
-                        <div class="col-md-2">
-                            <label>¿Requiere Factura?<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.invoice">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <div class="col-md">
-                            <label>Telefono<strong><span class="text-danger">*</span></strong></label>
-                            <input name="tel" inputmode="numeric" class="form-control" [(ngModel)]="this.data.tel">
-                        </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">DATOS DE CONTACTO DEL ESTABLECIMIENTO PARA NEGOCIOS
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Nombre del contacto<strong><span class="text-danger">*</span></strong></label>
-                            <input name="contact_name" inputmode="text" class="form-control" [(ngModel)]="this.data.contact_name">
-                        </div>
-                        <div class="col-md">
-                            <label>Puesto<strong><span class="text-danger">*</span></strong></label>
-                            <input name="job" inputmode="text" class="form-control" [(ngModel)]="this.data.job">
-                        </div>
-                        <div class="col-md">
-                            <label>Celular<strong><span class="text-danger">*</span></strong></label>
-                            <input name="contact_tel" inputmode="tel" class="form-control" [(ngModel)]="this.data.contact_tel">
-                        </div>
-                        <div class="col-md">
-                            <label>Email<strong><span class="text-danger">*</span></strong></label>
-                            <input name="contact_email" inputmode="email" class="form-control" [(ngModel)]="this.data.contact_email">
-                        </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">PERFIL GENERAL DE LA EMPRESA
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Tipo de Instalaciones</label>
-                            <!--        <input name="facilities" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">-->
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">
+                        <br>
+                        <p><strong><span class="text-primary">PERFIL GENERAL DE LA EMPRESA</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Tipo de Instalaciones</label>
+                                <select [ngModelOptions]="{standalone: true}" name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.facilities">
                                 <option [value]="facilities" *ngFor="let facilities of Tipos_de_Instalaciones">{{facilities}}</option>
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label>Distribucion<strong><span class="text-danger">*</span></strong></label>
-                            <!--        <input name="distribution" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution">-->
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution">
+                            </div>
+                            <div class="col-md">
+                                <label>Distribucion<strong><span class="text-danger">*</span></strong></label>
+                                <select formControlName="distribution" name="distribution" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution" [ngClass]="{ 'is-invalid': submitted && f.distribution.errors }">
                                 <option [value]="instalaciones" *ngFor="let instalaciones of Tipos_de_Instalaciones">{{instalaciones}}</option>
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label>Ambito de operaciones<strong><span class="text-danger">*</span></strong></label>
-                            <!--      <input name="scope_of_operations" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">-->
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">
+                                <div *ngIf="submitted && f.distribution.errors" class="invalid-feedback">
+                                    <div *ngIf="f.distribution.errors.required">La Distribucion es requerida</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Ambito de operaciones<strong><span class="text-danger">*</span></strong></label>
+                                <!--      <input name="scope_of_operations" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations">-->
+                                <select formControlName="scope_of_operations" name="scope_of_operations" inputmode="text" class="form-control" [(ngModel)]="this.data.scope_of_operations" [ngClass]="{ 'is-invalid': submitted && f.scope_of_operations.errors }">
                                 <option [value]="ambito" *ngFor="let ambito of Ambito_de_Operaciones">{{ambito}}</option>
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label>Comienzo de la empresa<strong><span class="text-danger">*</span></strong></label>
-                            <input name="company_start" class="form-control" [(ngModel)]="this.data.company_start" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31">
-                        </div>
-                        <div class="col-md">
-                            <label>Rango de ventas<strong><span class="text-danger">*</span></strong></label>
-                            <!--       <input name="sales_range" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">-->
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">
+                                <div *ngIf="submitted && f.scope_of_operations.errors" class="invalid-feedback">
+                                    <div *ngIf="f.scope_of_operations.errors.required">Los Ambitos de Operaciones son requeridos</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Comienzo de la empresa<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="company_start" name="company_start" class="form-control" [(ngModel)]="this.data.company_start" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" [ngClass]="{ 'is-invalid': submitted && f.company_start.errors }">
+                                <div *ngIf="submitted && f.company_start.errors" class="invalid-feedback">
+                                    <div *ngIf="f.company_start.errors.required">La Fecha es requerida</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Rango de ventas<strong><span class="text-danger">*</span></strong></label>
+                                <!--       <input name="sales_range" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range">-->
+                                <select formControlName="sales_range" name="sales_range" inputmode="text" class="form-control" [(ngModel)]="this.data.sales_range" [ngClass]="{ 'is-invalid': submitted && f.sales_range.errors }">
                                 <option [value]="ventas" *ngFor="let ventas of Rango_Ventas">{{ventas}}</option>
                             </select>
+                                <div *ngIf="submitted && f.sales_range.errors" class="invalid-feedback">
+                                    <div *ngIf="f.sales_range.errors.required">El Rango de ventas es requerido</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">ACTIVIDAD ECONOMICA
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Actividad Principal<strong><span class="text-danger">*</span></strong></label>
-                            <input name="main_activity" inputmode="text" class="form-control" [(ngModel)]="this.data.main_activity">
+                        <br>
+                        <p><strong><span class="text-primary">ACTIVIDAD ECONOMICA</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Actividad Principal<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="main_activity" name="main_activity" inputmode="text" class="form-control" [(ngModel)]="this.data.main_activity" [ngClass]="{ 'is-invalid': submitted && f.main_activity.errors }">
+                                <div *ngIf="submitted && f.main_activity.errors" class="invalid-feedback">
+                                    <div *ngIf="f.main_activity.errors.required">Apellido is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Codigo de actividad<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="activity_code" name="activity_code" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code" [ngClass]="{ 'is-invalid': submitted && f.activity_code.errors }">
+                                <div *ngIf="submitted && f.activity_code.errors" class="invalid-feedback">
+                                    <div *ngIf="f.activity_code.errors.required">Apellido is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>¿Exportan?<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.export">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md-2">
+                                <label>¿Importan?<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.import">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Codigo de actividad<strong><span class="text-danger">*</span></strong></label>
-                            <input name="activity_code" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code">
-                        </div>
-                        <div class="col-md-2">
-                            <label>¿Exportan?<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.export">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <div class="col-md-2">
-                            <label>¿Importan?<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.import">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">INFORMACIÓN ADICIONAL
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Numero de empleados<strong><span class="text-danger">*</span></strong></label>
-                            <input name="employees" inputmode="numeric" class="form-control" [(ngModel)]="this.data.employees">
-                        </div>
-                        <div class="col-md">
-                            <label>Empleadas Femeninas<strong><span class="text-danger">*</span></strong></label>
-                            <input name="female_employees" inputmode="numeric" class="form-control" [(ngModel)]="this.data.female_employees">
-                        </div>
-                        <div class="col-md">
-                            <label>Areas de atencion</label>
-                            <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">
+                        <br>
+                        <p><strong><span class="text-primary">INFORMACIÓN ADICIONAL</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Numero de empleados<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="employees" name="employees" inputmode="numeric" class="form-control" [(ngModel)]="this.data.employees" [ngClass]="{ 'is-invalid': submitted && f.employees.errors }">
+                                <div *ngIf="submitted && f.employees.errors" class="invalid-feedback">
+                                    <div *ngIf="f.employees.errors.required">Apellido is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Empleadas Femeninas<strong><span class="text-danger">*</span></strong></label>
+                                <input formControlName="female_employees" name="female_employees" inputmode="numeric" class="form-control" [(ngModel)]="this.data.female_employees" [ngClass]="{ 'is-invalid': submitted && f.female_employees.errors }">
+                                <div *ngIf="submitted && f.female_employees.errors" class="invalid-feedback">
+                                    <div *ngIf="f.female_employees.errors.required">Apellido is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Areas de atencion</label>
+                                <select [ngModelOptions]="{standalone: true}" name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">
                                 <option [value]="areas" *ngFor="let areas of Areas_de_Atencion">{{areas}}</option>
                             </select>
-                            <!--    <input name="attention_area" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">-->
-                        </div>
-                        <div class="col-md">
-                            <label>¿Creditos, Prestamos o Financiamiento?</label>
-                            <select name="type_street" inputmode="text" class="form-control">
-                                <option [value]="prestamo" *ngFor="let prestamo of Prestamos">{{prestamo}}</option>
+                                <!--    <input name="attention_area" inputmode="text" class="form-control" [(ngModel)]="this.data.attention_area">-->
+                            </div>
+                            <div class="col-md">
+                                <label>¿Creditos, Prestamos o Financiamiento?</label>
+                                <select name="type_street" inputmode="text" class="form-control">
+                                <option  [value]="prestamo" *ngFor="let prestamo of Prestamos">{{prestamo}}</option>
                             </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>¿Cuentan con equipo digital?<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.digital_equipment">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <div class="col-md">
-                            <label>¿Cuentan con Internet?<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.internet">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <div class="col-md">
-                            <label>¿han Pagado publicidad?</label>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.advertising">
+                        <div class="row">
+                            <div class="col-md">
+                                <label>¿Cuentan con equipo digital?<strong><span class="text-danger">*</span></strong></label>
                                 <br>
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.digital_equipment">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md">
+                                <label>¿Cuentan con Internet?<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.internet">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md">
+                                <label>¿han Pagado publicidad?</label>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.advertising">
+                                    <br>
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md">
+                                <label>¿Recibieron capacitacion?</label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.training">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>¿Recibieron capacitacion?</label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.training">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
+                        <br>
+                        <p><strong><span class="text-primary">INFORMACIÓN COMERCIAL</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Facebook</label>
+                                <input [ngModelOptions]="{standalone: true}" name="facebook" inputmode="text" class="form-control" [(ngModel)]="this.data.facebook">
+                            </div>
+                            <div class="col-md">
+                                <label>Twitter</label>
+                                <input [ngModelOptions]="{standalone: true}" name="twiter" inputmode="text" class="form-control" [(ngModel)]="this.data.twiter">
+                            </div>
+                            <div class="col-md">
+                                <label>Grupo empresarial</label>
+                                <input [ngModelOptions]="{standalone: true}" name="business_group" inputmode="text" class="form-control" [(ngModel)]="this.data.business_group">
+                            </div>
+                            <div class="col-md">
+                                <label>Camara y/o asociacion</label>
+                                <input [ngModelOptions]="{standalone: true}" name="association" inputmode="text" class="form-control" [(ngModel)]="this.data.association">
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">INFORMACIÓN COMERCIAL
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Facebook</label>
-                            <input name="facebook" inputmode="text" class="form-control" [(ngModel)]="this.data.facebook">
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Cluster</label>
+                                <input [ngModelOptions]="{standalone: true}" name="cluster" inputmode="text" class="form-control" [(ngModel)]="this.data.cluster">
+                            </div>
+                            <div class="col-md">
+                                <label>Cadena productiva</label>
+                                <input [ngModelOptions]="{standalone: true}" name="productive_chain" inputmode="text" class="form-control" [(ngModel)]="this.data.productive_chain">
+                            </div>
+                            <div class="col-md">
+                                <label>Cuentan con distintivo</label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.distinctive">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Twitter</label>
-                            <input name="twiter" inputmode="text" class="form-control" [(ngModel)]="this.data.twiter">
+                        <br>
+                        <p><strong><span class="text-primary">SERVICIOS A CONTRATAR</span></strong></p>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Contabilidad RIF<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="service1">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md">
+                                <label>Contabilidad Persona Fisica<strong><span class="text-danger">*</span></strong></label>
+                                <br>
+                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="service2">
+                                    <mat-radio-button value="1">Si</mat-radio-button>
+                                    <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Grupo empresarial</label>
-                            <input name="business_group" inputmode="text" class="form-control" [(ngModel)]="this.data.business_group">
-                        </div>
-                        <div class="col-md">
-                            <label>Camara y/o asociacion</label>
-                            <input name="association" inputmode="text" class="form-control" [(ngModel)]="this.data.association">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Cluster</label>
-                            <input name="cluster" inputmode="text" class="form-control" [(ngModel)]="this.data.cluster">
-                        </div>
-                        <div class="col-md">
-                            <label>Cadena productiva</label>
-                            <input name="productive_chain" inputmode="text" class="form-control" [(ngModel)]="this.data.productive_chain">
-                        </div>
-                        <div class="col-md">
-                            <label>Cuentan con distintivo</label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.distinctive">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </div>
-                    <br>
-                    <p><strong><span class="text-primary">SERVICIOS A CONTRATAR
-                    </span></strong></p>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Contabilidad RIF<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="service1">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <div class="col-md">
-                            <label>Contabilidad Persona Fisica<strong><span class="text-danger">*</span></strong></label>
-                            <br>
-                            <mat-radio-group aria-label="Select an option" [(ngModel)]="service2">
-                                <mat-radio-button value="1">Si</mat-radio-button>
-                                <mat-radio-button value="0">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </div>
-                    <br>
-                    <p><strong>Estas por agregar una Empresa Nueva <span class="text-primary">Verifica</span> la informacion</strong></p>
-                    <button class="btn btn-outline-primary" (click)="create()">
+                        <br>
+                        <p><strong>Estas por agregar una Empresa Nueva <span class="text-primary">Verifica</span> la informacion</strong></p>
+                        <button class="btn btn-outline-primary" (click)="create()">
                         <div>Completar el registro</div>
                     </button>
+                    </form>
                 </div>
             </div>
         </div>

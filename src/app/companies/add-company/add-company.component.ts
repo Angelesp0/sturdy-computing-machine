@@ -5,7 +5,8 @@ import { CompanyService } from './../../_services/company/company.service';
 import { User } from '../../../../../gglobals-ionic/gglobals/src/app/models/user';
 import { UserService } from '../../_services/user/user.service';
 import { CompanyServices } from './../../models/company_services';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-company',
@@ -13,6 +14,8 @@ import { CompanyServices } from './../../models/company_services';
   styleUrls: ['./add-company.component.css']
 })
 export class AddCompanyComponent implements OnInit {
+  registerCompany: FormGroup;
+  submitted = false;
   data: any;
   users: any;
   name: any;
@@ -70,13 +73,14 @@ export class AddCompanyComponent implements OnInit {
     private userService: UserService,
     private companyService: CompanyService,
     public router: Router,
+    private formBuilder: FormBuilder
     ) {
       this.data = new Company();
       this.users = new User();
       this.service = new CompanyServices();
     }
     create() {
-      console.log(this.data.users_id_user);
+      console.log(this.data);
       this.data.status = 1;
 
       // console.log(this.data);
@@ -116,11 +120,84 @@ export class AddCompanyComponent implements OnInit {
       this.router.navigate(['generatepdf']);
       });
     }
+    onSubmit() {
+      console.log(this.data);
+      this.submitted = true;
+      // stop here if form is invalid
+      if (this.registerCompany.invalid) {
+          return;
+      }
+      alert('Usuario Creado Exitosamente');
+      this.create();
+  }
 
   ngOnInit(): void {
+  /* this.registerCompany = new FormGroup({
+    company: new FormControl('', Validators.required),
+    rfc: new FormControl('', Validators.required),
+    users_id_user: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    direction: new FormControl('', Validators.required),
+    colony: new FormControl('', Validators.required),
+    street: new FormControl('', Validators.required),
+    street3: new FormControl('', Validators.required),
+    street1: new FormControl('', Validators.required),
+    street2: new FormControl('', Validators.required),
+    num_ext: new FormControl('', Validators.required),
+    cp: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    tel: new FormControl('',  [Validators.required, Validators.minLength(10)]),
+    contact_name: new FormControl('', Validators.required),
+    job: new FormControl('', Validators.required),
+    first_name: new FormControl('', Validators.required),
+    contact_tel: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    contact_email: new FormControl('', [Validators.required, Validators.email]),
+    distribution: new FormControl('', Validators.required),
+    scope_of_operations: new FormControl('', Validators.required),
+    company_start: new FormControl('', Validators.required),
+    sales_range: new FormControl('', Validators.required),
+    main_activity: new FormControl('', Validators.required),
+    activity_code: new FormControl('', Validators.required),
+    employees: new FormControl('', Validators.required),
+    female_employees: new FormControl('', Validators.required),
+    attention_area: new FormControl('', Validators.required),
+   });*/
+
+    this.registerCompany = this.formBuilder.group({
+      company: ['', Validators.required],
+      rfc: ['', Validators.required],
+      users_id_user: ['', Validators.required],
+
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      direction: ['', Validators.required],
+      colony: ['', Validators.required],
+      street: ['', Validators.required],
+      street3: ['', Validators.required],
+      street1: ['', Validators.required],
+      street2: ['', Validators.required],
+      num_ext: ['', Validators.required],
+      cp: ['', [Validators.required, Validators.minLength(5)]],
+      tel: ['', [Validators.required, Validators.minLength(10)]],
+      contact_name: ['', Validators.required],
+      job: ['', Validators.required],
+      first_name: ['', Validators.required],
+      contact_tel: ['', [Validators.required, Validators.minLength(10)]],
+      contact_email: ['', [Validators.required, Validators.email]],
+      distribution: ['', Validators.required],
+      scope_of_operations: ['', Validators.required],
+      company_start: ['', Validators.required],
+      sales_range: ['', Validators.required],
+      main_activity: ['', Validators.required],
+      activity_code: ['', Validators.required],
+      employees: ['', [Validators.required, Validators.minLength(1)]],
+      female_employees: ['', [Validators.required, Validators.minLength(1)]],
+      attention_area: ['', Validators.required],
+      type_street: ['', Validators.required],
+    });
 
     this.userService.getUsers().subscribe((response) => {
-      this.data = response;
+      this.name = response;
      // const name_users = [];
 
       // tslint:disable-next-line: forin
@@ -132,5 +209,7 @@ export class AddCompanyComponent implements OnInit {
 
     });
   }
+  get f() { return this.registerCompany.controls; }
+
 
 }

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Subject  } from 'rxjs';
 import { map  } from 'rxjs/operators';
 import { Response } from '@angular/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MustMatch } from './../_helpers/must-match.validator';
 
 // Agregar Usuario
 @Component({
@@ -18,62 +20,82 @@ import { Response } from '@angular/http';
     </button>
   </div>
   <div class="modal-body">
-    <div class="row">
-        <div class="col-md-12">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-12" class="form-group">
                 <label>Nombre</label>
-                <input name="first_name" inputmode="text" class="form-control" placeholder="Nombre" [(ngModel)]="this.data.first_name">
+                <input formControlName="first_name" name="first_name" inputmode="text" class="form-control" placeholder="Nombre" [(ngModel)]="this.data.first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" >
+                <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                    <div *ngIf="f.first_name.errors.required">First Name is required</div>
+                </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" class="form-group">
                 <label>Apellido</label>
-                <input name="last_name" inputmode="text" class="form-control" placeholder="Apellido" [(ngModel)]="this.data.last_name">
+                <input formControlName="last_name" name="last_name" inputmode="text" class="form-control" placeholder="Apellido" [(ngModel)]="this.data.last_name" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+                <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                    <div *ngIf="f.last_name.errors.required">Apellido is required</div>
+                </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" class="form-group">
                 <label>Direccion</label>
-                <input name="direction" inputmode="text" class="form-control" placeholder="Direccion" [(ngModel)]="this.data.direction">
+                <input formControlName="direction" name="direction" inputmode="text" class="form-control" placeholder="Direccion" [(ngModel)]="this.data.direction" [ngClass]="{ 'is-invalid': submitted && f.direction.errors }">
+                <div *ngIf="submitted && f.direction.errors" class="invalid-feedback">
+                    <div *ngIf="f.direction.errors.required">Direccion is required</div>
+                </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+
+        <div class="col-md-12" class="form-group">
                 <label>Colonia</label>
-                <input name="colony" inputmode="text" class="form-control" placeholder="Colonia"[(ngModel)]="this.data.colony">
+                <input formControlName="colony" name="colony" inputmode="text" class="form-control" placeholder="Colonia"[(ngModel)]="this.data.colony" [ngClass]="{ 'is-invalid': submitted && f.colony.errors }">
+                <div *ngIf="submitted && f.colony.errors" class="invalid-feedback">
+                    <div *ngIf="f.colony.errors.required">Colonia is required</div>
+                </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+
+        <div class="col-md-12" class="form-group">
                 <label>Codigo postal</label>
-                <input name="cp" inputmode="text" class="form-control" placeholder="Codigo postal" [(ngModel)]="this.data.cp">
+                <input formControlName="cp" name="cp" inputmode="text" class="form-control" placeholder="Codigo postal" [(ngModel)]="this.data.cp" [ngClass]="{ 'is-invalid': submitted && f.cp.errors }">
+                <div *ngIf="submitted && f.cp.errors" class="invalid-feedback">
+                            <div *ngIf="f.cp.errors.required">Codigo Postal is required</div>
+                            <div *ngIf="f.cp.errors.minlength">Codigo Postal must be at least 5 characters</div>
+                        </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+
+        <div class="col-md-12" class="form-group">
                 <label>Email</label>
-                <input name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email">
+                <input formControlName="email" name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  >
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+ 
+        <div class="col-md-12" class="form-group">
                 <label>Contraseña</label>
-                <input name="password" inputmode="text" class="form-control" placeholder="Contraseña" [(ngModel)]="this.data.password">
+                <input formControlName="password" name="password" inputmode="text" class="form-control" placeholder="Contraseña" [(ngModel)]="this.data.password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"  >
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Contraseña is required</div>
+                            <div *ngIf="f.password.errors.minlength">Contraseña must be at least 6 characters</div>
+                        </div>
         </div>
-    </div>
       <p><strong>Estas por agregar un nuevo usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
+      <div class="form-group">
+
+    <button type="submit" ngbAutofocus class="btn btn-danger" >Ok</button>
+</div>
+    </form>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button" ngbAutofocus class="btn btn-danger" (click) ="create()">Ok</button>
-  </div>
+  
   `
 })
-export class NgbdModalConfirmAutofocus {
+export class NgbdModalConfirmAutofocus implements OnInit {
+  registerForm: FormGroup;
+    submitted = false;
   data: User;
   constructor(
     public modal: NgbActiveModal,
     private userService: UserService,
-    public router: Router) {
+    public router: Router,
+    private formBuilder: FormBuilder) {
       this.data = new User();
     }
     create() {
@@ -82,6 +104,28 @@ export class NgbdModalConfirmAutofocus {
         this.modal.close('Ok click');
       });
     }
+    onSubmit() {
+      this.submitted = true;
+      // stop here if form is invalid
+      if (this.registerForm.invalid) {
+          return;
+      }
+      alert('Usuario Creado Exitosamente');
+      this.create();
+  }
+    ngOnInit() {
+      this.registerForm = this.formBuilder.group({
+        first_name: ['', Validators.required],
+        last_name: ['', Validators.required],
+        direction: ['', Validators.required],
+        colony: ['', Validators.required],
+        cp: ['', [Validators.required, Validators.minLength(5)]],
+        email: ['', [Validators.required, Validators.email]],
+        password:  ['', [Validators.required, Validators.minLength(6)]],
+      });
+  }
+  get f() { return this.registerForm.controls; }
+
 }
 
 // Editar Usuario
