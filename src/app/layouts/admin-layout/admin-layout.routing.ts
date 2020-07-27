@@ -13,6 +13,7 @@ import { CompaniesComponent } from '../../companies/companies.component';
 import { ServicesComponent } from '../../services/services.component';
 import { AddCompanyComponent } from '../../companies/add-company/add-company.component';
 import { JsPDFComponent } from '../../companies/js-pdf/js-pdf.component';
+import { AddMediaComponent } from '../../companies/add-company/add-media/add-media.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -28,6 +29,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'services',       component: ServicesComponent},
     { path: 'add-company',    component: AddCompanyComponent},
     { path: 'generatepdf',    component: JsPDFComponent },
+    { path: 'add-media',      component: AddMediaComponent }
 
 
 ];

@@ -1,0 +1,78 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title"> Google Maps</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="map" class="map"></div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <p>IMG Frontal de la INE</p>
+                                <input type="file" ng2FileSelect [uploader]="uploader">
+                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <br>
+                                <img [src]="previewImg" *ngIf="previewImg" />
+                            </div>
+                            <div class="col">
+                                <p>IMG Trasera de la INE</p>
+                                <input type="file" ng2FileSelect [uploader]="uploader1">
+                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <br>
+                                <img [src]="previewImg1" *ngIf="previewImg1" />
+                            </div>
+                            <div class="col">
+                                <p>IMG del Comprobante de Domicilio</p>
+                                <input type="file" ng2FileSelect [uploader]="uploader2">
+                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <br>
+                                <img [src]="previewImg2" *ngIf="previewImg2" />
+                            </div>
+                            <div class="col">
+                                <p>IMG Exterior de la Empresa</p>
+                                <input type="file" ng2FileSelect [uploader]="uploader3">
+                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <br>
+                                <img [src]="previewImg3" *ngIf="previewImg3" />
+                            </div>
+                            <div class="col">
+                                <p>IMG Interior de la Empresa</p>
+                                <input type="file" ng2FileSelect [uploader]="uploader4">
+                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <br>
+                                <img [src]="previewImg4" *ngIf="previewImg4" />
+                            </div>
+                        </div>
+                        <br>
+                        <div class="signature-pad">
+                            <div class="signature-pad--body">
+                                <canvas #sPad width="860" height="300" style="touch-action: none;"></canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-block btn-danger" (click)="clear()">Clear</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-block btn-success" (click)="savePNG()">Guardar Firma</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-primary" (click)="register()">
+                            <div>Completar el registro</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

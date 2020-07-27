@@ -24,6 +24,8 @@ import {MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,  } from '@angular/forms';
 import { CustomDatePipe } from './pipe/customDatePipe';
 import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
+import { AddMediaComponent } from './companies/add-company/add-media/add-media.component';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
     ToastrModule.forRoot()
   ],
   declarations: [
+    FileSelectDirective,
     CustomDatePipe,
     ModalEditarServicio,
     ModalNuevoServicio,
@@ -54,7 +57,8 @@ import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
     CompaniesComponent,
     ServicesComponent,
     AddCompanyComponent,
-    JsPDFComponent
+    JsPDFComponent,
+    AddMediaComponent
 
   ],
   providers: [
