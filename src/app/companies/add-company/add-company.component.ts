@@ -25,9 +25,7 @@ export class AddCompanyComponent implements OnInit {
   service2: number;
   service: any;
   todayDate: Date = new Date();
-
-
-
+  id_company: number;
 
   Tipos_de_Colonias: string [] = [
     "Aeropuerto","Ampliacion","Barrio", "Canton",
@@ -69,6 +67,7 @@ export class AddCompanyComponent implements OnInit {
     "Antes de abrir","Despues de abrir","Ambas",
     "Ninguna"
   ];
+
   constructor(
     private userService: UserService,
     private companyService: CompanyService,
@@ -80,12 +79,12 @@ export class AddCompanyComponent implements OnInit {
       this.service = new CompanyServices();
     }
     create() {
-      console.log(this.data);
       this.data.status = 1;
 
       // console.log(this.data);
       this.companyService.createCompany(this.data).subscribe((response) => {
       const id_company = response['newInf']['company_id_company'];
+      this.id_company = id_company;
       if (this.service1 == 1) {
 
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -117,11 +116,10 @@ export class AddCompanyComponent implements OnInit {
         });
       }
 
-      this.router.navigate(['generatepdf']);
+      this.router.navigate([`/add-media/${this.id_company}`]);
       });
     }
     onSubmit() {
-      console.log(this.data);
       this.submitted = true;
       // stop here if form is invalid
       if (this.registerCompany.invalid) {

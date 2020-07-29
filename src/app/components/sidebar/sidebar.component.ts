@@ -8,14 +8,14 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
-    { path: '/companies', title: 'Empresas',     icon: 'shopping_shop', class: '' },
-    { path: '/users', title: 'Usuarios',  icon: 'users_single-02', class: '' },
-    { path: '/services', title: 'Servicios',  icon: 'design_bullet-list-67', class: '' },
-    { path: '/user-profile', title: 'User Profile',  icon: 'users_circle-08', class: '' },
-    { path: '/login', title: 'Login',     icon: 'sport_user-run', class: '' },
-    { path: '/add-media', title: 'Multimedia',     icon: 'design_app', class: '' },
-    { path: '/generatepdf', title: 'Contrato',     icon: 'design_app', class: '' },
+    { path: '/dashboard',         title: 'Dashboard',    icon: 'design_app',            class: '' },
+    { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
+    { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
+    { path: '/services',          title: 'Servicios',    icon: 'design_bullet-list-67', class: '' },
+    { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
+    { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
+    { path: '/add-media/140',     title: 'Multimedia',   icon: 'design_app',            class: '' },
+    { path: '/generatepdf/140',   title: 'Contrato',     icon: 'design_app',            class: '' },
 
 
     // { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },

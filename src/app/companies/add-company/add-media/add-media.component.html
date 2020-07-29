@@ -16,55 +16,57 @@
                         <div class="row">
                             <div class="col">
                                 <p>IMG Frontal de la INE</p>
-                                <input type="file" ng2FileSelect [uploader]="uploader">
-                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <input #hiddenfileinput type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)" style="display: none">
+                                <button class="btn btn-block btn-success" (click)="hiddenfileinput.click()"><i class="material-icons left">cloud </i> Imagen</button>
                                 <br>
                                 <img [src]="previewImg" *ngIf="previewImg" />
                             </div>
                             <div class="col">
                                 <p>IMG Trasera de la INE</p>
-                                <input type="file" ng2FileSelect [uploader]="uploader1">
-                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <input #hiddenfileinput1 type="file" ng2FileSelect [uploader]="uploader1" (onFileSelected)="onFileSelected1($event)" style="display: none">
+                                <button class="btn btn-block btn-success" (click)="hiddenfileinput1.click()"><i class="material-icons left">cloud </i> Imagen</button>
                                 <br>
                                 <img [src]="previewImg1" *ngIf="previewImg1" />
                             </div>
                             <div class="col">
-                                <p>IMG del Comprobante de Domicilio</p>
-                                <input type="file" ng2FileSelect [uploader]="uploader2">
-                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <p>IMG del Comp de Domicilio</p>
+                                <input #hiddenfileinput2 type="file" ng2FileSelect [uploader]="uploader2" (onFileSelected)="onFileSelected2($event)" style="display: none">
+                                <button class="btn btn-block btn-success" (click)="hiddenfileinput2.click()"><i class="material-icons left">cloud </i> Imagen</button>
                                 <br>
                                 <img [src]="previewImg2" *ngIf="previewImg2" />
                             </div>
                             <div class="col">
                                 <p>IMG Exterior de la Empresa</p>
-                                <input type="file" ng2FileSelect [uploader]="uploader3">
-                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <input #hiddenfileinput3 type="file" ng2FileSelect [uploader]="uploader3" (onFileSelected)="onFileSelected3($event)" style="display: none">
+                                <button class="btn btn-block btn-success" (click)="hiddenfileinput3.click()"><i class="material-icons left">cloud </i> Imagen</button>
                                 <br>
                                 <img [src]="previewImg3" *ngIf="previewImg3" />
                             </div>
                             <div class="col">
                                 <p>IMG Interior de la Empresa</p>
-                                <input type="file" ng2FileSelect [uploader]="uploader4">
-                                <button class="btn btn-block btn-success" (click)="uploader.uploadAll()">Guardar</button>
+                                <input #hiddenfileinput4 type="file" ng2FileSelect [uploader]="uploader4" (onFileSelected)="onFileSelected4($event)" style="display: none">
+                                <button class="btn btn-block btn-success" (click)="hiddenfileinput4.click()"><i class="material-icons left">cloud</i> Imagen</button>
                                 <br>
                                 <img [src]="previewImg4" *ngIf="previewImg4" />
                             </div>
                         </div>
                         <br>
-                        <div class="signature-pad">
-                            <div class="signature-pad--body">
-                                <canvas #sPad width="860" height="300" style="touch-action: none;"></canvas>
+                        <div class="row justify-content-center">
+                            <div class="signature-pad">
+                                <div class="signature-pad--body">
+                                    <canvas #sPad width="860" height="300" style="touch-action: none;"></canvas>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-3">
                                 <button class="btn btn-block btn-danger" (click)="clear()">Clear</button>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                                 <button class="btn btn-block btn-success" (click)="savePNG()">Guardar Firma</button>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-outline-primary" (click)="register()">

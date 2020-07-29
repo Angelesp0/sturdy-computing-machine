@@ -85,4 +85,96 @@ export class AdminService {
     uploadData.append('file', image, image.name);
     return this.http.post('http://192.168.137.1:3000/subir', uploadData)  ;
   }
+
+  postImg(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'INE Frontal');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  postImg1(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'INE Posterior');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  postImg2(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Comprobante');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  postImg3(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Establecimiento Exterior');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  postImg4(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Establecimiento Interior');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  firma(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Firma');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  location(lat, lng, label, company_id_company) {
+    return this.http
+    .post('http://192.168.137.1:3000/companies/location', {lat, lng, label, company_id_company} )
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }
