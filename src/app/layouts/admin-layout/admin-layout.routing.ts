@@ -14,6 +14,7 @@ import { ServicesComponent } from '../../services/services.component';
 import { AddCompanyComponent } from '../../companies/add-company/add-company.component';
 import { JsPDFComponent } from '../../companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from '../../companies/add-company/add-media/add-media.component';
+import { PaymentsComponent } from '../../companies/payments/payments.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -30,4 +31,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-company',    component: AddCompanyComponent},
     { path: 'add-media/:id_company', component: AddMediaComponent},
     { path: 'generatepdf/:id_company',    component: JsPDFComponent},
+    { path: 'payment',        component: PaymentsComponent }
 ];

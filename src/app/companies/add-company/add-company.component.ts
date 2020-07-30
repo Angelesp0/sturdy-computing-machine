@@ -92,12 +92,13 @@ export class AddCompanyComponent implements OnInit {
 
         this.service.company_id_company = id_company;
         this.service.services_id_service = "1";
-        this.service.status = "1";
+        this.service.status = "0";
         this.service.start_date = date;
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
           console.log(response);
+          localStorage.setItem('Rif', 'True');
         });
       }
       if (this.service2 == 1) {
@@ -107,12 +108,13 @@ export class AddCompanyComponent implements OnInit {
 
         this.service.company_id_company = id_company;
         this.service.services_id_service = "2";
-        this.service.status = "1";
+        this.service.status = "0";
         this.service.start_date = date;
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
           console.log(response);
+          localStorage.setItem('Pf', 'True');
         });
       }
 

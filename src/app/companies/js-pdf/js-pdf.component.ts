@@ -7,6 +7,8 @@ import * as jsPDF from 'jspdf';
   styleUrls: ['./js-pdf.component.css']
 })
 export class JsPDFComponent implements OnInit {
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+
 
   @ViewChild('htmlData') htmlData: ElementRef;
 
@@ -354,6 +356,7 @@ export class JsPDFComponent implements OnInit {
   public downloadPDF(): void {
     let DATA = this.htmlData.nativeElement;
     let doc = new jsPDF('p','pt', 'letter');
+
 
     let handleElement = {
       '#editor':function(element,renderer){

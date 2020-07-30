@@ -26,10 +26,17 @@ import { CustomDatePipe } from './pipe/customDatePipe';
 import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from './companies/add-company/add-media/add-media.component';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PaymentsComponent } from './companies/payments/payments.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+
+
 
 
 @NgModule({
   imports: [
+    NgxPayPalModule,
+    PdfViewerModule,
     ReactiveFormsModule,
     MatRadioModule,
     DataTablesModule,
@@ -58,7 +65,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ServicesComponent,
     AddCompanyComponent,
     JsPDFComponent,
-    AddMediaComponent
+    AddMediaComponent,
+    PaymentsComponent
 
   ],
   providers: [
