@@ -31,5 +31,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-company',    component: AddCompanyComponent},
     { path: 'add-media/:id_company', component: AddMediaComponent},
     { path: 'generatepdf/:id_company',    component: JsPDFComponent},
-    { path: 'payment',        component: PaymentsComponent }
+    { path: 'payment/:id_company',        component: PaymentsComponent }
 ];

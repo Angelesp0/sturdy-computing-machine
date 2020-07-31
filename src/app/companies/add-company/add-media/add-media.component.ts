@@ -28,6 +28,7 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   file3: File;
   file4: File;
   id: number;
+  image: any;
   private selectedFile: File;
   firma: any;
 
@@ -59,6 +60,7 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   }
    ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
+    this.signaturePad.penColor = 'rgb(0,0,255)';
   }
 
   onFileSelect(event) {
@@ -178,7 +180,7 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     this.adminService.postImg4(  this.id, this.file4).subscribe(res => console.log(res));
     this.adminService.firma(  this.id, this.firma).subscribe(res => console.log(res));
     this.adminService.location(  this.lat, this.lng, 'localizacion de prueba', this.id).subscribe(res => console.log(res));
-    this.router.navigate([`/generatepdf/${this.id}`]);
+    this.router.navigate([`/payment/${this.id}`]);
 
   }
 
@@ -216,7 +218,8 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
       const a = document.createElement('a');
       a.href = url;
       a.download = filename;
-
+      this.image = blob;
+      console.log(this.image);
       document.body.appendChild(a);
       a.click();
 
@@ -243,9 +246,42 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     } else {
       const dataURL = this.signaturePad.toDataURL();
       // this.download(dataURL, 'signature.png');
-      const file = new File([dataURL], 'signature.png');
-      this.firma = file;
+      // const file = new File( [dataURL], 'signature.png', {type: 'png'});
+      console.log(this.b64toFile(dataURL));
+      this.firma = this.b64toFile(dataURL);
     }
   }
+
+  b64toFile(dataURI): File {
+    // convert the data URL to a byte string
+    const byteString = atob(dataURI.split(',')[1]);
+
+    // pull out the mime type from the data URL
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    // Convert to byte array
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    // Create a blob that looks like a file.
+    const blob = new Blob([ab], { 'type': mimeString });
+    blob['lastModifiedDate'] = (new Date()).toISOString();
+    blob['name'] = 'file';
+        
+    // Figure out what extension the file should have
+    switch(blob.type) {
+        case 'image/jpeg':
+            blob['name'] += '.jpg';
+            break;
+        case 'image/png':
+            blob['name'] += '.png';
+            break;
+    }
+    // cast to a File
+    return <File>blob;
+}
 
 }

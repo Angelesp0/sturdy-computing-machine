@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
+import { CompanyService } from '../../_services/company/company.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -12,13 +14,21 @@ export class PaymentsComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
   Rif: any;
   Pf: any;
-  constructor(private toastr: ToastrService) {}
+  date: Date;
+  id_service: number;
+  id_company: number;
+
+  constructor(
+    private toastr: ToastrService,
+    private companyService: CompanyService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    ) {}
 
   item: any;
 
   ngOnInit() {
-
-
+    this.id_company = this.activatedRoute.snapshot.params["id_company"];
     this.service();
     this.initConfig();
   }
@@ -36,6 +46,7 @@ export class PaymentsComponent implements OnInit {
           value: '400.00',
         }
       };
+      this.id_service = 1;
       return true;
   }
   if (localStorage.getItem('Pf')) {
@@ -50,6 +61,7 @@ export class PaymentsComponent implements OnInit {
         value: '20.00',
       }
     };
+    this.id_service = 2;
     return true;
   }
   }
@@ -65,33 +77,16 @@ export class PaymentsComponent implements OnInit {
         {
           amount: {
             currency_code: 'MXN',
-            value: '420.00',
+            value: this.item.unit_amount.value,
             breakdown: {
               item_total: {
                 currency_code: 'MXN',
-                value: '420.00'
+                value:  this.item.unit_amount.value
               }
             }
           },
           items: [
-            {
-              name: 'Servicio: PF',
-              quantity: '1',
-              category: 'DIGITAL_GOODS',
-              unit_amount: {
-                currency_code: 'MXN',
-                value: '20.00',
-              }
-            },
-            {
-              name: 'Servicio: Rif',
-              quantity: '1',
-              category: 'DIGITAL_GOODS',
-              unit_amount: {
-                currency_code: 'MXN',
-                value: '400.00',
-              }
-            }
+            this.item
           ]
         }
       ]
@@ -112,7 +107,23 @@ export class PaymentsComponent implements OnInit {
     },
     onClientAuthorization: (data) => {
       this.showNotification('top', 'right', 2);
-      console.log('onClientAuthorization: probablemente debería informar a su servidor sobre la transacción completada en este momento', data);
+      this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split("T")[0], this.id_company).subscribe((response) => {
+        console.log(response);
+      });
+      this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
+        console.log(responsee);
+        if (localStorage.getItem('Rif')) {
+          localStorage.removeItem('Rif');
+          // logged in so return true
+          return true;
+      }
+        if (localStorage.getItem('Pf')) {
+          localStorage.removeItem('Pf');
+          // logged in so return true
+          return true;
+      }
+    });
+    this.router.navigate([`/generatepdf/${this.id_company}`]);
       // this.showSuccess = true;
     },
     onCancel: (data, actions) => {
@@ -152,7 +163,7 @@ export class PaymentsComponent implements OnInit {
        });
       break;
       case 3:
-      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Welcome to <b>Now Ui Dashboard</b> - a beautiful freebie for every web developer.', '', {
+      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> El Pago se Cancelo, Favor de re-intentar', '', {
          timeOut: 8000,
          closeButton: true,
          enableHtml: true,
@@ -173,5 +184,4 @@ export class PaymentsComponent implements OnInit {
       break;
     }
 }
-
 }

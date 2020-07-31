@@ -4,8 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { Company } from './../../models/company';
 import { retry, catchError } from 'rxjs/operators';
 import { CompanyServices } from './../../models/company_services';
-import { stringify } from 'querystring';
-import { map } from 'rxjs/operators';
+import {  Payment} from '../../models/register_paiment';
 
 const headers = new HttpHeaders();
 
@@ -24,6 +23,7 @@ export class CompanyService {
       'Content-Type': 'application/json; charset=utf-8'
     })
   };
+
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -39,12 +39,15 @@ export class CompanyService {
     return throwError(
       'Algo malo a pasado; porfavor intentalo de nuevo mas tarde.');
   }
+
   getCompanies() {
       return this.http.get('http://192.168.137.1:3000/companies', this.httpOptions);
   }
+
   getCompany(id) {
     return this.http.get('http://192.168.137.1:3000/companies/' + id, this.httpOptions);
   }
+
   updateCompany(id, item) {
     const params  = new HttpParams()
       .set('rfc', item.rfc)
@@ -70,6 +73,7 @@ export class CompanyService {
         catchError(this.handleError)
       );
   }
+
   deleteCompany(id) {
     console.log(id);
     return this.http
@@ -79,7 +83,6 @@ export class CompanyService {
         catchError(this.handleError)
       );
   }
-
 
   createCompany(item): Observable<Company> {
     const params  = new HttpParams()
@@ -119,6 +122,21 @@ export class CompanyService {
       );
   }
 
+  active_payment(id_company, services_id_service) {
+    console.log(id_company, services_id_service);
+    return this.http
+    .put('http://192.168.137.1:3000/company_services/' + id_company, {services_id_service} )
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
 
+  register_payment(id, value, description, status, update_time, id_company): Observable<Payment> {
+    return this.http
+    .post<Payment>('http://192.168.137.1:3000/payment/' + id_company , {id, value, description, status, update_time})
+    .pipe(
+      catchError(this.handleError)
+    );
 
+  }
 }

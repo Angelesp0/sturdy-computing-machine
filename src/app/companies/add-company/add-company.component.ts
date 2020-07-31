@@ -84,6 +84,7 @@ export class AddCompanyComponent implements OnInit {
       // console.log(this.data);
       this.companyService.createCompany(this.data).subscribe((response) => {
       const id_company = response['newInf']['company_id_company'];
+      localStorage.setItem('id_company', id_company);
       this.id_company = id_company;
       if (this.service1 == 1) {
 

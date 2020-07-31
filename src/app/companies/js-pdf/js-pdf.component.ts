@@ -1,5 +1,7 @@
 import { Component, OnInit  , ViewChild, ElementRef} from '@angular/core';
 import * as jsPDF from 'jspdf';
+import { AdminService } from '../../_services/admin/admin.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-js-pdf',
@@ -8,7 +10,7 @@ import * as jsPDF from 'jspdf';
 })
 export class JsPDFComponent implements OnInit {
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-
+  id: number;
 
   @ViewChild('htmlData') htmlData: ElementRef;
 
@@ -51,7 +53,10 @@ export class JsPDFComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+   private adminService: AdminService,
+   private activatedRoute: ActivatedRoute
+  ) { }
   public pf(): void {
     let DATA = this.htmlData.nativeElement;
     let doc = new jsPDF('p','pt', 'letter');
@@ -436,5 +441,11 @@ export class JsPDFComponent implements OnInit {
     doc.save('angular-demo.pdf');
   }
   ngOnInit(): void {
+    this.id = this.activatedRoute.snapshot.params["id_company"];
+
+    this.adminService.getInfContract(this.id).subscribe((response) => {
+    console.log(response);
+    });
+
   }
 }
