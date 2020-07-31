@@ -124,10 +124,6 @@ import { Response } from '@angular/http';
     </div>
     <div class="row">
         <div class="col-md">
-            <label>¿Requiere Factura?<strong><span class="text-danger">*</span></strong></label>
-            <input name="invoice" inputmode="tel" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.invoice">
-        </div>
-        <div class="col-md">
             <label>Telefono<strong><span class="text-danger">*</span></strong></label>
             <input name="tel" inputmode="numeric" class="form-control" [(ngModel)]="this.data.tel">
         </div>
@@ -197,16 +193,7 @@ import { Response } from '@angular/http';
             <input name="activity_code" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code">
         </div>
     </div>
-    <div class="row">
-        <div class="col-md">
-            <label>¿Exportan?<strong><span class="text-danger">*</span></strong></label>
-            <input name="export" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.export">
-        </div>
-        <div class="col-md">
-            <label>¿Importan?<strong><span class="text-danger">*</span></strong></label>
-            <input name="import" inputmode="text" class="form-control" placeholder="Si / No" [(ngModel)]="this.data.import">
-        </div>
-    </div>
+
     <br>
     <p><strong><span class="text-primary">INFORMACIÓN ADICIONAL
     </span></strong></p>

@@ -12,7 +12,6 @@ export class Company {
     tel: number;
     num_ext?: number;
     num_int?: number;
-    invoice: boolean;
     users_id_user: number;
     img?: string;
     floor?: number;
@@ -36,8 +35,7 @@ export class Company {
     scope_of_operations: string;
     sales_range: string;
     distribution: string;
-    export: boolean;
-    import: boolean;
+
     main_activity: string;
     activity_code: number;
     employees: number;

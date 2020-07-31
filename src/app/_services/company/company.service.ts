@@ -64,7 +64,6 @@ export class CompanyService {
       .set('last_name', item.last_name)
       .set('mobile', item.mobile)
       .set('email', item.email)
-      .set('invoice', item.invoice)
       .set('users_id_user', item.users_id_user);
     return this.http
       .put<any>(this.base_path + '/' + id, item, {params} )
@@ -100,7 +99,6 @@ export class CompanyService {
       .set('last_name', item.last_name)
       .set('mobile', item.mobile)
       .set('email', item.email)
-      .set('invoice', item.invoice)
       .set('status', '1')
       .set('start_date', '2020-07-20')
       .set('end_date', '2020-08-20')

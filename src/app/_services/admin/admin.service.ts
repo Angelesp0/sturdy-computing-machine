@@ -169,6 +169,19 @@ export class AdminService {
       );
   }
 
+  postContract(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Contrato');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   location(lat, lng, label, company_id_company) {
     return this.http
     .post('http://192.168.137.1:3000/companies/location', {lat, lng, label, company_id_company} )

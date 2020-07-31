@@ -165,14 +165,6 @@
                                 <label>Numero int</label>
                                 <input [ngModelOptions]="{standalone: true}" name="num_int" inputmode="numeric" class="form-control" [(ngModel)]="this.data.num_int">
                             </div>
-                            <div class="col-md-2">
-                                <label>¿Requiere Factura?<strong><span class="text-danger">*</span></strong></label>
-                                <br>
-                                <mat-radio-group aria-label="Select an option" [(ngModel)]="this.data.invoice" [ngModelOptions]="{standalone: true}">
-                                    <mat-radio-button value="1">Si</mat-radio-button>
-                                    <mat-radio-button value="0">No</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
                             <div class="col-md">
                                 <label>Telefono<strong><span class="text-danger">*</span></strong></label>
                                 <input formControlName="tel" name="tel" inputmode="numeric" class="form-control" [(ngModel)]="this.data.tel" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }">
@@ -275,22 +267,6 @@
                                 <div *ngIf="submitted && f.activity_code.errors" class="invalid-feedback">
                                     <div *ngIf="f.activity_code.errors.required">Apellido is required</div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label>¿Exportan?<strong><span class="text-danger">*</span></strong></label>
-                                <br>
-                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.export">
-                                    <mat-radio-button value="1">Si</mat-radio-button>
-                                    <mat-radio-button value="0">No</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-                            <div class="col-md-2">
-                                <label>¿Importan?<strong><span class="text-danger">*</span></strong></label>
-                                <br>
-                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="this.data.import">
-                                    <mat-radio-button value="1">Si</mat-radio-button>
-                                    <mat-radio-button value="0">No</mat-radio-button>
-                                </mat-radio-group>
                             </div>
                         </div>
                         <br>

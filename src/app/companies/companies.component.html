@@ -29,7 +29,6 @@
                                     <th>Ciudad</th>
                                     <th>Telefono</th>
                                     <th>CP</th>
-                                    <th>Factura</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,12 +41,6 @@
                                     <td (click)="open('editar', company.id_company)">{{company.city}} </td>
                                     <td (click)="open('editar', company.id_company)">{{company.tel}}</td>
                                     <td (click)="open('editar', company.id_company)">{{company.cp}}</td>
-                                    <ng-template [ngIf]="company.invoice== 1">
-                                        <td>Si</td>
-                                    </ng-template>
-                                    <ng-template [ngIf]="company.invoice== 0">
-                                        <td>No</td>
-                                    </ng-template>
                                 </tr>
                             </tbody>
                         </table>

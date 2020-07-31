@@ -246,8 +246,8 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     } else {
       const dataURL = this.signaturePad.toDataURL();
       // this.download(dataURL, 'signature.png');
-      // const file = new File( [dataURL], 'signature.png', {type: 'png'});
-      console.log(this.b64toFile(dataURL));
+      console.log(dataURL);
+      console.log(this.dataURLToBlob(dataURL));
       this.firma = this.b64toFile(dataURL);
     }
   }
@@ -270,7 +270,7 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     const blob = new Blob([ab], { 'type': mimeString });
     blob['lastModifiedDate'] = (new Date()).toISOString();
     blob['name'] = 'file';
-        
+
     // Figure out what extension the file should have
     switch(blob.type) {
         case 'image/jpeg':
