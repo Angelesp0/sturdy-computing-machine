@@ -86,14 +86,18 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     infoWindow.open(map);
     // Configure the click listener.
     map.addListener('click', function(mapsMouseEvent) {
+      const my = mapsMouseEvent.latLng;
+      const lat = my.lat();
+      const lng = my.lng();
+
       // Close the current InfoWindow.
       infoWindow.close();
       // Create a new InfoWindow.
       infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
       infoWindow.setContent(mapsMouseEvent.latLng.toString());
       infoWindow.open(map);
-      _this.lat = myLatlng.lat;
-      _this.lng = myLatlng.lng;
+      _this.lat = lat;
+      _this.lng = lng;
     });
   }
 

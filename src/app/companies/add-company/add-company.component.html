@@ -217,7 +217,7 @@
                             <div class="col-md">
                                 <label>Distribucion<strong><span class="text-danger">*</span></strong></label>
                                 <select formControlName="distribution" name="distribution" inputmode="text" class="form-control" [(ngModel)]="this.data.distribution" [ngClass]="{ 'is-invalid': submitted && f.distribution.errors }">
-                                <option [value]="instalaciones" *ngFor="let instalaciones of Tipos_de_Instalaciones">{{instalaciones}}</option>
+                                <option [value]="instalaciones" *ngFor="let instalaciones of Tipo_de_Distribucion">{{instalaciones}}</option>
                             </select>
                                 <div *ngIf="submitted && f.distribution.errors" class="invalid-feedback">
                                     <div *ngIf="f.distribution.errors.required">La Distribucion es requerida</div>
@@ -376,13 +376,13 @@
                         <p><strong><span class="text-primary">SERVICIOS A CONTRATAR</span></strong></p>
                         <div class="row">
                             <div class="col-md">
-                                <label>Contabilidad RIF<strong><span class="text-danger">*</span></strong></label>
                                 <br>
                                 <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="service1">
-                                    <mat-radio-button value="1">Si</mat-radio-button>
-                                    <mat-radio-button value="0">No</mat-radio-button>
+                                    <mat-radio-button value="1">Contabilidad RIF</mat-radio-button>
+                                    <mat-radio-button value="0">Contabilidad Persona Fisica</mat-radio-button>
                                 </mat-radio-group>
                             </div>
+                            <!--
                             <div class="col-md">
                                 <label>Contabilidad Persona Fisica<strong><span class="text-danger">*</span></strong></label>
                                 <br>
@@ -391,6 +391,7 @@
                                     <mat-radio-button value="0">No</mat-radio-button>
                                 </mat-radio-group>
                             </div>
+                            -->
                         </div>
                         <br>
                         <p><strong>Estas por agregar una Empresa Nueva <span class="text-primary">Verifica</span> la informacion</strong></p>

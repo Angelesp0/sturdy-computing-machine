@@ -86,8 +86,8 @@ export class AddCompanyComponent implements OnInit {
       const id_company = response['newInf']['company_id_company'];
       localStorage.setItem('id_company', id_company);
       this.id_company = id_company;
-      if (this.service1 == 1) {
 
+      if (this.service1 == 1) {
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
         const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
 
@@ -102,7 +102,7 @@ export class AddCompanyComponent implements OnInit {
           localStorage.setItem('Rif', 'True');
         });
       }
-      if (this.service2 == 1) {
+      if (this.service1 == 0) {
 
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
         const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();

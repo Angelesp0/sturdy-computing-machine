@@ -1,17 +1,30 @@
 <div class="panel-header panel-header-sm">
 </div>
-<div class=" main-content ">
-    <div class="row ">
-        <div id="htmlData " #htmlData>
-            <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title">Contrato</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ">
+                        <div id="htmlData " #htmlData>
+                            <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 ">
+                            <button class="btn btn-danger btn-block " (click)="downloadPDF() ">Download PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-4 ">
-            <button class="btn btn-success btn-block " (click)="openPDF() ">Open PDF</button>
-        </div>
-        <div class="col-md-4 ">
-            <button class="btn btn-danger btn-block " (click)="downloadPDF() ">Download PDF</button>
-        </div>
-    </div>
+
 </div>
