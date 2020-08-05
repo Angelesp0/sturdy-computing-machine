@@ -5,6 +5,7 @@ import { Company } from './../../models/company';
 import { retry, catchError } from 'rxjs/operators';
 import { CompanyServices } from './../../models/company_services';
 import {  Payment} from '../../models/register_paiment';
+import { Commission } from '../../models/commission';
 
 const headers = new HttpHeaders();
 
@@ -135,6 +136,13 @@ export class CompanyService {
     .pipe(
       catchError(this.handleError)
     );
+  }
 
+  register_comition(amount, date, status, payments_id_payments, users_id_user): Observable<Commission> {
+    return this.http
+    .post<Commission>('http://192.168.137.1:3000/commission/', {amount, date, status, payments_id_payments, users_id_user})
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 }

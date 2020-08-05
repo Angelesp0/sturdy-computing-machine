@@ -197,5 +197,9 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/getcontract/' + id, this.httpOptions);
   }
 
+  getFirm() {
+    return this.http.get('http://192.168.137.1:3000/getfirm', this.httpOptions);
+  }
+
 
 }

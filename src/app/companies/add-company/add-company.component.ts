@@ -18,6 +18,8 @@ export class AddCompanyComponent implements OnInit {
   submitted = false;
   data: any;
   users: any;
+  executive: any;
+  ejecutivo: any;
   name: any;
   select: any;
   last_name: any;
@@ -77,11 +79,11 @@ export class AddCompanyComponent implements OnInit {
       this.data = new Company();
       this.users = new User();
       this.service = new CompanyServices();
+      this.ejecutivo = new Company();
     }
     create() {
+      localStorage.setItem('ejecutivo', this.ejecutivo.users_id_user);
       this.data.status = 1;
-
-      // console.log(this.data);
       this.companyService.createCompany(this.data).subscribe((response) => {
       const id_company = response['newInf']['company_id_company'];
       localStorage.setItem('id_company', id_company);
@@ -129,46 +131,15 @@ export class AddCompanyComponent implements OnInit {
           return;
       }
       alert('Usuario Creado Exitosamente');
+      console.log(this)
       this.create();
   }
 
   ngOnInit(): void {
-  /* this.registerCompany = new FormGroup({
-    company: new FormControl('', Validators.required),
-    rfc: new FormControl('', Validators.required),
-    users_id_user: new FormControl('', Validators.required),
-    state: new FormControl('', Validators.required),
-    city: new FormControl('', Validators.required),
-    direction: new FormControl('', Validators.required),
-    colony: new FormControl('', Validators.required),
-    street: new FormControl('', Validators.required),
-    street3: new FormControl('', Validators.required),
-    street1: new FormControl('', Validators.required),
-    street2: new FormControl('', Validators.required),
-    num_ext: new FormControl('', Validators.required),
-    cp: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    tel: new FormControl('',  [Validators.required, Validators.minLength(10)]),
-    contact_name: new FormControl('', Validators.required),
-    job: new FormControl('', Validators.required),
-    first_name: new FormControl('', Validators.required),
-    contact_tel: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    contact_email: new FormControl('', [Validators.required, Validators.email]),
-    distribution: new FormControl('', Validators.required),
-    scope_of_operations: new FormControl('', Validators.required),
-    company_start: new FormControl('', Validators.required),
-    sales_range: new FormControl('', Validators.required),
-    main_activity: new FormControl('', Validators.required),
-    activity_code: new FormControl('', Validators.required),
-    employees: new FormControl('', Validators.required),
-    female_employees: new FormControl('', Validators.required),
-    attention_area: new FormControl('', Validators.required),
-   });*/
-
     this.registerCompany = this.formBuilder.group({
       company: ['', Validators.required],
       rfc: ['', Validators.required],
       users_id_user: ['', Validators.required],
-
       state: ['', Validators.required],
       city: ['', Validators.required],
       direction: ['', Validators.required],
@@ -195,20 +166,11 @@ export class AddCompanyComponent implements OnInit {
       female_employees: ['', [Validators.required, Validators.minLength(1)]],
       attention_area: ['', Validators.required],
       type_street: ['', Validators.required],
+      executive: ['', Validators.required],
     });
 
-    this.userService.getUsers().subscribe((response) => {
-      this.name = response;
-     // const name_users = [];
-
-      // tslint:disable-next-line: forin
-      // for (const i in response) {
-       // name_users.push(response[i].first_name);
-
-      // }
-      // this.name = Object.values(name_users);
-
-    });
+    this.userService.getUsers().subscribe((response) => this.name = response);
+    this.userService.getExecutive().subscribe((response) => this.executive = response);
   }
   get f() { return this.registerCompany.controls; }
 

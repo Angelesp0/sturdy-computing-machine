@@ -65,14 +65,12 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
 
   onFileSelect(event) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile.name);
   }
 
   ngOnInit(): void {
     this.maplatlang();
     this.buttons();
     this.id = this.activatedRoute.snapshot.params["id_company"];
-    console.log(this.id);
   }
 
   maplatlang() {
@@ -104,88 +102,67 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   buttons() {
         // ================================================================================= //
         this.uploader.onAfterAddingFile = (file) => {
-          //console.log('***** onAfterAddingFile ******')
           this.previewImg = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
         }
         this.uploader.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-          //console.log('ImageUpload:uploaded:', item, status, response);
         };
         this.uploader.onCompleteAll = () => {
-          //console.log('******* onCompleteAll *********')
         }
         this.uploader.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-          //console.log('***** onWhenAddingFileFailed ********')
         }
         // ============================================1===================================== //
         this.uploader1.onAfterAddingFile = (file) => {
-          //console.log('***** onAfterAddingFile1 ******')
           this.previewImg1 = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
         }
         this.uploader1.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-          //console.log('ImageUpload:uploaded:', item, status, response);
         };
         this.uploader1.onCompleteAll = () => {
-          //console.log('******* onCompleteAll *********')
         }
         this.uploader1.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-          //console.log('***** onWhenAddingFileFailed ********')
         }
         // ============================================2===================================== //
         this.uploader2.onAfterAddingFile = (file) => {
-          //console.log('***** onAfterAddingFile2 ******')
           this.previewImg2 = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
         }
         this.uploader2.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-         // console.log('ImageUpload:uploaded:', item, status, response);
         };
         this.uploader2.onCompleteAll = () => {
-          //console.log('******* onCompleteAll *********')
         }
         this.uploader2.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-          //console.log('***** onWhenAddingFileFailed ********')
         }
         // ============================================3===================================== //
         this.uploader3.onAfterAddingFile = (file) => {
-          //console.log('***** onAfterAddingFile3 ******')
           this.previewImg3 = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
         }
         this.uploader3.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-          //console.log('ImageUpload:uploaded:', item, status, response);
         };
         this.uploader3.onCompleteAll = () => {
-          //console.log('******* onCompleteAll *********')
         }
         this.uploader3.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-          //console.log('***** onWhenAddingFileFailed ********')
         }
         // ============================================4===================================== //
         this.uploader4.onAfterAddingFile = (file) => {
-          //console.log('***** onAfterAddingFile4 ******')
           this.previewImg4 = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
         }
         this.uploader4.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-          //console.log('ImageUpload:uploaded:', item, status, response);
         };
         this.uploader4.onCompleteAll = () => {
-          //console.log('******* onCompleteAll *********')
         }
         this.uploader4.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-          //console.log('***** onWhenAddingFileFailed ********')
         }
 
   }
 
   register() {
     this.savePNG();
-    this.adminService.postImg(  this.id, this.file).subscribe(res => console.log(res));
+    this.adminService.postImg(   this.id, this.file ).subscribe(res => console.log(res));
     this.adminService.postImg1(  this.id, this.file1).subscribe(res => console.log(res));
     this.adminService.postImg2(  this.id, this.file2).subscribe(res => console.log(res));
     this.adminService.postImg3(  this.id, this.file3).subscribe(res => console.log(res));
     this.adminService.postImg4(  this.id, this.file4).subscribe(res => console.log(res));
-    this.adminService.firma(  this.id, this.firma).subscribe(res => console.log(res));
+    this.adminService.firma(     this.id, this.firma).subscribe(res => console.log(res));
     this.adminService.location(  this.lat, this.lng, 'localizacion de prueba', this.id).subscribe(res => console.log(res));
     this.router.navigate([`/payment/${this.id}`]);
-
   }
 
   public onFileSelected(event: EventEmitter<File[]>) {
@@ -223,7 +200,6 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
       a.href = url;
       a.download = filename;
       this.image = blob;
-      console.log(this.image);
       document.body.appendChild(a);
       a.click();
 
@@ -250,8 +226,6 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     } else {
       const dataURL = this.signaturePad.toDataURL();
       // this.download(dataURL, 'signature.png');
-      console.log(dataURL);
-      console.log(this.dataURLToBlob(dataURL));
       this.firma = this.b64toFile(dataURL);
     }
   }

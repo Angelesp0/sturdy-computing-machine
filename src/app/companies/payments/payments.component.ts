@@ -17,6 +17,11 @@ export class PaymentsComponent implements OnInit {
   date: Date;
   id_service: number;
   id_company: number;
+  id_ejecutivo: any;
+  id_payment: any;
+  todayDate: Date = new Date();
+  totalValue: any;
+  commission: any;
 
   constructor(
     private toastr: ToastrService,
@@ -28,12 +33,14 @@ export class PaymentsComponent implements OnInit {
   item: any;
 
   ngOnInit() {
+    this.id_ejecutivo = localStorage.getItem('ejecutivo');
     this.id_company = this.activatedRoute.snapshot.params["id_company"];
     this.service();
     this.initConfig();
   }
 
   private service() {
+
     if (localStorage.getItem('Rif')) {
       // logged in so return true
       this.Rif = localStorage.getItem('Rif');
@@ -67,6 +74,8 @@ export class PaymentsComponent implements OnInit {
   }
 
   private initConfig(): void {
+    const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+
 
     this.payPalConfig = {
     currency: 'MXN',
@@ -106,9 +115,15 @@ export class PaymentsComponent implements OnInit {
       });
     },
     onClientAuthorization: (data) => {
+      console.log(data);
       this.showNotification('top', 'right', 2);
       this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split("T")[0], this.id_company).subscribe((response) => {
-        console.log(response);
+        this.id_payment = response['id_table'];
+        this.totalValue = response['value'];
+        this.commission = (this.totalValue * 0.20);
+        this.companyService.register_comition(this.commission, date, 'por cobrar', this.id_payment, this.id_ejecutivo).subscribe((response) => {
+          console.log(response);
+        });
       });
       this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
         console.log(responsee);
@@ -122,7 +137,7 @@ export class PaymentsComponent implements OnInit {
           // logged in so return true
           return true;
       }
-    });
+      });
     this.router.navigate([`/generatepdf/${this.id_company}`]);
       // this.showSuccess = true;
     },

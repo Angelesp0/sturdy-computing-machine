@@ -33,11 +33,17 @@
                             <div class="col-md">
                                 <label>Usuario de la Empresa<strong><span class="text-danger">*</span></strong></label>
                                 <select formControlName="users_id_user" name="users_id_user" class="form-control" inputmode="text" [(ngModel)]="this.data.users_id_user" [ngClass]="{ 'is-invalid': submitted && f.users_id_user.errors }">
-                                <option [value]="user.id_user" *ngFor="let user of name">{{user.first_name}} {{user.last_name}}</option>
-                                <div *ngIf="submitted && f.users_id_user.errors" class="invalid-feedback">
-                                    <div *ngIf="f.users_id_user.errors.required">Selecciona un Usuario</div>
-                                </div>
-                            </select>
+                                    <option [value]="user.id_user" *ngFor="let user of name">{{user.first_name}} {{user.last_name}}</option>
+                                    <div *ngIf="submitted && f.users_id_user.errors" class="invalid-feedback">
+                                        <div *ngIf="f.users_id_user.errors.required">Selecciona un Usuario</div>
+                                    </div>
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label>Ejecutivos<strong><span class="text-danger">*</span></strong></label>
+                                <select formControlName="executive" name="executive" class="form-control" inputmode="text" [(ngModel)]="this.ejecutivo.users_id_user" [ngClass]="{ 'is-invalid': submitted && f.executive.errors }">
+                                    <option [value]="exec.id_user" *ngFor="let exec of executive">{{exec.first_name}} {{exec.last_name}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -382,16 +388,6 @@
                                     <mat-radio-button value="0">Contabilidad Persona Fisica</mat-radio-button>
                                 </mat-radio-group>
                             </div>
-                            <!--
-                            <div class="col-md">
-                                <label>Contabilidad Persona Fisica<strong><span class="text-danger">*</span></strong></label>
-                                <br>
-                                <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="service2">
-                                    <mat-radio-button value="1">Si</mat-radio-button>
-                                    <mat-radio-button value="0">No</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-                            -->
                         </div>
                         <br>
                         <p><strong>Estas por agregar una Empresa Nueva <span class="text-primary">Verifica</span> la informacion</strong></p>
