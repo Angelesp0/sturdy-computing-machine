@@ -21,7 +21,10 @@ export class PaymentsComponent implements OnInit {
   id_payment: any;
   todayDate: Date = new Date();
   totalValue: any;
+  totalDiscount: any;
   commission: any;
+  discount: any;
+  accept: any;
 
   constructor(
     private toastr: ToastrService,
@@ -75,8 +78,6 @@ export class PaymentsComponent implements OnInit {
 
   private initConfig(): void {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-
-
     this.payPalConfig = {
     currency: 'MXN',
     clientId: 'AdzB8j-AFKIKc074GT0S0jkkbcwCnouRtA3QgoVNOKEhIqB-yROQA6L4sfwgylkou0ZABoEz5CNrbTfm',
@@ -115,13 +116,15 @@ export class PaymentsComponent implements OnInit {
       });
     },
     onClientAuthorization: (data) => {
+      console.log(data.purchase_units[0].amount.value);
+      localStorage.setItem('value', data.purchase_units[0].amount.value );
       console.log(data);
       this.showNotification('top', 'right', 2);
       this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split("T")[0], this.id_company).subscribe((response) => {
         this.id_payment = response['id_table'];
         this.totalValue = response['value'];
         this.commission = (this.totalValue * 0.20);
-        this.companyService.register_comition(this.commission, date, 'por cobrar', this.id_payment, this.id_ejecutivo).subscribe((response) => {
+       this.companyService.register_comition(this.commission, date, 'por cobrar', this.id_payment, this.id_ejecutivo).subscribe((response) => {
           console.log(response);
         });
       });
@@ -198,5 +201,21 @@ export class PaymentsComponent implements OnInit {
       default:
       break;
     }
-}
+  }
+
+  setdiscount() {
+    if (this.discount) {
+      this.accept = true;
+    }
+    if (localStorage.getItem('Rif')) {
+      const descuento = (this.item.unit_amount.value * this.discount);
+      this.item.unit_amount.value = (this.item.unit_amount.value - descuento);
+      console.log(this.item.unit_amount.value);
+    }
+    if (localStorage.getItem('Pf')) {
+      this.item.unit_amount.value = ((this.item.unit_amount.value * this.discount) - this.item.unit_amount.value);
+      console.log(this.item.unit_amount.value);
+    }
+    console.log(this.discount);
+  }
 }

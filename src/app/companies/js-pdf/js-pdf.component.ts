@@ -14,7 +14,7 @@ export class JsPDFComponent implements OnInit {
   inf: any;
   todayDate: Date = new Date();
   cliente = new Image();
-
+  value: any;
 
   firmas: any;
   mario: any;
@@ -92,7 +92,7 @@ export class JsPDFComponent implements OnInit {
     doc.addPage();
     doc.text(490, 45, 'PF ACT EMP');
     doc.text(95, 80, '"LA PRESTADORA", Guardará absoluta confidencialidad con respecto a los datos y documentos que el adquirente le proporcione para las actividades que desarrolle, ni dar informes a personas distintas a las autorizadas por el “LA PRESTATARIA”.' , {maxWidth: 455, align: 'justify'});
-    doc.text(95, 140, `SEGUNDA.- PAGO DE HONORARIOS. “LA PRESTATARIA” se obliga a pagar a “LA PRESTADORA”, por los servicios profesionales que se le presten de conformidad con este contrato, honorarios por la cantidad total de $ __________ IVA incluido,  durante el periodo contratado y con la exhibición del recibo correspondiente  respectivo por el servicio profesional devengado. ` , {maxWidth: 455, align: 'justify'});
+    doc.text(95, 140, `SEGUNDA.- PAGO DE HONORARIOS. “LA PRESTATARIA” se obliga a pagar a “LA PRESTADORA”, por los servicios profesionales que se le presten de conformidad con este contrato, honorarios por la cantidad total de $ ${this.value} IVA incluido,  durante el periodo contratado y con la exhibición del recibo correspondiente  respectivo por el servicio profesional devengado. ` , {maxWidth: 455, align: 'justify'});
     doc.text(95, 220, `L E Í D O  y enteradas las partes del contenido y efectos de este contrato, firman de conformidad por duplicado, quedando en poder de “LA PRESTADORA” un ejemplar y para “LA PRESTATARIA” un ejemplar, en la ciudad de Chihuahua, capital del Estado del mismo nombre, al ${this.todayDate.getDate()} día del mes de ${this.todayDate.getMonth() + 1} de 2020.` , {maxWidth: 455, align: 'justify'});
     doc.text(140, 300, '“LA PRESTADORA”.                                      “LA PRESTATARIA”.');
     doc.text(95, 348, '   ___________________________                              ___________________________');
@@ -194,7 +194,7 @@ export class JsPDFComponent implements OnInit {
     doc.text(150, 200, 'Semanas cotizadas IMSS: COSTO: $100.00 (Cien pesos 00/100 M.N.) Por emisión' , {maxWidth: 400, align: 'justify'});
 
     doc.text(95, 240, '"LA PRESTADORA", Guardará absoluta confidencialidad con respecto a los datos y documentos que el adquirente le proporcione para las actividades que desarrolle, ni dar informes a personas distintas a las autorizadas por el “LA PRESTATARIA”.' , {maxWidth: 455, align: 'justify'});
-    doc.text(95, 290, `SEGUNDA.- PAGO DE HONORARIOS. “LA PRESTATARIA” se obliga a pagar a “LA PRESTADORA”, por los servicios profesionales que se le presten de conformidad con este contrato, honorarios por la cantidad total de $ __________ mas IVA,  durante el periodo contratado y con la exhibición del recibo correspondiente  respectivo por el servicio profesional devengado. ` , {maxWidth: 455, align: 'justify'});
+    doc.text(95, 290, `SEGUNDA.- PAGO DE HONORARIOS. “LA PRESTATARIA” se obliga a pagar a “LA PRESTADORA”, por los servicios profesionales que se le presten de conformidad con este contrato, honorarios por la cantidad total de $ ${this.value} IVA incluido,  durante el periodo contratado y con la exhibición del recibo correspondiente  respectivo por el servicio profesional devengado. ` , {maxWidth: 455, align: 'justify'});
     doc.text(95, 370, `L E Í D O  y enteradas las partes del contenido y efectos de este contrato, firman de conformidad por duplicado, quedando en poder de “LA PRESTADORA” un ejemplar y para “LA PRESTATARIA” un ejemplar, en la ciudad de Chihuahua, capital del Estado del mismo nombre, al ${this.todayDate.getDate()} día del mes de ${this.todayDate.getMonth() + 1} de 2020.` , {maxWidth: 455, align: 'justify'});
     doc.text(140, 452, '“LA PRESTADORA”.                                        “LA PRESTATARIA”.');
     doc.text(95, 500, '   ___________________________                              ___________________________');
@@ -236,6 +236,8 @@ export class JsPDFComponent implements OnInit {
 
   async ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id_company'];
+    this.value = localStorage.getItem('value');
+    console.log(this.value);
     this.firmas = await this.adminService.getFirm().toPromise();
     this.mario = this.firmas[0]['name'];
     this.yadira = this.firmas[1]['name'];
