@@ -9,11 +9,19 @@
     </a>
 </div>
 <div class="sidebar-wrapper">
-    <ul class="nav">
+    <ul class="nav" *ngIf="isAdmin">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
             <a [routerLink]="[menuItem.path]">
                 <i class="now-ui-icons {{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+    <ul class="nav" *ngIf="isExecutive">
+        <li routerLinkActive="active" *ngFor="let menuEjecutivo of menusEjecutivo" class="{{menuEjecutivo.class}} nav-item">
+            <a [routerLink]="[menuEjecutivo.path]">
+                <i class="now-ui-icons {{menuEjecutivo.icon}}"></i>
+                <p>{{menuEjecutivo.title}}</p>
             </a>
         </li>
     </ul>

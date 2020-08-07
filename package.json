@@ -46,6 +46,7 @@
         "jquery": "^3.3.1",
         "jspdf": "^1.5.3",
         "jw-bootstrap-switch-ng2": "2.0.4",
+        "moment": "^2.27.0",
         "ng2-charts": "1.6.0",
         "ng2-file-upload": "^1.4.0",
         "ng2-pdf-viewer": "^6.3.2",

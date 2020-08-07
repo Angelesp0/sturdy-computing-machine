@@ -3,6 +3,11 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from '../../_services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { send } from 'process';
+import { NotificationsService } from '../../_services/common/notifications.service';
+import { Notification } from './../../models/notification';
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -25,19 +30,27 @@ export class PaymentsComponent implements OnInit {
   commission: any;
   discount: any;
   accept: any;
+  notificacion: any;
+  id_destiny: number;
+  admins: any;
 
   constructor(
     private toastr: ToastrService,
     private companyService: CompanyService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    ) {}
+    private notificationsService: NotificationsService,
+
+    ) {
+      this.notificacion = new Notification();
+    }
 
   item: any;
 
   ngOnInit() {
     this.id_ejecutivo = localStorage.getItem('ejecutivo');
     this.id_company = this.activatedRoute.snapshot.params["id_company"];
+    this.companyService.getAdmin().subscribe( response => this.admins = response);
     this.service();
     this.initConfig();
   }
@@ -204,6 +217,9 @@ export class PaymentsComponent implements OnInit {
   }
 
   setdiscount() {
+
+    this.sendRequest(this.discount);
+/*
     if (this.discount) {
       this.accept = true;
     }
@@ -215,7 +231,15 @@ export class PaymentsComponent implements OnInit {
     if (localStorage.getItem('Pf')) {
       this.item.unit_amount.value = ((this.item.unit_amount.value * this.discount) - this.item.unit_amount.value);
       console.log(this.item.unit_amount.value);
-    }
+    }*/
     console.log(this.discount);
+  }
+
+  sendRequest(value) {
+    let now = moment().format("YYYY-MM-DD HH:mm:ss");
+    this.notificacion.message = ('Descuento de' + this.discount + '%');
+    this.notificacion.time = (now);
+    this.notificacion.data = this.discount;
+    this.notificationsService.postNotifications(this.id_ejecutivo, this.notificacion).subscribe( response => console.log(response));
   }
 }

@@ -49,6 +49,10 @@ export class CompanyService {
     return this.http.get('http://192.168.137.1:3000/companies/' + id, this.httpOptions);
   }
 
+  getAdmin() {
+    return this.http.get('http://192.168.137.1:3000/admin', this.httpOptions);
+  }
+
   updateCompany(id, item) {
     const params  = new HttpParams()
       .set('rfc', item.rfc)

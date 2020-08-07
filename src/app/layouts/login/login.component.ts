@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   ingresar() {
-    console.log(this.data);
     this.authService.login(this.data.email, this.data.password).subscribe((res) => {
       this.router.navigateByUrl('/dashboard');
     });

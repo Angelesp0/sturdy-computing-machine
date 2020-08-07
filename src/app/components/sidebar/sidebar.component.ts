@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService } from './../../_services/user/user.service';
+import { Router } from '@angular/router';
 
 declare interface RouteInfo {
     path: string;
@@ -26,23 +27,46 @@ export const ROUTES: RouteInfo[] = [
     // { path: '/typography', title: 'Typography',  icon: 'text_caps-small', class: '' }
 ];
 
+export const ROUTES_ejecutivo: RouteInfo[] = [
+  { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
+  { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
+  { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
+  { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
+];
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  currentUser: any;
 
-  constructor() { }
+  menuItems: any[];
+  menusEjecutivo: any[];
+
+
+  constructor(private authenticationService: UserService, private router: Router) {
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menusEjecutivo = ROUTES_ejecutivo.filter(menuEjecutivo => menuEjecutivo);
   }
   isMobileMenu() {
       if ( window.innerWidth > 991) {
           return false;
       }
       return true;
-  };
+  }
+  get isAdmin() {
+    return this.currentUser['user'].role_id_role === 1;
+  }
+  get isExecutive() {
+    return this.currentUser['user'].role_id_role === 2;
+  }
+  get isClient() {
+    return this.currentUser['user'].role_id_role === 3;
+  }
 }

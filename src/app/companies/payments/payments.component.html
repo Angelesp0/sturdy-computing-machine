@@ -15,26 +15,38 @@
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <p><strong><span class="text-primary">DESCUENTO</span></strong></p>
+                        <div class="col-md-8">
+                            <p><strong><span class="text-primary">DESCUENTO</span></strong></p>
+                        </div>
+                        <div class="col">
+                            <p><strong><span class="text-primary">Ejecutivos</span></strong></p>
+                        </div>
                     </div>
                     <div class="row justify-content-center">
-                        <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="discount">
-                            <mat-radio-button value="0">0%</mat-radio-button>
-                            <mat-radio-button value="0.10">10%</mat-radio-button>
-                            <mat-radio-button value="0.20">20%</mat-radio-button>
-                            <mat-radio-button value="0.30">30%</mat-radio-button>
-                            <mat-radio-button value="0.40">40%</mat-radio-button>
-                            <mat-radio-button value="0.50">50%</mat-radio-button>
-                            <mat-radio-button value="0.60">60%</mat-radio-button>
-                            <mat-radio-button value="0.70">70%</mat-radio-button>
-                            <mat-radio-button value="0.80">80%</mat-radio-button>
-                            <mat-radio-button value="0.90">90%</mat-radio-button>
-                            <mat-radio-button value="1.00">100%</mat-radio-button>
-                        </mat-radio-group>
+                        <div class="col-md-8">
+                            <mat-radio-group [ngModelOptions]="{standalone: true}" aria-label="Select an option" [(ngModel)]="discount">
+                                <mat-radio-button value="0">0%</mat-radio-button>
+                                <mat-radio-button value="10">10%</mat-radio-button>
+                                <mat-radio-button value="20">20%</mat-radio-button>
+                                <mat-radio-button value="30">30%</mat-radio-button>
+                                <mat-radio-button value="40">40%</mat-radio-button>
+                                <mat-radio-button value="50">50%</mat-radio-button>
+                                <mat-radio-button value="60">60%</mat-radio-button>
+                                <mat-radio-button value="70">70%</mat-radio-button>
+                                <mat-radio-button value="80">80%</mat-radio-button>
+                                <mat-radio-button value="90">90%</mat-radio-button>
+                                <mat-radio-button value="100">100%</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col">
+                            <select name="executive" class="form-control" inputmode="text" [(ngModel)]="this.notificacion.users_id_user">
+                            <option [value]="exec.id_user" *ngFor="let exec of admins">{{exec.first_name}} {{exec.last_name}}</option>
+                        </select>
+                        </div>
                     </div>
                     <br>
+                    <br>
                     <div class="row justify-content-center">
-
                         <p><strong><span style="color: green;" *ngIf="accept"><i class="far fa-check-circle"></i> APROBADO</span></strong></p>
                     </div>
                     <br>
@@ -42,6 +54,9 @@
                         <button class="btn btn-outline-primary" (click)="setdiscount()" onClick="this.disabled=true">
                             <div>Solicitar descuento</div>
                         </button>
+                        <!--<button class="btn btn-outline-primary" (click)="setdiscount()" onClick="this.disabled=true">
+                            <div>Solicitar descuento</div>
+                        </button>-->
                     </div>
                     <br>
                     <div class="row justify-content-center">

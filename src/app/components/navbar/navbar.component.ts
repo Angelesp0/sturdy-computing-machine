@@ -1,29 +1,64 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location} from '@angular/common';
 import { Router } from '@angular/router';
+import { NotificationsService } from '../../_services/common/notifications.service';
+import { Notification } from '../../models/notification';
+import { UserService } from './../../_services/user/user.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+
 import Chart from 'chart.js';
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  providers: [NgbModalConfig, NgbModal]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit , OnDestroy {
+
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
-
     public isCollapsed = true;
+    public limit = 4;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    public notifications: any;
+    public currentUser: any;
+    public size: number;
+    public id_user: any;
+    public selected: any;
+    notificacion: any;
+    descuentos: string [] = [
+      "10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"
+    ];
+
+    constructor(
+      location: Location,
+      private element: ElementRef,
+      private router: Router,
+      private notificationsService: NotificationsService,
+      private authenticationService: UserService,
+      config: NgbModalConfig,
+      private modalService: NgbModal
+    ) {
+      this.notificacion = new Notification();
+      config.backdrop = 'static';
+      config.keyboard = false;
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
       this.location = location;
-          this.sidebarVisible = false;
+      this.sidebarVisible = false;
     }
 
-    ngOnInit(){
+    async ngOnInit() {
+      this.id_user = this.currentUser['user'].id_user;
+        setInterval(() => {
+          this.notification();
+        }, 5000);
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
@@ -37,14 +72,50 @@ export class NavbarComponent implements OnInit {
      });
     }
 
-    collapse(){
+    notification() {
+      this.notificationsService.getNotifications(this.id_user).subscribe(x => {
+        this.notifications = x;
+        this.size = Object.keys(this.notifications).length;
+      }, error => console.log());
+      // console.log(1);
+    }
+
+    open(content, data) {
+      this.selected = data;
+      console.log(this.selected);
+      this.modalService.open(content);
+    }
+
+    aceptarDescuento() {
+    let now = moment().format("YYYY-MM-DD HH:mm:ss");
+    this.notificacion.message = ('Descuento aceptado');
+    this.notificacion.time = (now);
+    this.notificacion.data = this.selected.data;
+    this.notificacion.users_id_user = this.selected.id_sender;
+    this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
+    }
+    rechazarDescuento() {
+      let now = moment().format("YYYY-MM-DD HH:mm:ss");
+      this.notificacion.message = ('Descuento rechazado');
+      this.notificacion.time = (now);
+      this.notificacion.data = '0';
+      this.notificacion.users_id_user = this.selected.id_sender;
+      this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
+    }
+    hola(){
+      // UNDEFINED
+      console.log(this.notificacion.data);
+    }
+
+
+    collapse() {
       this.isCollapsed = !this.isCollapsed;
       const navbar = document.getElementsByTagName('nav')[0];
       console.log(navbar);
       if (!this.isCollapsed) {
         navbar.classList.remove('navbar-transparent');
         navbar.classList.add('bg-white');
-      }else{
+      } else {
         navbar.classList.add('navbar-transparent');
         navbar.classList.remove('bg-white');
       }
@@ -151,5 +222,17 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
+    }
+
+    ngOnDestroy() {
+      if (this.notifications) {
+        clearInterval(this.notifications);
+        console.log('destroid notifications');
+      }
+      if (this.size) {
+        clearInterval(this.size);
+        console.log('destroid size');
+
+      }
     }
 }
