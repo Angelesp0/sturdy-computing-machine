@@ -34,8 +34,11 @@ export class NavbarComponent implements OnInit , OnDestroy {
     public selected: any;
     notificacion: any;
     descuentos: string [] = [
-      "10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"
+      '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
     ];
+    aceptado: any;
+    solicitud: any;
+
 
     constructor(
       location: Location,
@@ -46,6 +49,9 @@ export class NavbarComponent implements OnInit , OnDestroy {
       config: NgbModalConfig,
       private modalService: NgbModal
     ) {
+      this.aceptado = 'aceptado';
+      this.solicitud = 'solicitud';
+
       this.notificacion = new Notification();
       config.backdrop = 'static';
       config.keyboard = false;
@@ -64,7 +70,7 @@ export class NavbarComponent implements OnInit , OnDestroy {
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
         this.sidebarClose();
-         var $layer: any = document.getElementsByClassName('close-layer')[0];
+         const $layer: any = document.getElementsByClassName('close-layer')[0];
          if ($layer) {
            $layer.remove();
            this.mobile_menu_visible = 0;
@@ -86,27 +92,38 @@ export class NavbarComponent implements OnInit , OnDestroy {
       this.modalService.open(content);
     }
 
-    aceptarDescuento() {
-    let now = moment().format("YYYY-MM-DD HH:mm:ss");
+     aceptarDescuento() {
+    const now = moment().format('YYYY-MM-DD HH:mm:ss');
+    this.notificacion.subject = ('aceptado');
     this.notificacion.message = ('Descuento aceptado');
     this.notificacion.time = (now);
     this.notificacion.data = this.selected.data;
     this.notificacion.users_id_user = this.selected.id_sender;
     this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
+    this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
     }
+
     rechazarDescuento() {
-      let now = moment().format("YYYY-MM-DD HH:mm:ss");
+      const now = moment().format('YYYY-MM-DD HH:mm:ss');
+      this.notificacion.subject = ('aceptado');
       this.notificacion.message = ('Descuento rechazado');
       this.notificacion.time = (now);
       this.notificacion.data = '0';
       this.notificacion.users_id_user = this.selected.id_sender;
       this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
-    }
-    hola(){
-      // UNDEFINED
-      console.log(this.notificacion.data);
+      this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
     }
 
+    personalizarDescuento() {
+      console.log(this.selected);
+      const now = moment().format('YYYY-MM-DD HH:mm:ss');
+      this.notificacion.subject = ('aceptado');
+      this.notificacion.message = ('Nuevo descuento');
+      this.notificacion.time = (now);
+      this.notificacion.users_id_user = this.selected.id_sender;
+      this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
+      this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
+    }
 
     collapse() {
       this.isCollapsed = !this.isCollapsed;
@@ -137,7 +154,8 @@ export class NavbarComponent implements OnInit , OnDestroy {
         html.classList.add('nav-open');
 
         this.sidebarVisible = true;
-    };
+    }
+
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         this.toggleButton.classList.remove('toggled');
@@ -150,7 +168,8 @@ export class NavbarComponent implements OnInit , OnDestroy {
         }
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
-    };
+    }
+
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const html = document.getElementsByTagName('html')[0];
@@ -207,9 +226,9 @@ export class NavbarComponent implements OnInit , OnDestroy {
             this.mobile_menu_visible = 1;
 
         }
-    };
+    }
 
-    getTitle(){
+    getTitle() {
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){
           titlee = titlee.slice( 2 );

@@ -43,8 +43,20 @@ export class NotificationsService {
   }
 
   postNotifications(id_addressee, data): Observable<Notification> {
+    console.log(data);
     return this.http.post<Notification>(this.base_path + id_addressee, data, this.httpOptions)
     .pipe(
+        catchError(this.handleError)
+      );
+  }
+  getNotificationsById(id_addressee, id_notifications) {
+    return this.http.get(this.base_path + id_addressee + '/' + id_notifications , this.httpOptions);
+  }
+
+  updateNotification(id) {
+    return this.http
+      .put('http://192.168.137.1:3000/notifications/' + id, this.httpOptions)
+      .pipe(
         catchError(this.handleError)
       );
   }

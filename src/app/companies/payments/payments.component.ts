@@ -33,6 +33,7 @@ export class PaymentsComponent implements OnInit {
   notificacion: any;
   id_destiny: number;
   admins: any;
+  interval: any;
 
   constructor(
     private toastr: ToastrService,
@@ -43,13 +44,13 @@ export class PaymentsComponent implements OnInit {
 
     ) {
       this.notificacion = new Notification();
-    }
+  }
 
   item: any;
 
   ngOnInit() {
     this.id_ejecutivo = localStorage.getItem('ejecutivo');
-    this.id_company = this.activatedRoute.snapshot.params["id_company"];
+    this.id_company = this.activatedRoute.snapshot.params['id_company'];
     this.companyService.getAdmin().subscribe( response => this.admins = response);
     this.service();
     this.initConfig();
@@ -133,10 +134,11 @@ export class PaymentsComponent implements OnInit {
       localStorage.setItem('value', data.purchase_units[0].amount.value );
       console.log(data);
       this.showNotification('top', 'right', 2);
-      this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split("T")[0], this.id_company).subscribe((response) => {
+      this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company).subscribe((response) => {
         this.id_payment = response['id_table'];
         this.totalValue = response['value'];
         this.commission = (this.totalValue * 0.20);
+       // tslint:disable-next-line: no-shadowed-variable
        this.companyService.register_comition(this.commission, date, 'por cobrar', this.id_payment, this.id_ejecutivo).subscribe((response) => {
           console.log(response);
         });
@@ -220,9 +222,6 @@ export class PaymentsComponent implements OnInit {
 
     this.sendRequest(this.discount);
 /*
-    if (this.discount) {
-      this.accept = true;
-    }
     if (localStorage.getItem('Rif')) {
       const descuento = (this.item.unit_amount.value * this.discount);
       this.item.unit_amount.value = (this.item.unit_amount.value - descuento);
@@ -236,10 +235,33 @@ export class PaymentsComponent implements OnInit {
   }
 
   sendRequest(value) {
-    let now = moment().format("YYYY-MM-DD HH:mm:ss");
-    this.notificacion.message = ('Descuento de' + this.discount + '%');
+    const now = moment().format('YYYY-MM-DD HH:mm:ss');
+    this.notificacion.message = ('Descuento de ' + this.discount + '%');
+    this.notificacion.subject = 'solicitud';
     this.notificacion.time = (now);
     this.notificacion.data = this.discount;
-    this.notificationsService.postNotifications(this.id_ejecutivo, this.notificacion).subscribe( response => console.log(response));
+    this.notificationsService.postNotifications(this.id_ejecutivo, this.notificacion).subscribe( response => this.getRequest(response));
   }
+
+  getRequest(data) {
+    console.log(data);
+    this.interval = setInterval(() => {
+      this.notification(data);
+    }, 5000);
+  }
+
+  notification(data) {
+    this.notificationsService.getNotificationsById(data.users_id_user, data.id).subscribe(
+      x => {
+        if (x[0]['subject'] === 'aceptado') {
+          clearInterval(this.interval);
+          this.accept = true;
+          const descuento = (this.item.unit_amount.value * (this.discount / 100));
+          this.item.unit_amount.value = (this.item.unit_amount.value - descuento);
+        }
+      },
+      error => console.log(error)
+    );
+  }
+
 }

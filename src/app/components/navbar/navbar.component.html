@@ -34,7 +34,7 @@
                     <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="2">
                         <div class="dropdown-item border-bottom ">You have {{size}} new messages</div>
                         <div *ngFor="let notification of notifications | slice:0:limit" class="pointer">
-                            <a (click)="open(content, notification)" class="dropdown-item border-bottom">
+                            <a (click)="open(acept, notification)" class="dropdown-item border-bottom">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="user-img">
@@ -82,31 +82,54 @@
         </div>
     </div>
 </nav>
-<ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Solicitud de descuento del Ejecutivo {{selected.first_name}} {{selected.last_name}} </h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <p>Se solicita un <span style="color: green;">{{selected.message}}</span></p>
-        <br>
-        <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-block btn-success" (click)="aceptarDescuento()" (click)="d('Cross click')">Aceptar Descuento</button>
-                <button type="button" class="btn btn-block btn-danger" (click)="rechazarDescuento()" (click)="d('Cross click')">Rechazar Descuento</button>
+
+<ng-template #acept let-c="close" let-d="dismiss">
+    <div [ngSwitch]="selected.subject">
+        <div *ngSwitchCase="solicitud">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Solicitud de descuento del Ejecutivo {{selected.first_name}} {{selected.last_name}} </h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="col">
-                <label>Ofrecer un descuento</label>
-                <select formControlName="users_id_user" name="type_street" inputmode="text" class="form-control" (ngModel)="this.notificacion.data">
-                    <option [value]="descuento" *ngFor="let descuento of descuentos">{{descuento}}</option>
-                </select>
+            <div class="modal-body">
+                <p>Se solicita un <span style="color: green;">Descuento por {{selected.data}} %</span></p>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-block btn-success" (click)="aceptarDescuento()" (click)="d('Cross click')">Aceptar Descuento</button>
+                        <button type="button" class="btn btn-block btn-danger" (click)="rechazarDescuento()" (click)="d('Cross click')">Rechazar Descuento</button>
+                    </div>
+                    <div class="col">
+                        <label>Ofrecer un descuento</label>
+                        <select name="type_street" inputmode="text" class="form-control" [(ngModel)]="this.notificacion.data">
+                            <option [value]="descuento" *ngFor="let descuento of descuentos">{{descuento}} %</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" (click)="personalizarDescuento()" (click)="c('Save click')">Save</button>
+                </div>
             </div>
         </div>
-        <br>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="hola()" (click)="c('Save click')">Save</button>
+
+
+        <div *ngSwitchCase="aceptado">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">aceptada</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>aceptada <span style="color: green;"> Descuento del {{selected.data}} %</span></p>
+                <br>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" (click)="personalizarDescuento()" (click)="c('Save click')">Save</button>
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>
