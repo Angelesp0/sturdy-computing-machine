@@ -30,10 +30,12 @@ export class PaymentsComponent implements OnInit {
   commission: any;
   discount: any;
   accept: any;
+  reject: any;
   notificacion: any;
   id_destiny: number;
   admins: any;
   interval: any;
+  aproved: any;
 
   constructor(
     private toastr: ToastrService,
@@ -72,22 +74,22 @@ export class PaymentsComponent implements OnInit {
       };
       this.id_service = 1;
       return true;
-  }
-  if (localStorage.getItem('Pf')) {
-    // logged in so return true
-    this.Pf = localStorage.getItem('Pf');
-    this.item = {
-      name: 'Servicio: PF',
-      quantity: '1',
-      category: 'DIGITAL_GOODS',
-      unit_amount: {
-        currency_code: 'MXN',
-        value: '20.00',
-      }
-    };
-    this.id_service = 2;
-    return true;
-  }
+    }
+    if (localStorage.getItem('Pf')) {
+      // logged in so return true
+      this.Pf = localStorage.getItem('Pf');
+      this.item = {
+        name: 'Servicio: PF',
+        quantity: '1',
+        category: 'DIGITAL_GOODS',
+        unit_amount: {
+          currency_code: 'MXN',
+          value: '20.00',
+        }
+      };
+      this.id_service = 2;
+      return true;
+    }
   }
 
   private initConfig(): void {
@@ -236,10 +238,10 @@ export class PaymentsComponent implements OnInit {
 
   sendRequest(value) {
     const now = moment().format('YYYY-MM-DD HH:mm:ss');
-    this.notificacion.message = ('Descuento de ' + this.discount + '%');
+    // this.notificacion.message = ('Descuento de ' + value + '%');
     this.notificacion.subject = 'solicitud';
     this.notificacion.time = (now);
-    this.notificacion.data = this.discount;
+    this.notificacion.data = value;
     this.notificationsService.postNotifications(this.id_ejecutivo, this.notificacion).subscribe( response => this.getRequest(response));
   }
 
@@ -253,10 +255,16 @@ export class PaymentsComponent implements OnInit {
   notification(data) {
     this.notificationsService.getNotificationsById(data.users_id_user, data.id).subscribe(
       x => {
+        console.log(x);
         if (x[0]['subject'] === 'aceptado') {
           clearInterval(this.interval);
-          this.accept = true;
-          const descuento = (this.item.unit_amount.value * (this.discount / 100));
+          if (x[0]['data'] == 0) {
+            this.reject = true;
+          } else {
+            this.aproved = x[0]['data']
+            this.accept = true;
+          }
+          const descuento = (this.item.unit_amount.value * (x[0]['data'] / 100));
           this.item.unit_amount.value = (this.item.unit_amount.value - descuento);
         }
       },

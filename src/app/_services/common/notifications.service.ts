@@ -53,9 +53,11 @@ export class NotificationsService {
     return this.http.get(this.base_path + id_addressee + '/' + id_notifications , this.httpOptions);
   }
 
-  updateNotification(id) {
-    return this.http
-      .put('http://192.168.137.1:3000/notifications/' + id, this.httpOptions)
+  updateNotification(id, data) {
+    console.log(id);
+    console.log(this.base_path + id);
+
+    return this.http.put(this.base_path + id, {data}, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );

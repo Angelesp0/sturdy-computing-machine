@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit , OnDestroy {
     public selected: any;
     notificacion: any;
     descuentos: string [] = [
-      '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'
+      '10', '20', '30', '40', '50', '60', '70', '80', '90'
     ];
     aceptado: any;
     solicitud: any;
@@ -100,7 +100,7 @@ export class NavbarComponent implements OnInit , OnDestroy {
     this.notificacion.data = this.selected.data;
     this.notificacion.users_id_user = this.selected.id_sender;
     this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
-    this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
+    this.notificationsService.updateNotification(this.selected.id_notifications, this.selected.data ).subscribe( response => console.log(response));
     }
 
     rechazarDescuento() {
@@ -111,18 +111,25 @@ export class NavbarComponent implements OnInit , OnDestroy {
       this.notificacion.data = '0';
       this.notificacion.users_id_user = this.selected.id_sender;
       this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
-      this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
+      this.notificationsService.updateNotification(this.selected.id_notifications, '0').subscribe( response => console.log(response));
     }
 
     personalizarDescuento() {
+      console.log(this.notificacion.data);
       console.log(this.selected);
       const now = moment().format('YYYY-MM-DD HH:mm:ss');
       this.notificacion.subject = ('aceptado');
       this.notificacion.message = ('Nuevo descuento');
       this.notificacion.time = (now);
       this.notificacion.users_id_user = this.selected.id_sender;
+      console.log('post');
       this.notificationsService.postNotifications(this.id_user, this.notificacion).subscribe( response => console.log(response));
-      this.notificationsService.updateNotification(this.selected.id_notifications).subscribe( response => console.log(response));
+      console.log('update');
+      this.notificationsService.updateNotification(this.selected.id_notifications, this.notificacion.data ).subscribe( response => console.log(response));
+    }
+
+    Confirmar() {
+      this.notificationsService.updateNotification(this.selected.id_notifications, this.selected.data ).subscribe( response => console.log(response));
     }
 
     collapse() {

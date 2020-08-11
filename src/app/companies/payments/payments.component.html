@@ -19,7 +19,7 @@
                             <p><strong><span class="text-primary">DESCUENTO</span></strong></p>
                         </div>
                         <div class="col">
-                            <p><strong><span class="text-primary">Ejecutivos</span></strong></p>
+                            <p><strong><span class="text-primary">ADMINISTRADORES</span></strong></p>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -35,7 +35,6 @@
                                 <mat-radio-button value="70">70%</mat-radio-button>
                                 <mat-radio-button value="80">80%</mat-radio-button>
                                 <mat-radio-button value="90">90%</mat-radio-button>
-                                <mat-radio-button value="100">100%</mat-radio-button>
                             </mat-radio-group>
                         </div>
                         <div class="col">
@@ -44,10 +43,20 @@
                         </select>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <label>Motivo de la solicitud de descuento<strong><span class="text-danger">*</span></strong></label>
+                            <input name="company" inputmode="text" class="form-control" [(ngModel)]="this.notificacion.message">
+                        </div>
+                    </div>
                     <br>
                     <br>
                     <div class="row justify-content-center">
-                        <p><strong><span style="color: green;" *ngIf="accept"><i class="far fa-check-circle"></i> APROBADO</span></strong></p>
+                        <!---->
+                        <p><strong><span style="color: green;" *ngIf="accept"><i class="far fa-check-circle"></i> {{aproved}}% APROBADO</span></strong></p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <p><strong><span style="color: red;" *ngIf="reject"><i class="fas fa-times-circle"></i> RECHAZADO</span></strong></p>
                     </div>
                     <br>
                     <div class="row justify-content-center">

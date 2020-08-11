@@ -36,16 +36,16 @@
                         <div *ngFor="let notification of notifications | slice:0:limit" class="pointer">
                             <a (click)="open(acept, notification)" class="dropdown-item border-bottom">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-sm-4">
                                         <div class="user-img">
                                             <img src="assets/img/icono.png" class="img-circle">
                                             <!-- <img src="http://192.168.137.1:3000/files/{{ notification.img}}">-->
                                         </div>
                                     </div>
-                                    <div class="col-md">
+                                    <div class="col-sm-8">
                                         <a style="color: green;">{{notification.first_name}} {{notification.last_name}}</a>
                                         <br>
-                                        <a style="color: black;">{{notification.message}}</a>
+                                        <a style="color: black;">{{notification.subject}}</a>
                                         <br>
                                         <span class="time ">{{notification.time  | date: 'hh:mm' }}</span>
                                     </div>
@@ -95,6 +95,10 @@
             <div class="modal-body">
                 <p>Se solicita un <span style="color: green;">Descuento por {{selected.data}} %</span></p>
                 <br>
+                <p><b>Motivo del descuento</b></p>
+                <p>{{selected.message}}</p>
+
+                <br>
                 <div class="row">
                     <div class="col">
                         <button type="button" class="btn btn-block btn-success" (click)="aceptarDescuento()" (click)="d('Cross click')">Aceptar Descuento</button>
@@ -117,7 +121,7 @@
 
         <div *ngSwitchCase="aceptado">
             <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">aceptada</h4>
+                <h4 class="modal-title" id="modal-basic-title">Aceptada</h4>
                 <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -127,7 +131,7 @@
                 <br>
                 <br>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" (click)="personalizarDescuento()" (click)="c('Save click')">Save</button>
+                    <button type="button" class="btn btn-outline-dark" (click)="Confirmar()" (click)="c('Save click')">Save</button>
                 </div>
             </div>
         </div>
