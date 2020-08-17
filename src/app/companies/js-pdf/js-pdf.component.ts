@@ -1,7 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { AdminService } from '../../_services/admin/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
+const nl = require("numeros_a_letras");
 
 @Component({
   selector: 'app-js-pdf',
@@ -10,11 +12,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class JsPDFComponent implements OnInit {
   pdfSrc;
+  recibov;
   id: number;
   inf: any;
   todayDate: Date = new Date();
   cliente = new Image();
   value: any;
+  recibo: any;
 
   firmas: any;
   mario: any;
@@ -32,6 +36,7 @@ export class JsPDFComponent implements OnInit {
     const cliente = new Image(); // HTML5 Constructor
     const prestador = new Image();
     const testigo2 = new Image();
+    ////////////////////////////// ERRRRRRRRRRRRRRRRRRRRRRRRRRRRor con los links files/abajo
 
     cliente.src = `http://192.168.137.1:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
@@ -225,6 +230,142 @@ export class JsPDFComponent implements OnInit {
     }
   }
 
+  receipt(download?: any, post?: any) {
+
+    const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+    const endDate = this.todayDate.getFullYear() + 1 + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+    const cliente = new Image(); // HTML5 Constructor
+    const prestador = new Image();
+    const testigo2 = new Image();
+    const logo = new Image();
+    const columns = ['Año', 'Mes', 'Total', 'Abono', 'Estado'];
+    const data = [[
+    this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, this.value, "PAGADO"]];
+    const value2: number = +this.value;
+    const value3 = nl(value2);
+    const a = this.value;
+    const b = parseFloat(this.value);
+    const c: number = a-b;
+
+
+    cliente.src = `http://192.168.137.1:3000/files/${this.inf.nombre}`;
+    cliente.alt = 'alt';
+
+    prestador.src = `http://192.168.137.1:3000/files/${this.yadira}`;
+    prestador.alt = 'alt';
+
+    testigo2.src = `http://192.168.137.1:3000/files/${this.mario}`;
+    testigo2.alt = 'alt';
+
+    logo.src = `http://192.168.137.1:3000/files/Logo.png`;
+    logo.alt = 'alt';
+
+
+    const doc = new jsPDF('p', 'pt', 'letter');
+    doc.setFont('Arial');
+    // doc.setFontSize(11.5);
+    doc.addImage(logo, 'PNG', 50, 20, 130, 45);
+    doc.setFontSize(10);
+
+    doc.text(190, 40, 'E-Mail:  servicioconta@gglobals.com.mx ');
+    doc.text(390, 40, 'Gestoria Empresarial Global Service, S.C.');
+    doc.text(390, 50, 'RFC :          GEG-110121-U13');
+
+
+    doc.text(190, 50, 'Telefono: 614 415 00 74');
+    doc.text(390, 60, 'Direccion: Av. Cantera 9301 Col. Las Misiones');
+
+    doc.text(190, 60, 'Sitio Web: Gglobals.com.mx');
+    doc.text(390, 70, 'Edificio Corporativo: Cantera V, Piso 3');
+
+    doc.text(85, 75, '__________________________________________________________________________________________');
+
+
+    doc.setFontSize(16);
+    doc.setFont('helvetica');
+    doc.setFontType("bold");
+    doc.text(210, 120, 'R E C I B O   D E   P A G O');
+    doc.setFont('Arial');
+
+// ======================================================================================================================= //
+    doc.setFontSize(11.5);
+    doc.text(40, 150,  `Recibimos de :                                                                                                                  No. recibo :`);
+    doc.text(40, 153,  `                            _______________________________________________________                      _________ `);
+    doc.setFontType("normal")
+    doc.text(200, 148, ` ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()} `);
+// ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 175,  `La cantidad de :`);
+    doc.text(40, 178,  `                              __________________________________________________________________________ `);
+    doc.setFontType("normal")
+    doc.text(200, 173, ` $${(a).toUpperCase()}       ${(value3).toUpperCase()} PESOS ${c}/100 MXN`);
+// ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 200,  `Concepto :                                         Forma de pago :                                              RFC :`);
+    doc.text(40, 203,  `                    __________________                                  _____________________              ________________`);
+    doc.setFontType("normal");
+    doc.text(105, 198, ` MENSUALIDAD                                               DEPOSITO                                ${(this.inf.rfc).toUpperCase()}`);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 225,  `Razon social :`);
+    doc.text(40, 228,  `                          ____________________________________________________________________________ `);
+    doc.setFontType("normal")
+    doc.text(150, 223, ` ${(this.inf.main_activity).toUpperCase()} `);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 250,  `Actividad :                                                                                Calle :`);
+    doc.text(40, 253,  `                      _____________________________________                _________________________________ `);
+    doc.setFontType("normal")
+    doc.text(130, 248, ` ${(this.inf.main_activity).toUpperCase()}                                                                            ${(this.inf.street).toUpperCase()}`);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 275,  `Numero :                  Colonia :                                                                                                Cp :`);
+    doc.text(40, 278,  `                  _______                  ______________________________________________            ____________ `);
+    doc.setFontType("normal")
+    doc.text(100, 273, ` ${this.inf.num_ext}                                           ${(this.inf.colony).toUpperCase()}                                                                                  ${this.inf.cp}`);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 300,  `Entre calles :                                                                               Y :`);
+    doc.text(40, 303,  `                         _____________________________________         ___________________________________ `);
+    doc.setFontType("normal")
+    doc.text(130, 298, ` ${(this.inf.street).toUpperCase()}                                                                            ${(this.inf.street).toUpperCase()}`);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 325,  `Calle posterior :                                                                                                 No. contrato :`);
+    doc.text(40, 328,  `                              ______________________________________________                            ______________ `);
+    doc.setFontType("normal")
+    doc.text(140, 323, ` ${this.inf.num_ext}                                                                                                                     ${this.inf.cp}`);
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(40, 350,  `Fecha de pago :                                                                       `);
+    doc.text(40, 353,  `                            _____________________________________ `);
+    doc.setFontType("normal")
+    // ======================================================================================================================= //
+    doc.setFontType("bold");
+    doc.text(200, 395,  `_____________________________________ `);
+    doc.setFontType("normal")
+    doc.text(210, 415,  `            GESTORIA EMPRESARIAL `);
+    doc.text(210, 430,  `               GLOBAL SERVICE S.C`);
+    doc.addImage(cliente, 'PNG', 240, 350, 130, 45);
+    doc.text(130, 348, ` ${date}                                                 `);
+    // ======================================================================================================================= //
+    doc.autoTable(columns, data, { margin: { top: 470 }, styles: { halign: 'center' }, theme: 'grid'});
+    if (download == 'true') {
+      if (this.inf.name_service === 'Contabilidad Rif') {
+        doc.save('RCR.pdf');
+      } else {
+        doc.save('RCE.pdf');
+      }
+    } 
+    if (post) {
+      this.adminService.postReceipt(this.id, this.recibo, doc.output('blob')).subscribe(response => {
+        console.log(response['id_receipt']);
+        this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
+          this.recibov = `http://192.168.137.1:3000/files/${response[0]['name']}`});
+      });
+    }
+  }
+
   public downloadPDF(): void {
     if (this.inf.id_service == 1) {
       this.rif('true');
@@ -234,20 +375,33 @@ export class JsPDFComponent implements OnInit {
     }
   }
 
+  public openPDF(): void {
+    let doc = new jsPDF('p','pt', 'a4');
+    doc.output('dataurlnewwindow');
+  }
+
   async ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id_company'];
     this.value = localStorage.getItem('value');
-    console.log(this.value);
     this.firmas = await this.adminService.getFirm().toPromise();
     this.mario = this.firmas[0]['name'];
     this.yadira = this.firmas[1]['name'];
     this.inf = await this.adminService.getInfContract(this.id).toPromise();
+    await this.receipt('false', 'post');
     if (this.inf.id_service == 1) {
       await this.rif('false', 'post');
     }
     if (this.inf.id_service == 2) {
       await this.pf('false', 'post');
     }
+    this.recibo = await this.adminService.getLastReceipt().toPromise();
 
+    const value2: number = +this.value;
+    const value3 = nl(value2);
+    const a = this.value;
+    const b = parseFloat(this.value);
+    const c: number = a - b;
+    console.log( a , b, c, );
+/////////////////////////////////////////////////// numerosssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
   }
 }

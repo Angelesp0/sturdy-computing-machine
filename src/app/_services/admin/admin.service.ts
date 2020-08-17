@@ -201,5 +201,25 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/getfirm', this.httpOptions);
   }
 
+  getLastReceipt() {
+    return this.http.get('http://192.168.137.1:3000/receipt', this.httpOptions);
+  }
+  getReceiptById(id) {
+    return this.http.get('http://192.168.137.1:3000/receipt/' + id, this.httpOptions);
+  }
+
+  postReceipt(id, num,  file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('company_id_company', id);
+    uploadData.append('num_receipt', num);
+
+    return this.http
+      .post('http://192.168.137.1:3000/receipt', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
 }
