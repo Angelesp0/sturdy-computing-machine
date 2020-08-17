@@ -3,7 +3,9 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { AdminService } from '../../_services/admin/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Email } from '../../models/email';
 const nl = require("numeros_a_letras");
+
 
 @Component({
   selector: 'app-js-pdf',
@@ -19,6 +21,9 @@ export class JsPDFComponent implements OnInit {
   cliente = new Image();
   value: any;
   recibo: any;
+  email: any;
+  contratoName: any;
+  reciboName: any;
 
   firmas: any;
   mario: any;
@@ -28,7 +33,9 @@ export class JsPDFComponent implements OnInit {
   constructor(
    private adminService: AdminService,
    private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.email = new Email();
+  }
 
    pf(download?: any, post?: any): void {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -122,6 +129,7 @@ export class JsPDFComponent implements OnInit {
     }*/
     if (post) {
       this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
+        this.contratoName = response['nombre'];
         this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`);
       });
     }
@@ -225,6 +233,7 @@ export class JsPDFComponent implements OnInit {
     }*/
     if (post) {
       this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
+        this.contratoName = response['nombre'];
         this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`);
       });
     }
@@ -238,9 +247,9 @@ export class JsPDFComponent implements OnInit {
     const prestador = new Image();
     const testigo2 = new Image();
     const logo = new Image();
-    const columns = ['Año', 'Mes', 'Total', 'Abono', 'Estado'];
+    const columns = ['Año', 'Mes', 'Total',  'Estado'];
     const data = [[
-    this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, this.value, "PAGADO"]];
+    this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, "PAGADO"]];
     const value2: number = +this.value;
     const value3 = nl(value2);
     const a = this.value;
@@ -304,7 +313,7 @@ export class JsPDFComponent implements OnInit {
     doc.text(40, 200,  `Concepto :                                         Forma de pago :                                              RFC :`);
     doc.text(40, 203,  `                    __________________                                  _____________________              ________________`);
     doc.setFontType("normal");
-    doc.text(105, 198, ` MENSUALIDAD                                               DEPOSITO                                ${(this.inf.rfc).toUpperCase()}`);
+    doc.text(105, 198, ` MENSUALIDAD                                               DEPOSITO                             ${(this.inf.rfc).toUpperCase()}`);
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 225,  `Razon social :`);
@@ -313,28 +322,36 @@ export class JsPDFComponent implements OnInit {
     doc.text(150, 223, ` ${(this.inf.main_activity).toUpperCase()} `);
     // ======================================================================================================================= //
     doc.setFontType("bold");
-    doc.text(40, 250,  `Actividad :                                                                                Calle :`);
-    doc.text(40, 253,  `                      _____________________________________                _________________________________ `);
+    doc.text(40, 250,  `Actividad :                                                           Calle :`);
+    doc.text(40, 253,  `                      ___________________________                ___________________________________________ `);
     doc.setFontType("normal")
-    doc.text(130, 248, ` ${(this.inf.main_activity).toUpperCase()}                                                                            ${(this.inf.street).toUpperCase()}`);
+    doc.text(130, 248, ` ${(this.inf.main_activity).toUpperCase()}`);
+    doc.text(310, 248, `${(this.inf.street).toUpperCase()}`);
+
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 275,  `Numero :                  Colonia :                                                                                                Cp :`);
     doc.text(40, 278,  `                  _______                  ______________________________________________            ____________ `);
     doc.setFontType("normal")
-    doc.text(100, 273, ` ${this.inf.num_ext}                                           ${(this.inf.colony).toUpperCase()}                                                                                  ${this.inf.cp}`);
+    doc.text(95, 273, ` ${this.inf.num_ext}`);
+    doc.text(200, 273, `${(this.inf.colony).toUpperCase()}`);
+    doc.text(500, 273, `${this.inf.cp}`);
+
+
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 300,  `Entre calles :                                                                               Y :`);
     doc.text(40, 303,  `                         _____________________________________         ___________________________________ `);
     doc.setFontType("normal")
-    doc.text(130, 298, ` ${(this.inf.street).toUpperCase()}                                                                            ${(this.inf.street).toUpperCase()}`);
+    doc.text(110, 298, `${(this.inf.street).toUpperCase()}`);
+    doc.text(350, 298, `${(this.inf.street).toUpperCase()}`);
+
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 325,  `Calle posterior :                                                                                                 No. contrato :`);
     doc.text(40, 328,  `                              ______________________________________________                            ______________ `);
     doc.setFontType("normal")
-    doc.text(140, 323, ` ${this.inf.num_ext}                                                                                                                     ${this.inf.cp}`);
+    doc.text(120, 323, ` ${(this.inf.street).toUpperCase()}                                                                                                                     ${this.inf.cp}`);
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 350,  `Fecha de pago :                                                                       `);
@@ -356,11 +373,13 @@ export class JsPDFComponent implements OnInit {
       } else {
         doc.save('RCE.pdf');
       }
-    } 
+    } else {
+      doc.output('dataurlnewwindow');
+    }
     if (post) {
       this.adminService.postReceipt(this.id, this.recibo, doc.output('blob')).subscribe(response => {
-        console.log(response['id_receipt']);
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
+          this.reciboName = response[0]['name'];
           this.recibov = `http://192.168.137.1:3000/files/${response[0]['name']}`});
       });
     }
@@ -395,13 +414,28 @@ export class JsPDFComponent implements OnInit {
       await this.pf('false', 'post');
     }
     this.recibo = await this.adminService.getLastReceipt().toPromise();
-
     const value2: number = +this.value;
     const value3 = nl(value2);
     const a = this.value;
     const b = parseFloat(this.value);
     const c: number = a - b;
-    console.log( a , b, c, );
-/////////////////////////////////////////////////// numerosssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+   /////////////////////////////////////////////////// numeros
+  }
+  sendemail() {
+    this.email.razon = this.inf.company;
+    this.email.rfc = this.inf.rfc;
+    this.email.servicio = this.inf.name_service;
+    this.email.fpago = 'Tarjeta de credito, debito';
+    this.email.pago = this.value;
+    this.email.calle = this.inf.street;
+    this.email.exterior = this.inf.num_ext;
+    this.email.interior = this.inf.num_int;
+    this.email.colonia = this.inf.colony;
+    this.email.ciudad = this.inf.city;
+    this.email.estado = this.inf.state;
+    this.email.cp = this.inf.cp;
+    this.email.contrato = this.contratoName;
+    this.email.recibo = this.reciboName;
+    this.adminService.sendEmail(this.email).subscribe(res => console.log(res));
   }
 }

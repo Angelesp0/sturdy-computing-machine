@@ -62,7 +62,7 @@
         "signature_pad": "^3.0.0-beta.3",
         "tslib": "^1.11.1",
         "web-animations-js": "2.3.1",
-        "zone.js": "0.8.27"
+        "zone.js": "0.10.3"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.900.6",

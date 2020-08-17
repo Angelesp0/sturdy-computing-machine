@@ -221,5 +221,12 @@ export class AdminService {
       );
   }
 
+  sendEmail(data) {
+    return this.http.post('http://192.168.137.1:3000/email', data)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
 }

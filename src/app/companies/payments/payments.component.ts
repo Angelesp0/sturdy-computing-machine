@@ -132,7 +132,6 @@ export class PaymentsComponent implements OnInit {
       });
     },
     onClientAuthorization: (data) => {
-      console.log(data.purchase_units[0].amount.value);
       localStorage.setItem('value', data.purchase_units[0].amount.value );
       console.log(data);
       this.showNotification('top', 'right', 2);

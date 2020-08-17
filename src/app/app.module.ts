@@ -22,6 +22,7 @@ import { AddCompanyComponent } from './companies/add-company/add-company.compone
 import { DataTablesModule } from 'angular-datatables';
 import {MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,  } from '@angular/forms';
+import {MatDividerModule} from '@angular/material/divider';
 import { CustomDatePipe } from './pipe/customDatePipe';
 import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from './companies/add-company/add-media/add-media.component';
@@ -35,6 +36,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   imports: [
+    MatDividerModule,
     NgxPayPalModule,
     PdfViewerModule,
     ReactiveFormsModule,
