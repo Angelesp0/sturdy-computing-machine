@@ -1,10 +1,13 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+//import * as autoTable from 'jspdf-autotable';
+
 import { AdminService } from '../../_services/admin/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Email } from '../../models/email';
-const nl = require("numeros_a_letras");
+import * as nl from 'numeros_a_letras';
+
 
 
 @Component({
@@ -12,7 +15,8 @@ const nl = require("numeros_a_letras");
   templateUrl: './js-pdf.component.html',
   styleUrls: ['./js-pdf.component.css']
 })
-export class JsPDFComponent implements OnInit {
+export class JsPDFComponent implements OnInit, OnDestroy
+{
   pdfSrc;
   recibov;
   id: number;
@@ -24,6 +28,7 @@ export class JsPDFComponent implements OnInit {
   email: any;
   contratoName: any;
   reciboName: any;
+  contrato: any;
 
   firmas: any;
   mario: any;
@@ -32,7 +37,9 @@ export class JsPDFComponent implements OnInit {
 
   constructor(
    private adminService: AdminService,
-   private activatedRoute: ActivatedRoute
+   private activatedRoute: ActivatedRoute,
+   private router: Router
+
   ) {
     this.email = new Email();
   }
@@ -43,7 +50,10 @@ export class JsPDFComponent implements OnInit {
     const cliente = new Image(); // HTML5 Constructor
     const prestador = new Image();
     const testigo2 = new Image();
-    ////////////////////////////// ERRRRRRRRRRRRRRRRRRRRRRRRRRRRor con los links files/abajo
+    console.log(this.contrato);
+
+    const identificador = 'CE-' + this.contrato;
+
 
     cliente.src = `http://192.168.137.1:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
@@ -57,7 +67,7 @@ export class JsPDFComponent implements OnInit {
     const doc = new jsPDF('p', 'pt', 'letter');
     doc.setFont('Arial');
     doc.setFontSize(11.5);
-    doc.text(490, 50, 'PF ACT EMP');
+    doc.text(490, 50, `${identificador}`);
     doc.text(150, 70, 'CONTRATO DE PRESTACIÓN DE SERVICIOS PROFESIONALES,', {maxWidth: 490, align: 'justify'});
     doc.text(205, 90, 'EN MATERIA DE CONTABILIDAD GENERAL.', {maxWidth: 490, align: 'justify'});
     doc.text(95, 122, `          QUE CELEBRAN POR UNA PARTE GESTORIA EMPRESARIAL GLOBAL SERVICE REPRESENTADA EN ESTE ACTO POR YADIRA EUGENIA TORRES MENDOZA, A QUIEN EN LO SUCESIVO SE LE DENOMINARA COMO “LA PRESTADORA”; Y POR LA OTRA, ${this.inf.first_name} ${this.inf.last_name} DE LA EMPRESA CON NOMBRE COMERCIAL ${this.inf.company}, A QUIEN EN ADELANTE SE DESIGNARA COMO “EL PRESTATARIO”; DE CONFORMIDAD CON LAS DECLARACIONES Y CLAUSULAS SIGUIENTES:`, {maxWidth: 455, align: 'justify'});
@@ -74,7 +84,7 @@ export class JsPDFComponent implements OnInit {
     doc.text(95, 720, `Declara que es el propietario del negocio denominado "${this.inf.company}", empresa` , {maxWidth: 455, align: 'justify'});
 
     doc.addPage();
-    doc.text(490, 45,  'PF ACT EMP');
+    doc.text(490, 45,  `${identificador}`);
     doc.text(95, 68,   `que se dedica a ${this.inf.main_activity}, y que tiene la suficiente capacidad para celebrar el presente contrato. `, {maxWidth: 455, align: 'justify'});
     doc.text(95, 102,  'Continua manifestando que requiere de la Prestación de Servicios ofrecidos por “LA PRESTADORA”, en materia de ADMINISTRACIÓN ELECTRÓNICA, entre otros rubros y actividades del ramo,  según se pacte en cláusula especial en este instrumento, y desea contratar los servicios profesionales de "LA PRESTADORA", de acuerdo a las cláusulas subsecuentes.', {maxWidth: 455, align: 'justify'});
     doc.text(95, 178,  '_______________________________________________________________________________');
@@ -102,7 +112,7 @@ export class JsPDFComponent implements OnInit {
     doc.text(150, 688, '-	Semanas cotizadas IMSS');
 
     doc.addPage();
-    doc.text(490, 45, 'PF ACT EMP');
+    doc.text(490, 45, `${identificador}`);
     doc.text(95, 80, '"LA PRESTADORA", Guardará absoluta confidencialidad con respecto a los datos y documentos que el adquirente le proporcione para las actividades que desarrolle, ni dar informes a personas distintas a las autorizadas por el “LA PRESTATARIA”.' , {maxWidth: 455, align: 'justify'});
     doc.text(95, 140, `SEGUNDA.- PAGO DE HONORARIOS. “LA PRESTATARIA” se obliga a pagar a “LA PRESTADORA”, por los servicios profesionales que se le presten de conformidad con este contrato, honorarios por la cantidad total de $ ${this.value} IVA incluido,  durante el periodo contratado y con la exhibición del recibo correspondiente  respectivo por el servicio profesional devengado. ` , {maxWidth: 455, align: 'justify'});
     doc.text(95, 220, `L E Í D O  y enteradas las partes del contenido y efectos de este contrato, firman de conformidad por duplicado, quedando en poder de “LA PRESTADORA” un ejemplar y para “LA PRESTATARIA” un ejemplar, en la ciudad de Chihuahua, capital del Estado del mismo nombre, al ${this.todayDate.getDate()} día del mes de ${this.todayDate.getMonth() + 1} de 2020.` , {maxWidth: 455, align: 'justify'});
@@ -130,7 +140,10 @@ export class JsPDFComponent implements OnInit {
     if (post) {
       this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
         this.contratoName = response['nombre'];
-        this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`);
+        this.adminService.getContract(this.id).subscribe( response => {
+          localStorage.setItem('cont', response['nombre']);
+          this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`;
+        });
       });
     }
 
@@ -142,6 +155,10 @@ export class JsPDFComponent implements OnInit {
     const cliente = new Image(); // HTML5 Constructor
     const prestador = new Image();
     const testigo2 = new Image();
+    console.log(this.contrato);
+
+    const identificador = 'CR-' + this.contrato;
+
 
     cliente.src = `http://192.168.137.1:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
@@ -155,7 +172,7 @@ export class JsPDFComponent implements OnInit {
     const doc = new jsPDF('p', 'pt', 'letter');
     doc.setFont('Arial');
     doc.setFontSize(11.5);
-    doc.text(490, 50, 'RIF');
+    doc.text(490, 50, `${identificador}`);
     doc.text(150, 70, ' CONTRATO DE PRESTACIÓN DE SERVICIOS PROFESIONALES,', {maxWidth: 490, align: 'justify'});
     doc.text(205, 90, ' EN MATERIA DE CONTABILIDAD GENERAL.', {maxWidth: 490, align: 'justify'});
     doc.text(95, 122, `          QUE CELEBRAN POR UNA PARTE GESTORIA EMPRESARIAL GLOBAL SERVICE REPRESENTADA EN ESTE ACTO POR YADIRA EUGENIA TORRES MENDOZA, A QUIEN EN LO SUCESIVO SE LE DENOMINARA COMO “LA PRESTADORA”; Y POR LA OTRA, ${this.inf.first_name} ${this.inf.last_name} DE LA EMPRESA CON NOMBRE COMERCIAL ${this.inf.company}, A QUIEN EN ADELANTE SE DESIGNARA COMO “EL PRESTATARIO”; DE CONFORMIDAD CON LAS DECLARACIONES Y CLAUSULAS SIGUIENTES:`, {maxWidth: 455, align: 'justify'});
@@ -172,7 +189,7 @@ export class JsPDFComponent implements OnInit {
     doc.text(95, 720, `Declara que es el propietario del negocio denominado "${this.inf.company}", empresa` , {maxWidth: 455, align: 'justify'});
 
     doc.addPage();
-    doc.text(490, 45, 'RIF');
+    doc.text(490, 45, `${identificador}`);
     doc.text(95, 68,  `que se dedica a ${this.inf.main_activity}, y que tiene la suficiente capacidad para celebrar el presente contrato. `, {maxWidth: 455, align: 'justify'});
     doc.text(95, 102, 'Continua manifestando que requiere de la Prestación de Servicios ofrecidos por “LA PRESTADORA”, en materia de ADMINISTRACIÓN ELECTRÓNICA, entre otros rubros y actividades del ramo,  según se pacte en cláusula especial en este instrumento, y desea contratar los servicios profesionales de "LA PRESTADORA", de acuerdo a las cláusulas subsecuentes.', {maxWidth: 455, align: 'justify'});
     doc.text(95, 178, '_______________________________________________________________________________');
@@ -199,7 +216,7 @@ export class JsPDFComponent implements OnInit {
 
 
     doc.addPage();
-    doc.text(490, 45, 'RIF');
+    doc.text(490, 45, `${identificador}`);
     doc.text(150, 80, 'Nomina Individual de trabajadores: COSTO: $50.00 (Cincuenta pesos 00/100 M.N.) Mensual' , {maxWidth: 400, align: 'justify'});
     doc.text(150, 110, 'Calculo de Impuesto Sobre Nomina:  COSTO: $10.00 (Diez pesos 00/100 M.N) Por ocasión' , {maxWidth: 400, align: 'justify'});
     doc.text(150, 140, 'Movimientos Filiatorios IMSS: COSTO: $30.00 (Treinta pesos 00/100 M.N.) Por ocasión' , {maxWidth: 400, align: 'justify'});
@@ -234,6 +251,7 @@ export class JsPDFComponent implements OnInit {
     if (post) {
       this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
         this.contratoName = response['nombre'];
+        localStorage.setItem('cont', response['nombre']);
         this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`);
       });
     }
@@ -255,7 +273,23 @@ export class JsPDFComponent implements OnInit {
     const a = this.value;
     const b = parseFloat(this.value);
     const c: number = a-b;
+    let service: any;
+    let identificador: any;
+    console.log(this.contrato);
 
+
+    if (this.inf.id_service == 1) {
+       service = 'RCR-' + (this.recibo[0]['id_receipt'] + 1);
+       identificador = 'CR-' + this.contrato;
+       console.log(identificador);
+    }
+    if (this.inf.id_service == 2) {
+      service = 'RCE-' + (this.recibo[0]['id_receipt'] + 1);
+      identificador = 'CE-' + this.contrato;
+      console.log(identificador);
+
+
+    }
 
     cliente.src = `http://192.168.137.1:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
@@ -302,6 +336,9 @@ export class JsPDFComponent implements OnInit {
     doc.text(40, 153,  `                            _______________________________________________________                      _________ `);
     doc.setFontType("normal")
     doc.text(200, 148, ` ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()} `);
+    doc.text(500, 148, ` ${service}`);
+
+    
 // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 175,  `La cantidad de :`);
@@ -351,11 +388,13 @@ export class JsPDFComponent implements OnInit {
     doc.text(40, 325,  `Calle posterior :                                                                                                 No. contrato :`);
     doc.text(40, 328,  `                              ______________________________________________                            ______________ `);
     doc.setFontType("normal")
-    doc.text(120, 323, ` ${(this.inf.street).toUpperCase()}                                                                                                                     ${this.inf.cp}`);
+    doc.text(120, 323, ` ${(this.inf.street).toUpperCase()}`);
+    doc.text(490, 323, `${identificador}`);
+
     // ======================================================================================================================= //
     doc.setFontType("bold");
     doc.text(40, 350,  `Fecha de pago :                                                                       `);
-    doc.text(40, 353,  `                            _____________________________________ `);
+    doc.text(40, 353,  `                            _____________ `);
     doc.setFontType("normal")
     // ======================================================================================================================= //
     doc.setFontType("bold");
@@ -373,12 +412,12 @@ export class JsPDFComponent implements OnInit {
       } else {
         doc.save('RCE.pdf');
       }
-    } else {
-      doc.output('dataurlnewwindow');
     }
     if (post) {
-      this.adminService.postReceipt(this.id, this.recibo, doc.output('blob')).subscribe(response => {
+      this.adminService.postReceipt(this.id, identificador, doc.output('blob')).subscribe(response => {
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
+          localStorage.setItem('rec', response[0]['name']);
+          localStorage.setItem(post, 'no');
           this.reciboName = response[0]['name'];
           this.recibov = `http://192.168.137.1:3000/files/${response[0]['name']}`});
       });
@@ -400,20 +439,33 @@ export class JsPDFComponent implements OnInit {
   }
 
   async ngOnInit() {
+    let contrato1;
     this.id = this.activatedRoute.snapshot.params['id_company'];
     this.value = localStorage.getItem('value');
     this.firmas = await this.adminService.getFirm().toPromise();
     this.mario = this.firmas[0]['name'];
     this.yadira = this.firmas[1]['name'];
     this.inf = await this.adminService.getInfContract(this.id).toPromise();
-    await this.receipt('false', 'post');
-    if (this.inf.id_service == 1) {
-      await this.rif('false', 'post');
-    }
-    if (this.inf.id_service == 2) {
-      await this.pf('false', 'post');
-    }
     this.recibo = await this.adminService.getLastReceipt().toPromise();
+    contrato1 = await this.adminService.getLastContract().toPromise();
+    this.contrato = contrato1[0]['id_files'];
+    if (localStorage.getItem('post')) {
+      this.recibov = `http://192.168.137.1:3000/files/${localStorage.getItem('rec')}`;
+      if (this.inf.id_service == 1) {
+        this.pdfSrc = `http://192.168.137.1:3000/files/${localStorage.getItem('cont')}`;
+      }
+      if (this.inf.id_service == 2) {
+        this.pdfSrc = `http://192.168.137.1:3000/files/${localStorage.getItem('cont')}`;
+      }
+    } else {
+      await this.receipt('false', 'post');
+      if (this.inf.id_service == 1) {
+        await this.rif('false', 'post');
+      }
+      if (this.inf.id_service == 2) {
+        await this.pf('false', 'post');
+      }
+    }
     const value2: number = +this.value;
     const value3 = nl(value2);
     const a = this.value;
@@ -434,8 +486,18 @@ export class JsPDFComponent implements OnInit {
     this.email.ciudad = this.inf.city;
     this.email.estado = this.inf.state;
     this.email.cp = this.inf.cp;
-    this.email.contrato = this.contratoName;
-    this.email.recibo = this.reciboName;
-    this.adminService.sendEmail(this.email).subscribe(res => console.log(res));
+    this.email.contrato = localStorage.getItem('cont');
+    this.email.recibo = localStorage.getItem('rec');
+    this.adminService.sendEmail(this.email).subscribe(res =>     this.router.navigate(['/companies']));
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem('value');
+    localStorage.removeItem('cont');
+    localStorage.removeItem('rec');
+    localStorage.removeItem('post');
+    localStorage.removeItem('id_company');
+    localStorage.removeItem('ejecutivo');
+
   }
 }

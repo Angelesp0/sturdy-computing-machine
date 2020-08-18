@@ -228,5 +228,11 @@ export class AdminService {
     );
   }
 
+  getLastContract() {
+    return this.http.get('http://192.168.137.1:3000/contractByIdCompany', this.httpOptions);
+  }
+
+
+
 
 }
