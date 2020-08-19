@@ -213,7 +213,7 @@ export class AdminService {
     uploadData.append('file', file);
     uploadData.append('company_id_company', id);
     uploadData.append('num_receipt', num);
-
+ 
     return this.http
       .post('http://192.168.137.1:3000/receipt', uploadData)
       .pipe(

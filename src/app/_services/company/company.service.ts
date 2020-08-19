@@ -134,7 +134,7 @@ export class CompanyService {
     );
   }
 
-  register_payment(id, value, description, status, update_time, id_company): Observable<Payment> {
+  register_payment(value, description, status, update_time, id_company, id?): Observable<Payment> {
     return this.http
     .post<Payment>('http://192.168.137.1:3000/payment/' + id_company , {id, value, description, status, update_time})
     .pipe(

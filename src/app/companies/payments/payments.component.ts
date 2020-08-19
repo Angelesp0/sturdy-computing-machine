@@ -133,9 +133,10 @@ export class PaymentsComponent implements OnInit {
     },
     onClientAuthorization: (data) => {
       localStorage.setItem('value', data.purchase_units[0].amount.value );
+      localStorage.setItem('payment', 'card');
       console.log(data);
       this.showNotification('top', 'right', 2);
-      this.companyService.register_payment(data.id, data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company).subscribe((response) => {
+      this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company, data.id ).subscribe((response) => {
         this.id_payment = response['id_table'];
         this.totalValue = response['value'];
         this.commission = (this.totalValue * 0.20);
@@ -269,6 +270,36 @@ export class PaymentsComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+
+  cash() {
+    localStorage.setItem('value', this.item.unit_amount.value );
+    const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.id_company).subscribe((response) => {
+      this.id_payment = response['id_table'];
+      this.totalValue = response['value'];
+      this.commission = (this.totalValue * 0.20);
+     // tslint:disable-next-line: no-shadowed-variable
+     this.companyService.register_comition(this.commission, date, 'por cobrar', this.id_payment, this.id_ejecutivo).subscribe((response) => {
+        console.log(response);
+      });
+    });
+    this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
+      localStorage.setItem('payment', 'cash');
+      console.log('Active_payment');
+      this.router.navigate([`/generatepdf/${this.id_company}`]);
+      console.log(responsee);
+      if (localStorage.getItem('Rif')) {
+        localStorage.removeItem('Rif');
+        // logged in so return true
+        return true;
+    }
+      if (localStorage.getItem('Pf')) {
+        localStorage.removeItem('Pf');
+        // logged in so return true
+        return true;
+    }
+    });
   }
 
 }
