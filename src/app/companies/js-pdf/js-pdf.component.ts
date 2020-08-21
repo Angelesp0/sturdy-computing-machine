@@ -35,7 +35,6 @@ export class JsPDFComponent implements OnInit, OnDestroy
   mario: any;
   yadira: any;
 
-
   constructor(
    private adminService: AdminService,
    private activatedRoute: ActivatedRoute,
@@ -148,6 +147,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.addImage(prestador, 'PNG', 160, 300, 100, 50);
     doc.addImage(cliente, 'PNG', 380, 300, 100, 50);
     doc.text(95, 380, 'YADIRA EUGENIA TORRES MENDOZA  ');
+    doc.text(335, 380, `${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()}`);
     doc.text(95, 400, 'GESTORIA EMPRESARIAL GLOBAL SERVICE S.C.');
     doc.text(95, 430, 'TESTIGOS:');
     doc.text(165, 460, '      TESTIGO				                                 TESTIGO');
@@ -168,8 +168,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
 
     if (download == 'true') {
       doc.save('Contrato_GGlobals.pdf');
-    }
-    else{
+    } else {
       doc.output('dataurlnewwindow');
     }
 
@@ -291,6 +290,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.addImage(prestador, 'PNG', 160, 450, 100, 50);
     doc.addImage(cliente, 'PNG', 370, 450, 100, 50);
     doc.text(95, 530, 'YADIRA EUGENIA TORRES MENDOZA  ');
+    doc.text(335, 530, `${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()}`);
     doc.text(95, 550, 'GESTORIA EMPRESARIAL GLOBAL SERVICE S.C.');
     doc.text(95, 580, 'TESTIGOS:');
     doc.text(165, 610, '       TESTIGO				                              TESTIGO');
@@ -310,9 +310,6 @@ export class JsPDFComponent implements OnInit, OnDestroy
 
     if (download == 'true') {
       doc.save('Contrato_GGlobals.pdf');
-    }
-    else {
-      doc.output('dataurlnewwindow' );
     }
     if (post) {
       this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
@@ -501,11 +498,14 @@ export class JsPDFComponent implements OnInit, OnDestroy
     }
   }
 
-  acuse(download?: any, post?: any): void {
+  acuse(email: any, download?: any, post?: any): void {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     const logo = new Image();
     const sparador = new Image();
     const fb = new Image();
+    const espacio = " ";
+
+    const arrayDeCadenas = this.inf.last_name.split(espacio);
 
     logo.src = `http://192.168.137.1:3000/files/Logo.png`;
     logo.alt = 'alt';
@@ -527,8 +527,8 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.text(320, 110, 'ACUSE DE GENEREACIÓN DE CLAVE Y USUARIO PARA APP(GGLOBALS)', {maxWidth: 490, align: 'center'});
     doc.setFontSize(10);
     doc.text(40, 130, ` RFC: ${this.inf.rfc.toUpperCase()}`, {maxWidth: 455, align: 'justify'});
-    doc.text(40, 140, ` NOMBRE DE LA PERSONA/RAZON SOCIAL: ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()} `, {maxWidth: 455, align: 'justify'});
-    doc.text(40, 150, ` CORREO ELECTRONICO: `, {maxWidth: 455, align: 'justify'});
+    doc.text(40, 140, ` NOMBRE DE LA PERSONA/RAZON SOCIAL: ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()}`, {maxWidth: 455, align: 'justify'});
+    doc.text(40, 150, ` CORREO ELECTRONICO: ${email}`, {maxWidth: 455, align: 'justify'});
     doc.text(40, 160, ` FECHA DE EMISION DE LAS CLAVES: ${date}`, {maxWidth: 455, align: 'justify'});
     doc.setFontType("normal");
     doc.text(40, 180, `Manifestamos haciendo de su conocimiento de que la contraseña y clave de acceso a su aplicacion (GGlobals), desarrollada por Gestoria Empresarial Global Service Sc, que le proporcionara nuestro ejecutivo de atencion a empresas, por medio de este documento, es personal e intransferible, y que usted: ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()} con RFC: ${this.inf.rfc.toUpperCase()}, es responsable del resguardo y uso de las mismas`, {maxWidth: 530, align: 'justify'});
@@ -544,8 +544,8 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.text(40, 330, 'Para su uso correcto se encuentra disponible en nuestra pagina de internet www.gglobals.com.mx/appglobals, un tutorial y manual de uso. Dicha aplicacion, se encontrara vigente en las plataformas para sistemas operativos, ANDROID E IOS, y podra descargarse de manera gratuita.', {maxWidth: 530, align: 'justify'});
     doc.text(40, 370, 'Para su ACCESO correspondiente, solo es necesario ingresar la clave de acceso y contraseña a continuacion asignada a su empresa:' , {maxWidth: 530, align: 'justify'});
     doc.text(40, 390, 'IMPORTANTE' , {maxWidth: 530, align: 'justify'});
-    doc.text(320, 410, 'CLAVE DE ACCESO:' , {maxWidth: 530, align: 'center'});
-    doc.text(320, 430, 'CONTRASEÑA: ' , {maxWidth: 530, align: 'center'});
+    doc.text(320, 410, `CLAVE DE ACCESO:  ${(this.inf.first_name).toUpperCase().slice(0,1)}${arrayDeCadenas[0].toUpperCase()}${arrayDeCadenas[1].toUpperCase().slice(0,1)}` , {maxWidth: 530, align: 'center'});
+    doc.text(320, 430, `CONTRASEÑA: GG${(this.inf.first_name).toUpperCase().slice(0, 2)}${arrayDeCadenas[0].toUpperCase().slice(0, 2)}${arrayDeCadenas[1].toUpperCase().slice(0, 2)}` , {maxWidth: 530, align: 'center'});
     doc.text(40, 450, 'Nota: si por algun motivo su clave de acceso o contraseña se extravia, no recuerda, o las credenciales se dañen, para reestablecerla es necesario reportar de la siguiente manera: ' , {maxWidth: 530, align: 'justify'});
     doc.text(70, 480, '1) enviar el reporte por medio de whatsapp al numero: (614) 163-88-17, o al cirrei: servicioconta@gglobals.com, indicando en asunto "Reestablecer contraseña aplicacion".' , {maxWidth: 530, align: 'justify'});
     doc.text(70, 510, '2) Debera ingresar los siguientes datos en su reporte: Nombre Completo de titular, numero de contrato (numero localizado en la parte superior derecha de su contrato, o en la parte media derecha de cualquier recibo de pago)' , {maxWidth: 530, align: 'justify'});
@@ -570,15 +570,11 @@ export class JsPDFComponent implements OnInit, OnDestroy
     if (download === 'true') {
       doc.output('dataurlnewwindow');
     }
-    /*if (post) {
-      this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
-        this.contratoName = response['nombre'];
-        this.adminService.getContract(this.id).subscribe( response => {
-          localStorage.setItem('cont', response['nombre']);
-          this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`;
-        });
+    if (post) {
+      this.adminService.postAcuse(this.id, doc.output('blob')).subscribe(response => {
+        localStorage.setItem('ac', response['nombre']);
       });
-    }*/
+    }
   }
 
   public downloadPDF(): void {
@@ -597,7 +593,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
 
   openPD() {
     console.log('hola');
-    this.acuse('true');
+    this.rif('true');
   }
 
   async ngOnInit() {
@@ -642,7 +638,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
    /////////////////////////////////////////////////// numeros
   }
 
-  sendemail() {
+  async sendemail() {
     this.email.razon = this.inf.company;
     this.email.rfc = this.inf.rfc;
     this.email.servicio = this.inf.name_service;
@@ -657,7 +653,9 @@ export class JsPDFComponent implements OnInit, OnDestroy
     this.email.cp = this.inf.cp;
     this.email.contrato = localStorage.getItem('cont');
     this.email.recibo = localStorage.getItem('rec');
-    this.adminService.sendEmail(this.email).subscribe(res =>     this.router.navigate(['/companies']));
+    this.email.acuse = localStorage.getItem('ac');
+    this.acuse(this.email.email, 'false', 'post');
+    await this.adminService.sendEmail(this.email).subscribe(res =>     this.router.navigate(['/companies']));
   }
 
   ngOnDestroy() {
@@ -665,8 +663,11 @@ export class JsPDFComponent implements OnInit, OnDestroy
     localStorage.removeItem('cont');
     localStorage.removeItem('rec');
     localStorage.removeItem('post');
+    localStorage.removeItem('ac');
+    localStorage.removeItem('payment');
     localStorage.removeItem('id_company');
     localStorage.removeItem('ejecutivo');
+    
 
   }
 }

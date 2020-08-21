@@ -174,7 +174,18 @@ export class AdminService {
     uploadData.append('file', file);
     uploadData.append('category', 'Contrato');
     uploadData.append('company_id_company', id);
+    return this.http
+      .post('http://192.168.137.1:3000/companies/img', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
+  postAcuse(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Acuse');
+    uploadData.append('company_id_company', id);
     return this.http
       .post('http://192.168.137.1:3000/companies/img', uploadData)
       .pipe(

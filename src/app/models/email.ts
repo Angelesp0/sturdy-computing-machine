@@ -14,4 +14,5 @@ export class Email {
     email: string;
     contrato: string;
     recibo: string;
+    acuse: string;
 }

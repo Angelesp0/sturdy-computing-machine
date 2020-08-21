@@ -101,7 +101,8 @@ export class UserService {
     .set('cp', item.cp)
     .set('role', item.role)
     .set('email', item.email)
-    .set('password', item.password);
+    .set('password', item.password)
+    .set('username', item.username);
     return this.http
       .post<User>(this.base_path, item, {params})
       .pipe(
