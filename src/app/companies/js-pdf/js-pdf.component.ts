@@ -591,10 +591,10 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.output('dataurlnewwindow');
   }
 
-  openPD() {
+  /*openPD() {
     console.log('hola');
     this.rif('true');
-  }
+  }*/
 
   async ngOnInit() {
     let contrato1;
