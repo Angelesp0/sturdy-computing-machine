@@ -76,12 +76,35 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   maplatlang() {
     let _this = this;
     const myLatlng = {lat: 28.658638071997842, lng: -106.06216647017715};
-    const map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 12, center: myLatlng});
+    const map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: myLatlng});
     // Create the initial InfoWindow.
-    let infoWindow = new google.maps.InfoWindow(
-        {content: 'Registrar ubicacion del establecimiento!', position: myLatlng});
-    infoWindow.open(map);
+    let infoWindow = new google.maps.InfoWindow();
+    const service = new google.maps.places.PlacesService(map);
+    const request = {
+      query: 'Gestoria Empresarial Global Service S.C.',
+      fields: ['name', 'geometry'],
+    };
+
+    service.findPlaceFromQuery(request, function(results, status) {
+      console.log(status);
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          console.log(results[i]);
+
+          let place = results[i];
+          const marker = new google.maps.Marker({
+              map,
+              position: place.geometry.location
+            });
+          google.maps.event.addListener(marker, "click", () => {
+            infoWindow.setContent(place.name);
+            infoWindow.open(map);
+            });
+        }
+        map.setCenter(results[0].geometry.location);
+      }
+    });
+    // infoWindow.open(map);
     // Configure the click listener.
     map.addListener('click', function(mapsMouseEvent) {
       const my = mapsMouseEvent.latLng;

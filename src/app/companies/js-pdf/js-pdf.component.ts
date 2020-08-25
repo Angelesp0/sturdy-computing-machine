@@ -655,7 +655,8 @@ export class JsPDFComponent implements OnInit, OnDestroy
     this.email.recibo = localStorage.getItem('rec');
     this.email.acuse = localStorage.getItem('ac');
     this.acuse(this.email.email, 'false', 'post');
-    await this.adminService.sendEmail(this.email).subscribe(res =>     this.router.navigate(['/companies']));
+    await this.adminService.sendEmail(this.email).subscribe();
+    console.log('esperar');
   }
 
   ngOnDestroy() {
@@ -667,7 +668,5 @@ export class JsPDFComponent implements OnInit, OnDestroy
     localStorage.removeItem('payment');
     localStorage.removeItem('id_company');
     localStorage.removeItem('ejecutivo');
-    
-
   }
 }

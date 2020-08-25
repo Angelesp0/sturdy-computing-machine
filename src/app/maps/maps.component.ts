@@ -18,6 +18,9 @@ export class MapsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(google.maps.places.PlacesServiceStatus);
+
+    var infowindow = new google.maps.InfoWindow();
 
     var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
     var mapOptions = {
@@ -111,15 +114,42 @@ export class MapsComponent implements OnInit {
         }]
 
     };
+
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    var request = {
+        query: 'Gestoria Empresarial Global Service S.C.',
+        fields: ['name', 'geometry'],
+    };
 
     var marker = new google.maps.Marker({
         position: myLatlng,
         title: "Hello World!"
     });
 
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
-  }
 
+    var service = new google.maps.places.PlacesService(map);
+
+
+    service.findPlaceFromQuery(request, function(results, status) {
+        console.log('hola')
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            let place = results[i];
+            const marker = new google.maps.Marker({
+                map,
+                position: place.geometry.location
+              });
+            google.maps.event.addListener(marker, "click", () => {
+                infowindow.setContent(place.name);
+                infowindow.open(map);
+              });
+          }
+          map.setCenter(results[0].geometry.location);
+        }
+      });
+
+    // To add the marker to the map, call setMap();
+  }
 }
+

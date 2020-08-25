@@ -69,7 +69,7 @@ export class PaymentsComponent implements OnInit {
         category: 'DIGITAL_GOODS',
         unit_amount: {
           currency_code: 'MXN',
-          value: '400.00',
+          value: '350.00',
         }
       };
       this.id_service = 1;
@@ -84,7 +84,7 @@ export class PaymentsComponent implements OnInit {
         category: 'DIGITAL_GOODS',
         unit_amount: {
           currency_code: 'MXN',
-          value: '20.00',
+          value: '600.00',
         }
       };
       this.id_service = 2;
