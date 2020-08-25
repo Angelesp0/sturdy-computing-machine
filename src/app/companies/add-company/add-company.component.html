@@ -17,10 +17,17 @@
                         <p><strong><span class="text-primary">DATOS GENERALES</span></strong></p>
                         <div class="row">
                             <div class="col-md">
-                                <label>Razon Social<strong><span class="text-danger">*</span></strong></label>
+                                <label>Nombre Comercial<strong><span class="text-danger">*</span></strong></label>
                                 <input formControlName="company" name="company" inputmode="text" class="form-control" [(ngModel)]="this.data.company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
                                 <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
-                                    <div *ngIf="f.company.errors.required">La Razon social es requerida</div>
+                                    <div *ngIf="f.company.errors.required">El Nombre Comercial es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Razon Social</label>
+                                <input formControlName="razon" name="razon" inputmode="text" class="form-control" [(ngModel)]="this.data.razon" [ngClass]="{ 'is-invalid': submitted && f.razon.errors }">
+                                <div *ngIf="submitted && f.razon.errors" class="invalid-feedback">
+                                    <div *ngIf="f.razon.errors.required">La Razon social es requerida</div>
                                 </div>
                             </div>
                             <div class="col-md">
@@ -241,7 +248,7 @@
                             </div>
                             <div class="col-md">
                                 <label>Comienzo de la empresa<strong><span class="text-danger">*</span></strong></label>
-                                <input formControlName="company_start" name="company_start" class="form-control" [(ngModel)]="this.data.company_start" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" [ngClass]="{ 'is-invalid': submitted && f.company_start.errors }">
+                                <input formControlName="company_start" name="company_start" class="form-control" [(ngModel)]="this.data.company_start" type="date" id="start" name="trip-start" value="2018-07-22" min="1999-01-01" max="2020-12-31" [ngClass]="{ 'is-invalid': submitted && f.company_start.errors }">
                                 <div *ngIf="submitted && f.company_start.errors" class="invalid-feedback">
                                     <div *ngIf="f.company_start.errors.required">La Fecha es requerida</div>
                                 </div>
@@ -268,11 +275,8 @@
                                 </div>
                             </div>
                             <div class="col-md">
-                                <label>Codigo de actividad<strong><span class="text-danger">*</span></strong></label>
-                                <input formControlName="activity_code" name="activity_code" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code" [ngClass]="{ 'is-invalid': submitted && f.activity_code.errors }">
-                                <div *ngIf="submitted && f.activity_code.errors" class="invalid-feedback">
-                                    <div *ngIf="f.activity_code.errors.required">Apellido is required</div>
-                                </div>
+                                <label>Codigo de activida</label>
+                                <input [ngModelOptions]="{standalone: true}" inputmode="numeric" class="form-control" [(ngModel)]="this.data.activity_code">
                             </div>
                         </div>
                         <br>

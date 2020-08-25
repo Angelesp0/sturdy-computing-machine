@@ -37,7 +37,7 @@ export class Company {
     distribution: string;
 
     main_activity: string;
-    activity_code: number;
+    activity_code?: number;
     employees: number;
     female_employees: number;
     attention_area?: string;

@@ -54,6 +54,7 @@ export class CompanyService {
   }
 
   updateCompany(id, item) {
+    console.log(item);
     const params  = new HttpParams()
       .set('rfc', item.rfc)
       .set('street', item.street )
@@ -61,6 +62,7 @@ export class CompanyService {
       .set('city', item.city)
       .set('tel', item.tel)
       .set('company', item.company)
+      .set('razon', item.razon)
       .set('num_ext', item.num_ext)
       .set('num_int', item.num_int)
       .set('state', item.state)

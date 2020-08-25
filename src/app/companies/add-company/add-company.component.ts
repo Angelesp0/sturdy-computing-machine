@@ -131,13 +131,13 @@ export class AddCompanyComponent implements OnInit {
           return;
       }
       alert('Usuario Creado Exitosamente');
-      console.log(this)
       this.create();
   }
 
   ngOnInit(): void {
     this.registerCompany = this.formBuilder.group({
       company: ['', Validators.required],
+      razon: ['', Validators.required],
       rfc: ['', Validators.required],
       users_id_user: ['', Validators.required],
       state: ['', Validators.required],
@@ -161,7 +161,6 @@ export class AddCompanyComponent implements OnInit {
       company_start: ['', Validators.required],
       sales_range: ['', Validators.required],
       main_activity: ['', Validators.required],
-      activity_code: ['', Validators.required],
       employees: ['', [Validators.required, Validators.minLength(1)]],
       female_employees: ['', [Validators.required, Validators.minLength(1)]],
       attention_area: ['', Validators.required],
