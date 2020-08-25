@@ -16,22 +16,24 @@ import { JsPDFComponent } from '../../companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from '../../companies/add-company/add-media/add-media.component';
 import { PaymentsComponent } from '../../companies/payments/payments.component';
 import { AuthGuard } from './../../_guards/auth.guard';
+import { CollectComponent } from '../../payments/collect.component';
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent},
-    { path: 'user-profile',   component: UserProfileComponent},
-    { path: 'table-list',     component: TableListComponent},
-    { path: 'typography',     component: TypographyComponent},
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-    { path: 'users',          component: UsersComponent},
-    { path: 'companies',      component: CompaniesComponent},
-    { path: 'services',       component: ServicesComponent, canActivate: [AuthGuard]},
-    { path: 'add-company',    component: AddCompanyComponent},
-    { path: 'add-media/:id_company', component: AddMediaComponent},
+    { path: 'dashboard',                  component: DashboardComponent},
+    { path: 'user-profile',               component: UserProfileComponent},
+    { path: 'table-list',                 component: TableListComponent},
+    { path: 'typography',                 component: TypographyComponent},
+    { path: 'icons',                      component: IconsComponent },
+    { path: 'maps',                       component: MapsComponent },
+    { path: 'notifications',              component: NotificationsComponent },
+    { path: 'upgrade',                    component: UpgradeComponent },
+    { path: 'users',                      component: UsersComponent},
+    { path: 'companies',                  component: CompaniesComponent},
+    { path: 'services',                   component: ServicesComponent, canActivate: [AuthGuard]},
+    { path: 'add-company',                component: AddCompanyComponent},
+    { path: 'add-media/:id_company',      component: AddMediaComponent},
     { path: 'generatepdf/:id_company',    component: JsPDFComponent},
-    { path: 'payment/:id_company',        component: PaymentsComponent }
+    { path: 'payment/:id_company',        component: PaymentsComponent },
+    { path: 'payment',                    component: CollectComponent },
 ];

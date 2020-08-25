@@ -51,18 +51,12 @@ export class CollectComponent implements OnInit {
   item: any;
 
   ngOnInit() {
-    this.id_ejecutivo = localStorage.getItem('ejecutivo');
-    this.id_company = this.activatedRoute.snapshot.params['id_company'];
     this.companyService.getAdmin().subscribe( response => this.admins = response);
     this.service();
     this.initConfig();
   }
 
   private service() {
-
-    if (localStorage.getItem('Rif')) {
-      // logged in so return true
-      this.Rif = localStorage.getItem('Rif');
       this.item = {
         name: 'Servicio: RIF',
         quantity: '1',
@@ -74,22 +68,6 @@ export class CollectComponent implements OnInit {
       };
       this.id_service = 1;
       return true;
-    }
-    if (localStorage.getItem('Pf')) {
-      // logged in so return true
-      this.Pf = localStorage.getItem('Pf');
-      this.item = {
-        name: 'Servicio: PF',
-        quantity: '1',
-        category: 'DIGITAL_GOODS',
-        unit_amount: {
-          currency_code: 'MXN',
-          value: '600.00',
-        }
-      };
-      this.id_service = 2;
-      return true;
-    }
   }
 
   private initConfig(): void {

@@ -32,7 +32,7 @@
                         <!--<div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>-->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="2">
-                        <div class="dropdown-item border-bottom ">You have {{size}} new messages</div>
+                        <div class="dropdown-item border-bottom ">Tienes {{size}} nuevos mensajes</div>
                         <div *ngFor="let notification of notifications | slice:0:limit" class="pointer">
                             <a (click)="open(acept, notification)" class="dropdown-item border-bottom">
                                 <div class="row">

@@ -18,6 +18,8 @@ import { LoginComponent } from './layouts/login/login.component';
 import { CompaniesComponent, ModalEditarEmpresa } from './companies/companies.component';
 import { ServicesComponent, ModalEditarServicio, ModalNuevoServicio } from './services/services.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
+import { CollectComponent } from './payments/collect.component';
+
 
 import { DataTablesModule } from 'angular-datatables';
 import {MatRadioModule } from '@angular/material/radio';
@@ -36,6 +38,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   imports: [
+    CollectComponent,
     MatDividerModule,
     NgxPayPalModule,
     PdfViewerModule,

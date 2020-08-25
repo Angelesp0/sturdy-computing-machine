@@ -13,8 +13,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
     { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
     { path: '/services',          title: 'Servicios',    icon: 'design_bullet-list-67', class: '' },
+    { path: '/payment',           title: 'Pagar',        icon: 'business_money-coins',  class: '' },
     { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
     { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
+
+
     // { path: '/add-media/140',     title: 'Multimedia',   icon: 'design_app',            class: '' },
     // { path: '/payment',           title: 'Pago',         icon: 'design_app',            class: '' },
     // { path: '/generatepdf/140',   title: 'Contrato',     icon: 'design_app',            class: '' },
