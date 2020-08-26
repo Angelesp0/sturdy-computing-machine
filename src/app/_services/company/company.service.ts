@@ -118,9 +118,9 @@ export class CompanyService {
       );
   }
 
-  company_has_service(item): Observable<CompanyServices> {
+  company_has_service(item) {
     return this.http
-      .post<CompanyServices>('http://192.168.137.1:3000/company_services', item)
+      .post('http://192.168.137.1:3000/company_services', item)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -151,4 +151,7 @@ export class CompanyService {
       catchError(this.handleError)
     );
   }
+  getcompanyHasService(id) {
+    return this.http.get('http://192.168.137.1:3000/companies/services/' + id, this.httpOptions);
+}
 }

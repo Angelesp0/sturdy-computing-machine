@@ -16,7 +16,7 @@ import { JsPDFComponent } from '../../companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from '../../companies/add-company/add-media/add-media.component';
 import { PaymentsComponent } from '../../companies/payments/payments.component';
 import { AuthGuard } from './../../_guards/auth.guard';
-import { CollectComponent } from '../../payments/collect.component';
+import { CollectComponent } from '../../collect/collect.component';
 
 
 export const AdminLayoutRoutes: Routes = [

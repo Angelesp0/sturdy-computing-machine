@@ -100,7 +100,7 @@ export class AddCompanyComponent implements OnInit {
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
-          console.log(response);
+          localStorage.setItem('payment', response['id']);
           localStorage.setItem('Rif', 'True');
         });
       }
@@ -116,6 +116,7 @@ export class AddCompanyComponent implements OnInit {
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
+          localStorage.setItem('payment', response['id']);
           console.log(response);
           localStorage.setItem('Pf', 'True');
         });

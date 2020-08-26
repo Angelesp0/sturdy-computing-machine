@@ -1,0 +1,39 @@
+<script src="https://paypal.com/sdk/js?client-id=AdzB8j-AFKIKc074GT0S0jkkbcwCnouRtA3QgoVNOKEhIqB-yROQA6L4sfwgylkou0ZABoEz5CNrbTfm&currency=MXN"></script>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title">Pagos</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md">
+                            <label>Empresas<strong><span class="text-danger">*</span></strong></label>
+                            <select name="companies" class="form-control" inputmode="text" [(ngModel)]="this.company" (ngModelChange)="getService($event)">
+                                <option [value]="exec.id_company" *ngFor="let exec of companies">{{exec.company}} {{exec.rfc}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <label>Servicio<strong><span class="text-danger">*</span></strong></label>
+                            <select name="services" class="form-control" inputmode="text" [(ngModel)]="this.service">
+                                <option [value]="serv.id_service" *ngFor="let serv of services">{{serv.name_service}}</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,8 +18,6 @@ import { LoginComponent } from './layouts/login/login.component';
 import { CompaniesComponent, ModalEditarEmpresa } from './companies/companies.component';
 import { ServicesComponent, ModalEditarServicio, ModalNuevoServicio } from './services/services.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
-import { CollectComponent } from './payments/collect.component';
-
 
 import { DataTablesModule } from 'angular-datatables';
 import {MatRadioModule } from '@angular/material/radio';
@@ -32,13 +30,13 @@ import { FileSelectDirective } from 'ng2-file-upload';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PaymentsComponent } from './companies/payments/payments.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { CollectComponent } from './collect/collect.component';
 
 
 
 
 @NgModule({
   imports: [
-    CollectComponent,
     MatDividerModule,
     NgxPayPalModule,
     PdfViewerModule,
@@ -71,7 +69,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AddCompanyComponent,
     JsPDFComponent,
     AddMediaComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    CollectComponent
 
   ],
   providers: [
