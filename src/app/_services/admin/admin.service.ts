@@ -193,7 +193,7 @@ export class AdminService {
       );
   }
 
-  location(lat, lng, label, company_id_company) {
+  locatio(lat, lng, label, company_id_company) {
     return this.http
     .post('http://192.168.137.1:3000/companies/location', {lat, lng, label, company_id_company} )
     .pipe(

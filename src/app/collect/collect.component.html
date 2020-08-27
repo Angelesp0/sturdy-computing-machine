@@ -24,12 +24,27 @@
                         </div>
                         <div class="col-md">
                             <label>Servicio<strong><span class="text-danger">*</span></strong></label>
-                            <select name="services" class="form-control" inputmode="text" [(ngModel)]="this.service">
+                            <select name="services" class="form-control" inputmode="text" [(ngModel)]="this.service" (ngModelChange)="payment($event)">
                                 <option [value]="serv.id_service" *ngFor="let serv of services">{{serv.name_service}}</option>
                             </select>
                         </div>
                         <div class="col">
                             <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <div></div>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong><span style="color: green;" *ngIf="accept"><i class="far fa-check-circle"></i> Mes Actual Pagado</span></strong></p>
+                            <p><strong><span style="color: orange;" *ngIf="pagar"><i class="far fa-exclamation-circle"></i>Pagar Mes Actual</span></strong></p>
+                            <p><strong><span style="color: red;" *ngIf="reject"><i class="fas fa-times-circle"></i> Adeudo Favor de pagar</span></strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-primary" (click)="cash()">
+                                <div>Pago En Efectivo</div>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from '../_services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Payment } from '../models/register_paiment';
 
 @Component({
   selector: 'app-collect',
@@ -16,11 +17,19 @@ export class CollectComponent implements OnInit {
   services: any;
   service: any;
   todayDate: Date = new Date();
-  id_payment: any;
-  totalValue: any;
   id_company: number;
   id_service: number;
+  idCompanyServ: number;
 
+  name: string;
+  value: number;
+  endMonth: any;
+  endDay: any;
+  actualMonth: any;
+  actualDay: any;
+  accept: boolean;
+  reject: boolean;
+  pagar: boolean;
 
   constructor(
     private toastr: ToastrService,
@@ -32,23 +41,21 @@ export class CollectComponent implements OnInit {
 
   ngOnInit(): void {
     this.companyService.getCompanies().subscribe(response => this.companies = response);
-    //this.service();
     this.initConfig();
   }
 
-  /*private service() {
+   payment(newValue) {
       // logged in so return true
       this.item = {
-        name: 'Servicio: RIF',
+        name: this.name,
         quantity: '1',
         category: 'DIGITAL_GOODS',
         unit_amount: {
           currency_code: 'MXN',
-          value: '350.00',
+          value: this.value,
         }
       };
-      this.id_service = 1;
-  }*/
+  }
 
   private initConfig(): void {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -90,11 +97,10 @@ export class CollectComponent implements OnInit {
       });
     },
     onClientAuthorization: (data) => {
-      console.log(data);
       this.showNotification('top', 'right', 2);
-      this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company, data.id ).subscribe((response) => {
+      this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
       });
-      this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
+      this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
         console.log(responsee);
       });
       // this.showSuccess = true;
@@ -160,11 +166,58 @@ export class CollectComponent implements OnInit {
 
   getService(newValue) {
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
-      console.log(response);
        this.services = Array.of(response);
+       this.name = response['name_service'];
+       this.value = response['value'];
+       this.id_service = response['id_service'];
+       this.idCompanyServ = response['id_companys'];
+
+       const datePayment = new Date(response['end_date']);
+       this.endMonth = datePayment.getMonth() + 1;
+       this.endDay = datePayment.getDate();
+       this.abono();
       });
   }
 
+  abono() {
+    const actual = new Date(Date.now());
+    this.actualMonth = actual.getMonth() + 1;
+    this.actualDay = actual.getDate();
 
+    if (this.endMonth === this.actualMonth) {
+        if (this.actualDay >=  12) {
+          // console.log('mes igual, dia actual mayor al 12');
+          this.reject = true;
+          this.pagar = false;
+          this.accept = false;
+        } else {
+          // console.log('mes igual, dia actual menor al 12');
+          this.pagar = true;
+          this.accept = false;
+          this.reject = false;
+        }
+    } else {
+      if (this.endMonth > this.actualMonth) {
+        // console.log('mes final, mayor al actual');
+        this.accept = true;
+        this.reject = false;
+        this.pagar = false;
+      } else {
+        // console.log('mes final, menor al actual');
+        this.reject = true;
+        this.pagar = false;
+        this.accept = false;
+      }
+    }
+  }
 
+  cash() {
+    const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
+    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.company, this.idCompanyServ, this.id_company).subscribe((response) => {
+      console.log(response);
+    });
+    this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
+      console.log(responsee);
+    });
+  }
 }

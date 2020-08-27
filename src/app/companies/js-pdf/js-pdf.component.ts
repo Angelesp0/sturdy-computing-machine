@@ -222,7 +222,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.text(490, 60, `${identificador}`);
     doc.text(150, 80, ' CONTRATO DE PRESTACIÓN DE SERVICIOS PROFESIONALES,', {maxWidth: 490, align: 'justify'});
     doc.text(205, 100, ' EN MATERIA DE CONTABILIDAD GENERAL.', {maxWidth: 490, align: 'justify'});
-    doc.text(95, 132, `          QUE CELEBRAN POR UNA PARTE GESTORIA EMPRESARIAL GLOBAL SERVICE REPRESENTADA EN ESTE ACTO POR YADIRA EUGENIA TORRES MENDOZA, A QUIEN EN LO SUCESIVO SE LE DENOMINARA COMO “LA PRESTADORA”; Y POR LA OTRA, ${this.inf.first_name} ${this.inf.last_name} DE LA EMPRESA CON NOMBRE COMERCIAL ${this.inf.company}, A QUIEN EN ADELANTE SE DESIGNARA COMO “EL PRESTATARIO”; DE CONFORMIDAD CON LAS DECLARACIONES Y CLAUSULAS SIGUIENTES:`, {maxWidth: 455, align: 'justify'});
+    doc.text(95, 132, `          QUE CELEBRAN POR UNA PARTE GESTORIA EMPRESARIAL GLOBAL SERVICE REPRESENTADA EN ESTE ACTO POR YADIRA EUGENIA TORRES MENDOZA, A QUIEN EN LO SUCESIVO SE LE DENOMINARA COMO “LA PRESTADORA”; Y POR LA OTRA, ${this.inf.first_name.toUpperCase()} ${this.inf.last_name.toUpperCase()} DE LA EMPRESA CON NOMBRE COMERCIAL ${this.inf.company.toUpperCase()}, A QUIEN EN ADELANTE SE DESIGNARA COMO “EL PRESTATARIO”; DE CONFORMIDAD CON LAS DECLARACIONES Y CLAUSULAS SIGUIENTES:`, {maxWidth: 455, align: 'justify'});
     doc.text(200, 235, 'D E C L A R A C I O N E S:');
     doc.text(95, 260, 'I. “LA PRESTADORA” DECLARA.' , {maxWidth: 190, align: 'justify'});
     doc.text(95, 280, 'Que es una Sociedad Civil debidamente constituida conforme las leyes mexicanas, según consta en la Escritura Pública número 9,699 de fecha de 21 de enero de 2011, otorgada ante la fe del Lic. Norberto Burciaga Cazares, Notario Público número 7 para el Distrito Judicial Morelos, Estado de Chihuahua, inscrita en el Registro Público de la Propiedad y del Comercio del Estado de Chihuahua, bajo el número 42, a folios 84, del libro 152 de la Sección Cuarta.', {maxWidth: 455, align: 'justify'});
@@ -668,5 +668,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     localStorage.removeItem('payment');
     localStorage.removeItem('id_company');
     localStorage.removeItem('ejecutivo');
+    localStorage.removeItem('pay');
+
   }
 }

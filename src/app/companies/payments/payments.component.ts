@@ -36,7 +36,7 @@ export class PaymentsComponent implements OnInit {
   admins: any;
   interval: any;
   aproved: any;
-
+  idCompanyServ: any;
   constructor(
     private toastr: ToastrService,
     private companyService: CompanyService,
@@ -51,6 +51,7 @@ export class PaymentsComponent implements OnInit {
   item: any;
 
   ngOnInit() {
+    this.idCompanyServ = localStorage.getItem('pay');
     this.id_ejecutivo = localStorage.getItem('ejecutivo');
     this.id_company = this.activatedRoute.snapshot.params['id_company'];
     this.companyService.getAdmin().subscribe( response => this.admins = response);
@@ -134,9 +135,11 @@ export class PaymentsComponent implements OnInit {
     onClientAuthorization: (data) => {
       localStorage.setItem('value', data.purchase_units[0].amount.value );
       localStorage.setItem('payment', 'card');
+      console.log(this.idCompanyServ);
       console.log(data);
       this.showNotification('top', 'right', 2);
-      this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company, data.id ).subscribe((response) => {
+      this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company, this.idCompanyServ, data.id ).subscribe((response) => {
+        console.log(response);
         this.id_payment = response['id_table'];
         this.totalValue = response['value'];
         this.commission = (this.totalValue * 0.20);
@@ -275,7 +278,8 @@ export class PaymentsComponent implements OnInit {
   cash() {
     localStorage.setItem('value', this.item.unit_amount.value );
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.id_company).subscribe((response) => {
+    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.idCompanyServ, this.id_company).subscribe((response) => {
+      localStorage.removeItem('payment');
       this.id_payment = response['id_table'];
       this.totalValue = response['value'];
       this.commission = (this.totalValue * 0.20);
@@ -285,7 +289,6 @@ export class PaymentsComponent implements OnInit {
       });
     });
     this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
-      localStorage.setItem('payment', 'cash');
       console.log('Active_payment');
       this.router.navigate([`/generatepdf/${this.id_company}`]);
       console.log(responsee);
