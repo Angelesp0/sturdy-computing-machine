@@ -567,9 +567,6 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.text(485, 750, `/Gestoria Empresarial` , {maxWidth: 455, align: 'justify'});
     doc.text(255, 760, `Chihuahua, Chih.` , {maxWidth: 455, align: 'justify'});
 
-    if (download === 'true') {
-      doc.output('dataurlnewwindow');
-    }
     if (post) {
       this.adminService.postAcuse(this.id, doc.output('blob')).subscribe(response => {
         localStorage.setItem('ac', response['nombre']);

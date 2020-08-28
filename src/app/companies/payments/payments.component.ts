@@ -278,7 +278,7 @@ export class PaymentsComponent implements OnInit {
   cash() {
     localStorage.setItem('value', this.item.unit_amount.value );
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.idCompanyServ, this.id_company).subscribe((response) => {
+    this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.id_company, this.idCompanyServ, this.id_company).subscribe((response) => {
       localStorage.removeItem('payment');
       this.id_payment = response['id_table'];
       this.totalValue = response['value'];

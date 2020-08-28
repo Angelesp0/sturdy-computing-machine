@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/maps',              title: 'Ubicaciones',  icon: 'location_pin',      class: '' },
     { path: '/payment',           title: 'Pagar',        icon: 'business_money-coins',  class: '' },
     { path: '/services',          title: 'Servicios',    icon: 'design_bullet-list-67', class: '' },
-    { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
+    // { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
     { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
 
 
@@ -24,7 +24,7 @@ export const ROUTES: RouteInfo[] = [
     // { path: '/generatepdf/140',   title: 'Contrato',     icon: 'design_app',            class: '' },
 
 
-     { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
+    // { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
     // { path: '/table-list', title: 'Table List',  icon: 'design_bullet-list-67', class: '' },
     // { path: '/maps', title: 'Maps',  icon: 'location_map-big', class: '' },
     // { path: '/notifications', title: 'Notifications',  icon: 'ui-1_bell-53', class: '' },

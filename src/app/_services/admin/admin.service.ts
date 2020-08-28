@@ -201,6 +201,10 @@ export class AdminService {
     );
   }
 
+  getLocations() {
+    return this.http.get('http://192.168.137.1:3000/location/', this.httpOptions);
+  }
+
   getInfContract(id) {
     return this.http.get('http://192.168.137.1:3000/contract/' + id, this.httpOptions);
   }

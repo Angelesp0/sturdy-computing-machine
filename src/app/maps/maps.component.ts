@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../_services/admin/admin.service';
+
 
 declare const google: any;
 
@@ -7,6 +9,7 @@ lat: number;
 lng: number;
 label?: string;
 draggable?: boolean;
+
 }
 @Component({
   selector: 'app-maps',
@@ -14,16 +17,19 @@ draggable?: boolean;
   styleUrls: ['./maps.component.css']
 })
 export class MapsComponent implements OnInit {
-
-  constructor() { }
+  constructor(
+      public adminService: AdminService
+  ) { }
 
   ngOnInit() {
-    console.log(google.maps.places.PlacesServiceStatus);
+    this.adminService.getLocations().subscribe(response => this.mapa(response));
+  }
 
-    var infowindow = new google.maps.InfoWindow();
+  mapa(locations) {
 
+    console.log(locations);
     const myLatlng = {lat: 28.658638071997842, lng: -106.06216647017715};
-    var mapOptions = {
+    const mapOptions = {
         zoom: 13,
         center: myLatlng,
         scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
@@ -112,19 +118,47 @@ export class MapsComponent implements OnInit {
                 "visibility": "simplified"
             }]
         }]
-
     };
+    const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    let infoWindow = new google.maps.InfoWindow();
 
-    const map = new google.maps.Map(document.getElementById('map'), {zoom: 13, center: myLatlng});
+    for (let i = 0; i < locations.length; i++) {
+        const contentString = '<div id="content">' +
+      '<div id="siteNotice">' +
+      '</div>' +
+      `<h1 id="firstHeading" class="firstHeading">${locations[i]['company']}</h1>` +
+      `<div id="bodyContent">` +
+      `<br><b>Razon social: ${locations[i]['razon']}</b>` +
+      `<br><b>RFC: ${locations[i]['rfc']}</b>` +
+      `<br><b>Telefono Empresa: ${locations[i]['tel']}</b>` +
+      `<br><b>Responsable del registro: ${locations[i]['first_name']} ${locations[i]['last_name']}</b>` +
+      `<br><img height="80" src="http://192.168.137.1:3000/files/${locations[i]['nombre']}">` +
+      '</div>' +
+      '</div>';
+        const lat = locations[i]['lat'];
+        const lng = locations[i]['lng'];
 
+        const lat1: number = + lat;
+        const lng1: number = + lng;
 
+        const latlng = {lat: lat1, lng: lng1};
 
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        title: "Hello World!"
-    });
-
-    // To add the marker to the map, call setMap();
+        const marker = new google.maps.Marker({
+            position: latlng,
+            title: locations[i]['company']
+        });
+        google.maps.event.addListener(marker, "click", () => {
+            infoWindow.close();
+            infoWindow = new google.maps.InfoWindow({position: latlng});
+            infoWindow.setContent(contentString);
+            infoWindow.open(map);
+            });
+        marker.setMap(map);
+    }
+    map.addListener('click', function(mapsMouseEvent) {
+        // Close the current InfoWindow.
+        infoWindow.close();
+      });
   }
-}
 
+}
