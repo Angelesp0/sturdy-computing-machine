@@ -169,11 +169,13 @@ export class AdminService {
       );
   }
 
-  postContract(id, file) {
+  postContract(id, date, file) {
     const uploadData = new FormData();
     uploadData.append('file', file);
     uploadData.append('category', 'Contrato');
     uploadData.append('company_id_company', id);
+    uploadData.append('upload_date', date);
+
     return this.http
       .post('http://192.168.137.1:3000/companies/img', uploadData)
       .pipe(
@@ -223,12 +225,14 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/receipt/' + id, this.httpOptions);
   }
 
-  postReceipt(id, num,  file) {
+  postReceipt(id, num, date, file) {
     const uploadData = new FormData();
     uploadData.append('file', file);
     uploadData.append('company_id_company', id);
     uploadData.append('num_receipt', num);
- 
+    uploadData.append('upload_date', date);
+
+
     return this.http
       .post('http://192.168.137.1:3000/receipt', uploadData)
       .pipe(

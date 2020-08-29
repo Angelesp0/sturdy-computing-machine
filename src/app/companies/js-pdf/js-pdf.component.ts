@@ -173,7 +173,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     }
 
     if (post) {
-      this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
+      this.adminService.postContract(this.id, date, doc.output('blob')).subscribe(response => {
         this.contratoName = response['nombre'];
         this.adminService.getContract(this.id).subscribe( response => {
           localStorage.setItem('cont', response['nombre']);
@@ -311,8 +311,8 @@ export class JsPDFComponent implements OnInit, OnDestroy
     if (download == 'true') {
       doc.save('Contrato_GGlobals.pdf');
     }
-    if (post) {
-      this.adminService.postContract(this.id, doc.output('blob')).subscribe(response => {
+    if (post) { 
+      this.adminService.postContract(this.id, date, doc.output('blob')).subscribe(response => {
         this.contratoName = response['nombre'];
         localStorage.setItem('cont', response['nombre']);
         this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.137.1:3000/files/${response['nombre']}`);
@@ -487,7 +487,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     }
 
     if (post) {
-      this.adminService.postReceipt(this.id, identificador, doc.output('blob')).subscribe(response => {
+      this.adminService.postReceipt(this.id, identificador, date, doc.output('blob')).subscribe(response => {
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
           localStorage.setItem('rec', response[0]['name']);
           localStorage.setItem(post, 'no');
@@ -619,7 +619,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
         this.pdfSrc = `http://192.168.137.1:3000/files/${localStorage.getItem('cont')}`;
       }
     } else {
-      await this.receipt('false', 'post');
+      await this.receipt('false', 'post'); 
       if (this.inf.id_service == 1) {
         await this.rif('false', 'post');
       }
