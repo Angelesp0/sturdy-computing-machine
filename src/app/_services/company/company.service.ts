@@ -122,7 +122,6 @@ export class CompanyService {
     return this.http
       .post('http://192.168.137.1:3000/company_services', item)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }

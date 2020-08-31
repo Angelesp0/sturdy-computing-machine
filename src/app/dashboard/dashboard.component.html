@@ -1,6 +1,8 @@
 <div class="panel-header panel-header-lg">
     <canvas baseChart id="bigDashboardChart" [datasets]="lineBigDashboardChartData" [labels]="lineBigDashboardChartLabels" [colors]="lineBigDashboardChartColors" [options]="lineBigDashboardChartOptions" [chartType]="lineBigDashboardChartType" (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"></canvas>
+    <button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>
+
 </div>
 
 <div class="main-content">

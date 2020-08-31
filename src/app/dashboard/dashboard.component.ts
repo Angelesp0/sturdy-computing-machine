@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import * as Chartist from 'chartist';
+import { AdminService } from '../_services/admin/admin.service';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,43 +9,56 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+
+  constructor(
+    public adminService: AdminService
+  ) { }
+  public contratosTotales: any;
+  public data1: any;
+  public num: number;
+  data: any;
+
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
-  public canvas : any;
+  public canvas: any;
   public ctx;
   public gradientFill;
-  public lineBigDashboardChartData:Array<any>;
-  public lineBigDashboardChartOptions:any;
-  public lineBigDashboardChartLabels:Array<any>;
-  public lineBigDashboardChartColors:Array<any>
+  public lineBigDashboardChartData: Array<any>;
+  public lineBigDashboardChartOptions: any;
+  public lineBigDashboardChartLabels: Array<any>;
+  public lineBigDashboardChartColors: Array<any>;
 
   public gradientChartOptionsConfiguration: any;
   public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
 
   public lineChartType;
-  public lineChartData:Array<any>;
-  public lineChartOptions:any;
-  public lineChartLabels:Array<any>;
-  public lineChartColors:Array<any>
+  public lineChartData: Array<any>;
+  public lineChartOptions: any;
+  public lineChartLabels: Array<any>;
+  public lineChartColors: Array<any>;
 
   public lineChartWithNumbersAndGridType;
-  public lineChartWithNumbersAndGridData:Array<any>;
-  public lineChartWithNumbersAndGridOptions:any;
-  public lineChartWithNumbersAndGridLabels:Array<any>;
-  public lineChartWithNumbersAndGridColors:Array<any>
+  public lineChartWithNumbersAndGridData: Array<any>;
+  public lineChartWithNumbersAndGridOptions: any;
+  public lineChartWithNumbersAndGridLabels: Array<any>;
+  public lineChartWithNumbersAndGridColors: Array<any>;
 
   public lineChartGradientsNumbersType;
-  public lineChartGradientsNumbersData:Array<any>;
-  public lineChartGradientsNumbersOptions:any;
-  public lineChartGradientsNumbersLabels:Array<any>;
-  public lineChartGradientsNumbersColors:Array<any>
+  public lineChartGradientsNumbersData: Array<any>;
+  public lineChartGradientsNumbersOptions: any;
+  public lineChartGradientsNumbersLabels: Array<any>;
+  public lineChartGradientsNumbersColors: Array<any>;
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
   // events
-  public chartClicked(e:any):void {
+  public chartClicked(e: any): void {
     console.log(e);
   }
 
-  public chartHovered(e:any):void {
+  public chartHovered(e: any): void {
     console.log(e);
   }
   public hexToRGB(hex, alpha) {
@@ -57,9 +72,72 @@ export class DashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
-  constructor() { }
 
   ngOnInit() {
+    const ene = [];
+    const feb = [];
+    const mar = [];
+    const abr = [];
+    const may = [];
+    const jun = [];
+    const jul = [];
+    const ago = [];
+    const sep = [];
+    const oct = [];
+    const nov = [];
+    const dic = [];
+
+     this.adminService.getContracts().subscribe(response => {
+      this.data1 = response;
+      for (let i = 0; i < this.data1.length; i++) {
+        const date = new Date(this.data1[i]['upload_date']);
+        const month = date.getMonth() + 1;
+        console.log(month);
+        switch (month) {
+          case 1:
+            ene.push('1');
+            break;
+          case 2:
+            feb.push('2');
+            break;
+          case 3:
+            mar.push('3');
+            break;
+          case 4:
+            abr.push('4');
+            break;
+          case 5:
+            may.push('5');
+            break;
+          case 6:
+            jun.push('6');
+            break;
+          case 7:
+            jul.push('7');
+            break;
+          case 8:
+            ago.push('8');
+            break;
+          case 9:
+            sep.push('9');
+            break;
+          case 10:
+            oct.push('10');
+            break;
+          case 11:
+            nov.push('11');
+            break;
+          case 12:
+            dic.push('12');
+            break;
+          default:
+            break;
+        }
+      }
+      this.data = [ene.length, feb.length, mar.length, abr.length, may.length, jun.length, jul.length, ago.length, sep.length, oct.length, nov.length, dic.length];
+      console.log(jun.length);
+    });
+
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
     this.ctx = this.canvas.getContext("2d");
@@ -71,22 +149,20 @@ export class DashboardComponent implements OnInit {
     this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     this.gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
-
     this.lineBigDashboardChartData = [
         {
-          label: "Data",
-
+          label: 'Data',
           pointBorderWidth: 1,
           pointHoverRadius: 7,
           pointHoverBorderWidth: 2,
           pointRadius: 5,
           fill: true,
-
           borderWidth: 2,
-          data: [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95]
+          data: [0, 2, 3, 4, 5, 6, 7, 8, 9, 5, 3]
         }
-      ];
-      this.lineBigDashboardChartColors = [
+    ];
+
+    this.lineBigDashboardChartColors = [
        {
          backgroundColor: this.gradientFill,
          borderColor: this.chartColor,
@@ -95,8 +171,9 @@ export class DashboardComponent implements OnInit {
          pointHoverBackgroundColor: "#2c2c2c",
          pointHoverBorderColor: this.chartColor,
        }
-     ];
-    this.lineBigDashboardChartLabels = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    ];
+
+    this.lineBigDashboardChartLabels = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
     this.lineBigDashboardChartOptions = {
 
           layout: {
@@ -277,16 +354,19 @@ export class DashboardComponent implements OnInit {
           borderWidth: 2,
           data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
         }
-      ];
-      this.lineChartColors = [
+    ];
+
+    this.lineChartColors = [
        {
          borderColor: "#f96332",
          pointBorderColor: "#FFF",
          pointBackgroundColor: "#f96332",
          backgroundColor: this.gradientFill
        }
-     ];
+    ];
+
     this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     this.lineChartOptions = this.gradientChartOptionsConfiguration;
 
     this.lineChartType = 'line';
@@ -405,5 +485,12 @@ export class DashboardComponent implements OnInit {
       }
 
     this.lineChartGradientsNumbersType = 'bar';
+  }
+
+  public randomize(): void {
+    this.lineBigDashboardChartData[0]['data'] = [0];
+    console.log(this.lineBigDashboardChartData[0]['data']);
+    console.log('data');
+    this.chart.chart.update();
   }
 }

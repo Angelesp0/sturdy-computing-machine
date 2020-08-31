@@ -88,10 +88,16 @@ export class AddCompanyComponent implements OnInit {
       const id_company = response['newInf']['company_id_company'];
       localStorage.setItem('id_company', id_company);
       this.id_company = id_company;
+      console.log(this.service1);
 
       if (this.service1 == 1) {
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-        const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
+        let endDate;
+        if (this.todayDate.getDate() === 31) {
+          endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + (this.todayDate.getDate() - 1);
+        } else {
+          endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
+        }
 
         this.service.company_id_company = id_company;
         this.service.services_id_service = "1";
@@ -108,8 +114,12 @@ export class AddCompanyComponent implements OnInit {
       if (this.service1 == 0) {
 
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-        const endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
-
+        let endDate;
+        if (this.todayDate.getDate() === 31) {
+          endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + (this.todayDate.getDate() - 1);
+        } else {
+          endDate = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 2) + '-' + this.todayDate.getDate();
+        }
         this.service.company_id_company = id_company;
         this.service.services_id_service = "2";
         this.service.status = "0";
