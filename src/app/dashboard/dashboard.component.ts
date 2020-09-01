@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild  } from '@angular/core';
 import * as Chartist from 'chartist';
 import { AdminService } from '../_services/admin/admin.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -9,25 +12,89 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-
-  constructor(
-    public adminService: AdminService
-  ) { }
   public contratosTotales: any;
   public data1: any;
   public num: number;
   data: any;
 
-  public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
   public canvas: any;
   public ctx;
   public gradientFill;
-  public lineBigDashboardChartData: Array<any>;
-  public lineBigDashboardChartOptions: any;
-  public lineBigDashboardChartLabels: Array<any>;
+  public lineBigDashboardChartType = 'line';
+  public lineBigDashboardChartData: ChartDataSets[] = [
+    {
+      label: 'Data',
+      pointBorderWidth: 1,
+      pointHoverRadius: 7,
+      pointHoverBorderWidth: 2,
+      pointRadius: 5,
+      fill: true,
+      borderWidth: 2,
+      data: this.data
+    }
+];
+  public lineBigDashboardChartOptions: ChartOptions = {
+
+    layout: {
+        padding: {
+            left: 20,
+            right: 20,
+            top: 0,
+            bottom: 0
+        }
+    },
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: '#fff',
+      titleFontColor: '#333',
+      bodyFontColor: '#666',
+      bodySpacing: 4,
+      xPadding: 12,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest"
+    },
+    legend: {
+        position: "bottom",
+        fillStyle: "#FFF",
+        display: false
+    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                fontColor: "rgba(255,255,255,0.4)",
+                fontStyle: "bold",
+                beginAtZero: true,
+                maxTicksLimit: 5,
+                padding: 10
+            },
+            gridLines: {
+                drawTicks: true,
+                drawBorder: false,
+                display: true,
+                color: "rgba(255,255,255,0.1)",
+                zeroLineColor: "transparent"
+            }
+
+        }],
+        xAxes: [{
+            gridLines: {
+                zeroLineColor: "transparent",
+                display: false,
+
+            },
+            ticks: {
+                padding: 10,
+                fontColor: "rgba(255,255,255,0.4)",
+                fontStyle: "bold"
+            }
+        }]
+    }
+  };
+
+  public lineBigDashboardChartLabels: Array<any> = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];;
   public lineBigDashboardChartColors: Array<any>;
 
   public gradientChartOptionsConfiguration: any;
@@ -51,43 +118,63 @@ export class DashboardComponent implements OnInit {
   public lineChartGradientsNumbersLabels: Array<any>;
   public lineChartGradientsNumbersColors: Array<any>;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
-  public hexToRGB(hex, alpha) {
-    var r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
-      b = parseInt(hex.slice(5, 7), 16);
-
-    if (alpha) {
-      return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
-    } else {
-      return "rgb(" + r + ", " + g + ", " + b + ")";
+    // events
+    public chartClicked(e: any): void {
+      console.log(e);
     }
-  }
+    public chartHovered(e: any): void {
+      console.log(e);
+    }
+    public hexToRGB(hex, alpha) {
+      let r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+
+      if (alpha) {
+        return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+      } else {
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+      }
+    }
+
+  constructor(public adminService: AdminService) { }
 
   ngOnInit() {
-    const ene = [];
-    const feb = [];
-    const mar = [];
-    const abr = [];
-    const may = [];
-    const jun = [];
-    const jul = [];
-    const ago = [];
-    const sep = [];
-    const oct = [];
-    const nov = [];
-    const dic = [];
+    this.chartColor = "#FFFFFF";
+    this.canvas = document.getElementById("bigDashboardChart");
+    this.ctx = this.canvas.getContext("2d");
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#80b6f4');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+    this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
+    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+    this.lineBigDashboardChartColors = [
+       {
+         backgroundColor: this.gradientFill,
+         borderColor: this.chartColor,
+         pointBorderColor: this.chartColor,
+         pointBackgroundColor: "#2c2c2c",
+         pointHoverBackgroundColor: "#2c2c2c",
+         pointHoverBorderColor: this.chartColor,
+       }
+    ];
 
-     this.adminService.getContracts().subscribe(response => {
+    this.adminService.getContracts().subscribe(response => {
+      const ene = [];
+      const feb = [];
+      const mar = [];
+      const abr = [];
+      const may = [];
+      const jun = [];
+      const jul = [];
+      const ago = [];
+      const sep = [];
+      const oct = [];
+      const nov = [];
+      const dic = [];
       this.data1 = response;
       for (let i = 0; i < this.data1.length; i++) {
         const date = new Date(this.data1[i]['upload_date']);
@@ -134,22 +221,7 @@ export class DashboardComponent implements OnInit {
             break;
         }
       }
-      this.data = [ene.length, feb.length, mar.length, abr.length, may.length, jun.length, jul.length, ago.length, sep.length, oct.length, nov.length, dic.length];
-      console.log(jun.length);
-    });
-
-    this.chartColor = "#FFFFFF";
-    this.canvas = document.getElementById("bigDashboardChart");
-    this.ctx = this.canvas.getContext("2d");
-
-    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-    this.gradientStroke.addColorStop(0, '#80b6f4');
-    this.gradientStroke.addColorStop(1, this.chartColor);
-
-    this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
-    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    this.gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
-    this.lineBigDashboardChartData = [
+      this.lineBigDashboardChartData = [
         {
           label: 'Data',
           pointBorderWidth: 1,
@@ -158,82 +230,10 @@ export class DashboardComponent implements OnInit {
           pointRadius: 5,
           fill: true,
           borderWidth: 2,
-          data: [0, 2, 3, 4, 5, 6, 7, 8, 9, 5, 3]
+          data: [ene.length, feb.length, mar.length, abr.length, may.length, jun.length, jul.length, ago.length, sep.length, oct.length, nov.length, dic.length]
         }
-    ];
-
-    this.lineBigDashboardChartColors = [
-       {
-         backgroundColor: this.gradientFill,
-         borderColor: this.chartColor,
-         pointBorderColor: this.chartColor,
-         pointBackgroundColor: "#2c2c2c",
-         pointHoverBackgroundColor: "#2c2c2c",
-         pointHoverBorderColor: this.chartColor,
-       }
-    ];
-
-    this.lineBigDashboardChartLabels = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-    this.lineBigDashboardChartOptions = {
-
-          layout: {
-              padding: {
-                  left: 20,
-                  right: 20,
-                  top: 0,
-                  bottom: 0
-              }
-          },
-          maintainAspectRatio: false,
-          tooltips: {
-            backgroundColor: '#fff',
-            titleFontColor: '#333',
-            bodyFontColor: '#666',
-            bodySpacing: 4,
-            xPadding: 12,
-            mode: "nearest",
-            intersect: 0,
-            position: "nearest"
-          },
-          legend: {
-              position: "bottom",
-              fillStyle: "#FFF",
-              display: false
-          },
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      fontColor: "rgba(255,255,255,0.4)",
-                      fontStyle: "bold",
-                      beginAtZero: true,
-                      maxTicksLimit: 5,
-                      padding: 10
-                  },
-                  gridLines: {
-                      drawTicks: true,
-                      drawBorder: false,
-                      display: true,
-                      color: "rgba(255,255,255,0.1)",
-                      zeroLineColor: "transparent"
-                  }
-
-              }],
-              xAxes: [{
-                  gridLines: {
-                      zeroLineColor: "transparent",
-                      display: false,
-
-                  },
-                  ticks: {
-                      padding: 10,
-                      fontColor: "rgba(255,255,255,0.4)",
-                      fontStyle: "bold"
-                  }
-              }]
-          }
-    };
-
-    this.lineBigDashboardChartType = 'line';
+      ]; 
+    });
 
 
     this.gradientChartOptionsConfiguration = {
@@ -487,10 +487,5 @@ export class DashboardComponent implements OnInit {
     this.lineChartGradientsNumbersType = 'bar';
   }
 
-  public randomize(): void {
-    this.lineBigDashboardChartData[0]['data'] = [0];
-    console.log(this.lineBigDashboardChartData[0]['data']);
-    console.log('data');
-    this.chart.chart.update();
-  }
+
 }
