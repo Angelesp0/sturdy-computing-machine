@@ -14,6 +14,8 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 export class DashboardComponent implements OnInit {
   public contratosTotales: any;
   public data1: any;
+  public data2: any;
+
   public num: number;
   data: any;
 
@@ -22,19 +24,20 @@ export class DashboardComponent implements OnInit {
   public canvas: any;
   public ctx;
   public gradientFill;
+  // Grafica central
   public lineBigDashboardChartType = 'line';
   public lineBigDashboardChartData: ChartDataSets[] = [
     {
-      label: 'Data',
+      label: 'Contratos',
       pointBorderWidth: 1,
       pointHoverRadius: 7,
       pointHoverBorderWidth: 2,
       pointRadius: 5,
       fill: true,
       borderWidth: 2,
-      data: this.data
+      data: [1, 4, 7, 5, 1, 6, 2, 5, 7, 8, 4, 2]
     }
-];
+  ];
   public lineBigDashboardChartOptions: ChartOptions = {
 
     layout: {
@@ -93,25 +96,37 @@ export class DashboardComponent implements OnInit {
         }]
     }
   };
-
-  public lineBigDashboardChartLabels: Array<any> = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];;
+  public lineBigDashboardChartLabels: Array<any> = ["ENERO", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];;
   public lineBigDashboardChartColors: Array<any>;
-
   public gradientChartOptionsConfiguration: any;
   public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
 
+  // grafica inferior izquierda
   public lineChartType;
   public lineChartData: Array<any>;
   public lineChartOptions: any;
   public lineChartLabels: Array<any>;
   public lineChartColors: Array<any>;
 
-  public lineChartWithNumbersAndGridType;
-  public lineChartWithNumbersAndGridData: Array<any>;
+  // grafica inferior central
+  public lineChartWithNumbersAndGridType = 'line';
+  public lineChartWithNumbersAndGridData: ChartDataSets[] = [
+    {
+      label: "Email Stats",
+       pointBorderWidth: 2,
+       pointHoverRadius: 4,
+       pointHoverBorderWidth: 1,
+       pointRadius: 4,
+       fill: true,
+       borderWidth: 2,
+      data: [40, 500, 650, 700, 1200, 1250, 1300, 1900,1900,1900,1900,1900]
+    }
+  ];
   public lineChartWithNumbersAndGridOptions: any;
-  public lineChartWithNumbersAndGridLabels: Array<any>;
+  public lineChartWithNumbersAndGridLabels: Array<any> = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   public lineChartWithNumbersAndGridColors: Array<any>;
 
+  // grafica inferior derecha
   public lineChartGradientsNumbersType;
   public lineChartGradientsNumbersData: Array<any>;
   public lineChartGradientsNumbersOptions: any;
@@ -161,7 +176,6 @@ export class DashboardComponent implements OnInit {
          pointHoverBorderColor: this.chartColor,
        }
     ];
-
     this.adminService.getContracts().subscribe(response => {
       const ene = [];
       const feb = [];
@@ -179,7 +193,6 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i < this.data1.length; i++) {
         const date = new Date(this.data1[i]['upload_date']);
         const month = date.getMonth() + 1;
-        console.log(month);
         switch (month) {
           case 1:
             ene.push('1');
@@ -223,7 +236,7 @@ export class DashboardComponent implements OnInit {
       }
       this.lineBigDashboardChartData = [
         {
-          label: 'Data',
+          label: 'Contratos',
           pointBorderWidth: 1,
           pointHoverRadius: 7,
           pointHoverBorderWidth: 2,
@@ -232,10 +245,8 @@ export class DashboardComponent implements OnInit {
           borderWidth: 2,
           data: [ene.length, feb.length, mar.length, abr.length, may.length, jun.length, jul.length, ago.length, sep.length, oct.length, nov.length, dic.length]
         }
-      ]; 
+      ];
     });
-
-
     this.gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
       legend: {
@@ -286,7 +297,6 @@ export class DashboardComponent implements OnInit {
         }
       }
     };
-
     this.gradientChartOptionsConfigurationWithNumbersAndGrid = {
       maintainAspectRatio: false,
       legend: {
@@ -331,18 +341,16 @@ export class DashboardComponent implements OnInit {
         }
       }
     };
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     this.canvas = document.getElementById("lineChartExample");
     this.ctx = this.canvas.getContext("2d");
-
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
     this.gradientStroke.addColorStop(0, '#80b6f4');
     this.gradientStroke.addColorStop(1, this.chartColor);
-
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     this.gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
-
     this.lineChartData = [
         {
           label: "Active Users",
@@ -355,7 +363,6 @@ export class DashboardComponent implements OnInit {
           data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
         }
     ];
-
     this.lineChartColors = [
        {
          borderColor: "#f96332",
@@ -364,60 +371,124 @@ export class DashboardComponent implements OnInit {
          backgroundColor: this.gradientFill
        }
     ];
-
-    this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    this.lineChartOptions = this.gradientChartOptionsConfiguration;
-
     this.lineChartType = 'line';
+    this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    this.lineChartOptions = this.gradientChartOptionsConfiguration;
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     this.canvas = document.getElementById("lineChartExampleWithNumbersAndGrid");
     this.ctx = this.canvas.getContext("2d");
-
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
     this.gradientStroke.addColorStop(0, '#18ce0f');
     this.gradientStroke.addColorStop(1, this.chartColor);
-
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+    this.adminService.getSales().subscribe(response => {
+      let ene = [];
+      let feb = [];
+      let mar = [];
+      let abr = [];
+      let may = [];
+      let jun = [];
+      let jul = [];
+      let ago = [];
+      let sep = [];
+      let oct = [];
+      let nov = [];
+      let dic = [];
+      this.data2 = response;
+      console.log(this.data2[7]['value']);
+      for (let i = 0; i < this.data2.length; i++) {
+        const date = new Date(this.data2[i]['update_time']);
+        const month = date.getMonth() + 1;
+        switch (month) {
+          case 1:
+            ene.push(this.data2[i]['value']);
+            break;
+          case 2:
+            feb.push(this.data2[i]['value']);
+            break;
+          case 3:
+            mar.push(this.data2[i]['value']);
+            break;
+          case 4:
+            abr.push(this.data2[i]['value']);
+            break;
+          case 5:
+            may.push(this.data2[i]['value']);
+            break;
+          case 6:
+            jun.push(this.data2[i]['value']);
+            break;
+          case 7:
+            jul.push(this.data2[i]['value']);
+            break;
+          case 8:
+            ago.push(this.data2[i]['value']);
+            break;
+          case 9:
+            sep.push(this.data2[i]['value']);
+            break;
+          case 10:
+            oct.push(this.data2[i]['value']);
+            break;
+          case 11:
+            nov.push(this.data2[i]['value']);
+            break;
+          case 12:
+            dic.push(this.data2[i]['value']);
+            break;
+          default:
+            break;
+        }
+      }
 
-    this.lineChartWithNumbersAndGridData = [
+      let m1 = ene.reduce((a, b) => a + b, 0);
+      let m2 = feb.reduce((a, b) => a + b, 0);
+      let m3 = mar.reduce((a, b) => a + b, 0);
+      let m4 = abr.reduce((a, b) => a + b, 0);
+      let m5 = may.reduce((a, b) => a + b, 0);
+      let m6 = jun.reduce((a, b) => a + b, 0);
+      let m7 = jul.reduce((a, b) => a + b, 0);
+      let m8 = ago.reduce((a, b) => a + b, 0);
+      let m9 = sep.reduce((a, b) => a + b, 0);
+      let m10 = oct.reduce((a, b) => a + b, 0);
+      let m11 = nov.reduce((a, b) => a + b, 0);
+      let m12 = dic.reduce((a, b) => a + b, 0);
+
+
+      this.lineChartWithNumbersAndGridData = [
         {
-          label: "Email Stats",
-           pointBorderWidth: 2,
-           pointHoverRadius: 4,
-           pointHoverBorderWidth: 1,
-           pointRadius: 4,
-           fill: true,
-           borderWidth: 2,
-          data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
+          label: 'Total',
+          pointBorderWidth: 1,
+          pointHoverRadius: 7,
+          pointHoverBorderWidth: 2,
+          pointRadius: 5,
+          fill: true,
+          borderWidth: 2,
+          data: [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12]
         }
       ];
-      this.lineChartWithNumbersAndGridColors = [
+    });
+    // this.lineChartWithNumbersAndGridData ;
+    this.lineChartWithNumbersAndGridColors = [
        {
          borderColor: "#18ce0f",
          pointBorderColor: "#FFF",
          pointBackgroundColor: "#18ce0f",
          backgroundColor: this.gradientFill
        }
-     ];
-    this.lineChartWithNumbersAndGridLabels = ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"];
+    ];
+    // this.lineChartWithNumbersAndGridLabels = ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"];
     this.lineChartWithNumbersAndGridOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
-
-    this.lineChartWithNumbersAndGridType = 'line';
-
-
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     this.canvas = document.getElementById("barChartSimpleGradientsNumbers");
     this.ctx = this.canvas.getContext("2d");
-
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
-
-
     this.lineChartGradientsNumbersData = [
         {
           label: "Active Countries",
@@ -429,7 +500,7 @@ export class DashboardComponent implements OnInit {
           borderWidth: 1,
           data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
         }
-      ];
+    ];
     this.lineChartGradientsNumbersColors = [
      {
        backgroundColor: this.gradientFill,
@@ -437,7 +508,7 @@ export class DashboardComponent implements OnInit {
        pointBorderColor: "#FFF",
        pointBackgroundColor: "#2CA8FF",
      }
-   ];
+    ];
     this.lineChartGradientsNumbersLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     this.lineChartGradientsNumbersOptions = {
         maintainAspectRatio: false,
@@ -482,8 +553,7 @@ export class DashboardComponent implements OnInit {
             bottom: 15
           }
         }
-      }
-
+    };
     this.lineChartGradientsNumbersType = 'bar';
   }
 

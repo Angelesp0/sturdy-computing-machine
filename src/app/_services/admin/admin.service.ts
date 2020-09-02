@@ -255,8 +255,7 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/dashboard/contract', this.httpOptions);
   }
 
-
-
-
-
+  getSales() {
+    return this.http.get('http://192.168.137.1:3000/dashboard/sales', this.httpOptions);
+  }
 }
