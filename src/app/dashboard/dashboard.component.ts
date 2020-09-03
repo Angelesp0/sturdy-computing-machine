@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
   public contratosTotales: any;
   public data1: any;
   public data2: any;
+  public data3: any;
+
 
   public num: number;
   data: any;
@@ -55,20 +57,20 @@ export class DashboardComponent implements OnInit {
       bodyFontColor: '#666',
       bodySpacing: 4,
       xPadding: 12,
-      mode: "nearest",
+      mode: 'nearest',
       intersect: 0,
-      position: "nearest"
+      position: 'nearest'
     },
     legend: {
-        position: "bottom",
-        fillStyle: "#FFF",
+        position: 'bottom',
+        fillStyle: '#FFF',
         display: false
     },
     scales: {
         yAxes: [{
             ticks: {
-                fontColor: "rgba(255,255,255,0.4)",
-                fontStyle: "bold",
+                fontColor: 'rgba(255,255,255,0.4)',
+                fontStyle: 'bold',
                 beginAtZero: true,
                 maxTicksLimit: 5,
                 padding: 10
@@ -77,26 +79,26 @@ export class DashboardComponent implements OnInit {
                 drawTicks: true,
                 drawBorder: false,
                 display: true,
-                color: "rgba(255,255,255,0.1)",
-                zeroLineColor: "transparent"
+                color: 'rgba(255,255,255,0.1)',
+                zeroLineColor: 'transparent'
             }
 
         }],
         xAxes: [{
             gridLines: {
-                zeroLineColor: "transparent",
+                zeroLineColor: 'transparent',
                 display: false,
 
             },
             ticks: {
                 padding: 10,
-                fontColor: "rgba(255,255,255,0.4)",
-                fontStyle: "bold"
+                fontColor: 'rgba(255,255,255,0.4)',
+                fontStyle: 'bold'
             }
         }]
     }
   };
-  public lineBigDashboardChartLabels: Array<any> = ["ENERO", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];;
+  public lineBigDashboardChartLabels: Array<any> = ['ENERO', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
   public lineBigDashboardChartColors: Array<any>;
   public gradientChartOptionsConfiguration: any;
   public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
@@ -112,14 +114,14 @@ export class DashboardComponent implements OnInit {
   public lineChartWithNumbersAndGridType = 'line';
   public lineChartWithNumbersAndGridData: ChartDataSets[] = [
     {
-      label: "Email Stats",
+      label: 'Email Stats',
        pointBorderWidth: 2,
        pointHoverRadius: 4,
        pointHoverBorderWidth: 1,
        pointRadius: 4,
        fill: true,
        borderWidth: 2,
-      data: [40, 500, 650, 700, 1200, 1250, 1300, 1900,1900,1900,1900,1900]
+      data: [40, 500, 650, 700, 1200, 1250, 1300, 1900, 1900, 1900, 1900, 1900]
     }
   ];
   public lineChartWithNumbersAndGridOptions: any;
@@ -127,10 +129,64 @@ export class DashboardComponent implements OnInit {
   public lineChartWithNumbersAndGridColors: Array<any>;
 
   // grafica inferior derecha
-  public lineChartGradientsNumbersType;
-  public lineChartGradientsNumbersData: Array<any>;
-  public lineChartGradientsNumbersOptions: any;
-  public lineChartGradientsNumbersLabels: Array<any>;
+  public lineChartGradientsNumbersType = 'bar';
+  public lineChartGradientsNumbersData: Array<any>  = [
+    {
+      label: 'Active Countries',
+      pointBorderWidth: 2,
+      pointHoverRadius: 4,
+      pointHoverBorderWidth: 1,
+      pointRadius: 4,
+      fill: true,
+      borderWidth: 1,
+      data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
+    }
+  ];
+  public lineChartGradientsNumbersOptions: any = {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    tooltips: {
+      bodySpacing: 4,
+      mode: 'nearest',
+      intersect: 0,
+      position: 'nearest',
+      xPadding: 10,
+      yPadding: 10,
+      caretPadding: 10
+    },
+    responsive: 1,
+    scales: {
+      yAxes: [{
+        gridLines: {
+          zeroLineColor: 'transparent',
+          drawBorder: false
+        }
+      }],
+      xAxes: [{
+        display: 0,
+        ticks: {
+          display: false
+        },
+        gridLines: {
+          zeroLineColor: 'transparent',
+          drawTicks: false,
+          display: false,
+          drawBorder: false
+        }
+      }]
+    },
+    layout: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 15,
+        bottom: 15
+      }
+    }
+};
+  public lineChartGradientsNumbersLabels: Array<any> = ['January', 'November', 'December'];
   public lineChartGradientsNumbersColors: Array<any>;
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
@@ -148,31 +204,31 @@ export class DashboardComponent implements OnInit {
         b = parseInt(hex.slice(5, 7), 16);
 
       if (alpha) {
-        return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+        return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
       } else {
-        return "rgb(" + r + ", " + g + ", " + b + ")";
+        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
       }
     }
 
   constructor(public adminService: AdminService) { }
 
   ngOnInit() {
-    this.chartColor = "#FFFFFF";
-    this.canvas = document.getElementById("bigDashboardChart");
-    this.ctx = this.canvas.getContext("2d");
+    this.chartColor = '#FFFFFF';
+    this.canvas = document.getElementById('bigDashboardChart');
+    this.ctx = this.canvas.getContext('2d');
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
     this.gradientStroke.addColorStop(0, '#80b6f4');
     this.gradientStroke.addColorStop(1, this.chartColor);
     this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
-    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    this.gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, 'rgba(255, 255, 255, 0.24)');
     this.lineBigDashboardChartColors = [
        {
          backgroundColor: this.gradientFill,
          borderColor: this.chartColor,
          pointBorderColor: this.chartColor,
-         pointBackgroundColor: "#2c2c2c",
-         pointHoverBackgroundColor: "#2c2c2c",
+         pointBackgroundColor: '#2c2c2c',
+         pointHoverBackgroundColor: '#2c2c2c',
          pointHoverBorderColor: this.chartColor,
        }
     ];
@@ -254,9 +310,9 @@ export class DashboardComponent implements OnInit {
       },
       tooltips: {
         bodySpacing: 4,
-        mode: "nearest",
+        mode: 'nearest',
         intersect: 0,
-        position: "nearest",
+        position: 'nearest',
         xPadding: 10,
         yPadding: 10,
         caretPadding: 10
@@ -269,7 +325,7 @@ export class DashboardComponent implements OnInit {
             display: false
           },
           gridLines: {
-            zeroLineColor: "transparent",
+            zeroLineColor: 'transparent',
             drawTicks: false,
             display: false,
             drawBorder: false
@@ -281,7 +337,7 @@ export class DashboardComponent implements OnInit {
             display: false
           },
           gridLines: {
-            zeroLineColor: "transparent",
+            zeroLineColor: 'transparent',
             drawTicks: false,
             display: false,
             drawBorder: false
@@ -304,9 +360,9 @@ export class DashboardComponent implements OnInit {
       },
       tooltips: {
         bodySpacing: 4,
-        mode: "nearest",
+        mode: 'nearest',
         intersect: 0,
-        position: "nearest",
+        position: 'nearest',
         xPadding: 10,
         yPadding: 10,
         caretPadding: 10
@@ -315,7 +371,7 @@ export class DashboardComponent implements OnInit {
       scales: {
         yAxes: [{
           gridLines: {
-            zeroLineColor: "transparent",
+            zeroLineColor: 'transparent',
             drawBorder: false
           }
         }],
@@ -325,7 +381,7 @@ export class DashboardComponent implements OnInit {
             display: false
           },
           gridLines: {
-            zeroLineColor: "transparent",
+            zeroLineColor: 'transparent',
             drawTicks: false,
             display: false,
             drawBorder: false
@@ -343,17 +399,17 @@ export class DashboardComponent implements OnInit {
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    this.canvas = document.getElementById("lineChartExample");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById('lineChartExample');
+    this.ctx = this.canvas.getContext('2d');
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
     this.gradientStroke.addColorStop(0, '#80b6f4');
     this.gradientStroke.addColorStop(1, this.chartColor);
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    this.gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
     this.lineChartData = [
         {
-          label: "Active Users",
+          label: 'Active Users',
           pointBorderWidth: 2,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 1,
@@ -365,24 +421,24 @@ export class DashboardComponent implements OnInit {
     ];
     this.lineChartColors = [
        {
-         borderColor: "#f96332",
-         pointBorderColor: "#FFF",
-         pointBackgroundColor: "#f96332",
+         borderColor: '#f96332',
+         pointBorderColor: '#FFF',
+         pointBackgroundColor: '#f96332',
          backgroundColor: this.gradientFill
        }
     ];
     this.lineChartType = 'line';
-    this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    this.lineChartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     this.lineChartOptions = this.gradientChartOptionsConfiguration;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    this.canvas = document.getElementById("lineChartExampleWithNumbersAndGrid");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById('lineChartExampleWithNumbersAndGrid');
+    this.ctx = this.canvas.getContext('2d');
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
     this.gradientStroke.addColorStop(0, '#18ce0f');
     this.gradientStroke.addColorStop(1, this.chartColor);
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
     this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
     this.adminService.getSales().subscribe(response => {
       let ene = [];
@@ -471,25 +527,30 @@ export class DashboardComponent implements OnInit {
         }
       ];
     });
-    // this.lineChartWithNumbersAndGridData ;
     this.lineChartWithNumbersAndGridColors = [
        {
-         borderColor: "#18ce0f",
-         pointBorderColor: "#FFF",
-         pointBackgroundColor: "#18ce0f",
+         borderColor: '#18ce0f',
+         pointBorderColor: '#FFF',
+         pointBackgroundColor: '#18ce0f',
          backgroundColor: this.gradientFill
        }
     ];
-    // this.lineChartWithNumbersAndGridLabels = ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"];
     this.lineChartWithNumbersAndGridOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    this.canvas = document.getElementById("barChartSimpleGradientsNumbers");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = document.getElementById('barChartSimpleGradientsNumbers');
+    this.ctx = this.canvas.getContext('2d');
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
     this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
-    this.lineChartGradientsNumbersData = [
+    this.adminService.getExecutive().subscribe(response => {
+      this.data3 = response;
+      for (let i = 0; i < this.data3.length; i++) {
+        const name = this.data3[i]['first_name'] + this.data3[i]['last_name'];
+        console.log(name);
+      }
+    });
+    /*this.lineChartGradientsNumbersData = [
         {
           label: "Active Countries",
           pointBorderWidth: 2,
@@ -500,61 +561,16 @@ export class DashboardComponent implements OnInit {
           borderWidth: 1,
           data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
         }
-    ];
+    ];*/
     this.lineChartGradientsNumbersColors = [
      {
        backgroundColor: this.gradientFill,
-       borderColor: "#2CA8FF",
-       pointBorderColor: "#FFF",
-       pointBackgroundColor: "#2CA8FF",
+       borderColor: '#2CA8FF',
+       pointBorderColor: '#FFF',
+       pointBackgroundColor: '#2CA8FF',
      }
     ];
-    this.lineChartGradientsNumbersLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    this.lineChartGradientsNumbersOptions = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          bodySpacing: 4,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest",
-          xPadding: 10,
-          yPadding: 10,
-          caretPadding: 10
-        },
-        responsive: 1,
-        scales: {
-          yAxes: [{
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawBorder: false
-            }
-          }],
-          xAxes: [{
-            display: 0,
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawTicks: false,
-              display: false,
-              drawBorder: false
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 15,
-            bottom: 15
-          }
-        }
-    };
-    this.lineChartGradientsNumbersType = 'bar';
+    // this.lineChartGradientsNumbersLabels = ['January', 'November', 'December'];
   }
 
 

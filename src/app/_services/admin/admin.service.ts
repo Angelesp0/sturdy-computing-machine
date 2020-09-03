@@ -258,4 +258,8 @@ export class AdminService {
   getSales() {
     return this.http.get('http://192.168.137.1:3000/dashboard/sales', this.httpOptions);
   }
+
+  getExecutive() {
+    return this.http.get('http://192.168.137.1:3000/dashboard/executive', this.httpOptions);
+  }
 }
