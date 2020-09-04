@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   public data1: any;
   public data2: any;
   public data3: any;
+  public value: any = 0;
+  public datos: any;
 
 
   public num: number;
@@ -454,7 +456,6 @@ export class DashboardComponent implements OnInit {
       let nov = [];
       let dic = [];
       this.data2 = response;
-      console.log(this.data2[7]['value']);
       for (let i = 0; i < this.data2.length; i++) {
         const date = new Date(this.data2[i]['update_time']);
         const month = date.getMonth() + 1;
@@ -543,14 +544,38 @@ export class DashboardComponent implements OnInit {
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
     this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
+
+    // obtener el total de ejecutivos
     this.adminService.getExecutive().subscribe(response => {
-      this.data3 = response;
+    this.data3 = response;
+    let data = [];
+    let executive = [];
+
+
+    // por cada ejecutivo
       for (let i = 0; i < this.data3.length; i++) {
-        const name = this.data3[i]['first_name'] + this.data3[i]['last_name'];
-        console.log(name);
+        executive.push(this.data3[i]['first_name']);
+        // solicitar sus ventas
+        this.adminService.getExecutiveSales(this.data3[i]['id_user']).subscribe(response => {
+          // posible idea para el martes .- guardar los valores en variables diferentes y fuera del subscribe crear el arreglo
+          this.datos = response;
+          localStorage.setItem('prueba', this.datos);
+          data.push('');
+
+          /*const datos: any = response;
+          for (let index = 0; index < datos.length; index++) {
+            const d1 = this.value;
+            const d2 = datos[index]['amount'];
+            this.value = d1 + d2;
+
+
+            data.push({name: this.data3[i]['first_name'] + ' ' + this.data3[i]['last_name'], amount: datos[index]['amount'], date: datos[index]['date']});
+          }*/
+        });
       }
-    });
-    /*this.lineChartGradientsNumbersData = [
+      console.log(data);
+
+      this.lineChartGradientsNumbersData = [
         {
           label: "Active Countries",
           pointBorderWidth: 2,
@@ -559,9 +584,14 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
+          data: [10,20]
         }
-    ];*/
+      ];
+      console.log(executive);
+      this.lineChartGradientsNumbersLabels = executive;
+
+    });
+    /**/
     this.lineChartGradientsNumbersColors = [
      {
        backgroundColor: this.gradientFill,
