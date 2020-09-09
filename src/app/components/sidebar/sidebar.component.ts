@@ -32,10 +32,15 @@ export const ROUTES: RouteInfo[] = [
 ];
 
 export const ROUTES_ejecutivo: RouteInfo[] = [
+  { path: '/material',          title: 'Materiales',   icon: 'design_image',          class: '' },
   { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
   { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
-  { path: '/user-profile',      title: 'User Profile', icon: 'users_circle-08',       class: '' },
+  { path: '/user-profile',      title: 'User Profile', icon: 'business_badge',        class: '' },
   { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
+  { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
+
+
+  
 ];
 
 @Component({

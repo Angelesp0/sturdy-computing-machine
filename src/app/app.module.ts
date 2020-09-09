@@ -31,6 +31,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PaymentsComponent } from './companies/payments/payments.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CollectComponent } from './collect/collect.component';
+import { MaterialComponent } from './material/material.component';
 
 
 
@@ -70,7 +71,8 @@ import { CollectComponent } from './collect/collect.component';
     JsPDFComponent,
     AddMediaComponent,
     PaymentsComponent,
-    CollectComponent
+    CollectComponent,
+    MaterialComponent
 
   ],
   providers: [
