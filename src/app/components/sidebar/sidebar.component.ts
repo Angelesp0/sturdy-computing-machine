@@ -37,10 +37,18 @@ export const ROUTES_ejecutivo: RouteInfo[] = [
   { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
   { path: '/user-profile',      title: 'User Profile', icon: 'business_badge',        class: '' },
   { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
+];
+
+export const ROUTES_cliente: RouteInfo[] = [
+  { path: '/account',          title: 'Cuenta',    icon: 'education_agenda-bookmark',          class: '' },
+  { path: '/material',          title: 'Servicios',    icon: 'design_image',          class: '' },
+  // { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
+  // { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
   { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
 
+  { path: '/user-profile',      title: 'User Profile', icon: 'business_badge',        class: '' },
+  { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
 
-  
 ];
 
 @Component({
@@ -53,6 +61,8 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   menusEjecutivo: any[];
+  menusCliente: any[];
+
 
 
   constructor(private authenticationService: UserService, private router: Router) {
@@ -62,6 +72,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.menusEjecutivo = ROUTES_ejecutivo.filter(menuEjecutivo => menuEjecutivo);
+    this.menusCliente = ROUTES_cliente.filter(menusCliente => menusCliente);
   }
   isMobileMenu() {
       if ( window.innerWidth > 991) {

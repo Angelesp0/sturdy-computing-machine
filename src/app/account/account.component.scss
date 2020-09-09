@@ -1,0 +1,69 @@
+.table {
+    thead th {}
+    th {}
+    td {
+        .progress {
+            height: 3px;
+            width: 120px;
+            margin: 0;
+        }
+    }
+    td,
+    th {
+        white-space: nowrap;
+    }
+    // Vetical align table content
+    &.align-items-center {
+        td,
+        th {
+            vertical-align: middle;
+        }
+    }
+    // Styles for dark table
+    .thead-dark {
+        th {}
+    }
+    // Styles for light table
+    .thead-light {
+        th {}
+    }
+}
+
+// Add transition for hover state
+.table-hover {
+    tr {}
+}
+
+// Flush tables
+.table-flush {
+    td,
+    th {
+        border-left: 0;
+        border-right: 0;
+    }
+    tbody {
+        tr {
+            &:first-child {
+                td,
+                th {
+                    border-top: 0;
+                }
+            }
+            &:last-child {
+                td,
+                th {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+// Tables inside cards
+.card {
+    .table {
+        margin-bottom: 0;
+        td,
+        th {}
+    }
+}

@@ -1,0 +1,117 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md">
+                            <h5 class="title">Empresas Registradas</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div *ngFor="let company of companies" class="pointer">
+                                    <div class="card card-chart">
+                                        <div class="card-header">
+                                            <h5 class="card-category">{{company.company}}</h5>
+                                            <h4 class="card-title"> <img src="http://192.168.137.1:3000/files/{{company.img}}" alt="Avatar" style="width:80px"> {{company.razon}}
+                                            </h4>
+                                            <div ngbDropdown>
+                                                <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
+                                                    <i class="now-ui-icons loader_gear"></i>
+                                                </button>
+                                                <div ngbDropdownMenu class="dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-category">{{company.name_service}}
+                                                <h5 class="card-category">Precio del servicio ${{company.price}}</h5>
+                                            </h5>
+                                            <h5 class="card-category">Fecha de contrato {{company.upload_date}}
+                                                <a href="http://192.168.137.1:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
+                                                    <i class="now-ui-icons files_single-copy-04"></i>
+                                                </a>
+                                            </h5>
+                                            <h5 class="card-category">Historial de pagos
+                                                <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="open(acept, company)">
+                                                    <i class="now-ui-icons files_single-copy-04"></i>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #acept let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Solicitud de descuento del Ejecutivo </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- Dark table -->
+
+        <table class="table align-items-center table-flush">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Servicio</th>
+                    <th scope="col" class="text-center">Valor</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Fecha</th>
+                    <th scope="col" class="text-center">Recibo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let payment of payments" class="pointer">
+                    <th scope="row">
+                        <div class="media align-items-center">
+                            <div class="media-body text-center">
+                                <span class="mb-0 text-sm">{{payment.description}}</span>
+                            </div>
+                        </div>
+                    </th>
+                    <td class="text-center">
+                        {{payment.value}}
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-success badge-dot">
+                            <i class="bg-warning"></i> {{payment.status}}
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span class="mr-2">{{payment.update_time | date: 'yyyy:mm:dd'}}</span>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                            <i class="now-ui-icons files_single-copy-04"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="Confirmar()" (click)="c('Save click')">Close</button>
+    </div>
+</ng-template>

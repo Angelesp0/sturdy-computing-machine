@@ -21,7 +21,23 @@ export class LoginComponent implements OnInit {
   }
   ingresar() {
     this.authService.login(this.data.email, this.data.password).subscribe((res) => {
-      this.router.navigateByUrl('/dashboard');
+      const data = res;
+      switch (data['user']['role_id_role']) {
+        case 1:
+          this.router.navigateByUrl('/dashboard');
+
+          break;
+        case 2:
+          this.router.navigateByUrl('/material');
+
+          break;
+        case 3:
+          this.router.navigateByUrl('/material');
+          break;
+
+        default:
+          break;
+      }
     });
   }
 

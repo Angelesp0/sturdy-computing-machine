@@ -18,6 +18,7 @@ import { PaymentsComponent } from '../../companies/payments/payments.component';
 import { AuthGuard } from './../../_guards/auth.guard';
 import { CollectComponent } from '../../collect/collect.component';
 import { MaterialComponent } from '../../material/material.component';
+import { AccountComponent } from '../../account/account.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -38,5 +39,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'payment/:id_company',        component: PaymentsComponent },
     { path: 'payment',                    component: CollectComponent },
     { path: 'material',                   component: MaterialComponent },
-
+    { path: 'account',                    component: AccountComponent },
 ];

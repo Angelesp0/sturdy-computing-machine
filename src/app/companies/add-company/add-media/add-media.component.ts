@@ -184,7 +184,6 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     this.adminService.postImg3(  this.id, this.file3).subscribe(res => console.log(res));
     this.adminService.postImg4(  this.id, this.file4).subscribe(res => console.log(res));
     this.adminService.firma(     this.id, this.firma).subscribe(res => console.log(res));
-    console.log('locacion');
     this.adminService.locatio(  this.lat, this.lng, 'localizacion de prueba', this.id).subscribe(res => console.log(res));
     this.router.navigate([`/payment/${this.id}`]);
   }

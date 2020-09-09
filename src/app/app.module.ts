@@ -32,12 +32,15 @@ import { PaymentsComponent } from './companies/payments/payments.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CollectComponent } from './collect/collect.component';
 import { MaterialComponent } from './material/material.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { AccountComponent } from './account/account.component';
 
 
 
 
 @NgModule({
   imports: [
+    MatTabsModule,
     MatDividerModule,
     NgxPayPalModule,
     PdfViewerModule,
@@ -72,7 +75,8 @@ import { MaterialComponent } from './material/material.component';
     AddMediaComponent,
     PaymentsComponent,
     CollectComponent,
-    MaterialComponent
+    MaterialComponent,
+    AccountComponent
 
   ],
   providers: [

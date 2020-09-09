@@ -168,8 +168,6 @@ export class JsPDFComponent implements OnInit, OnDestroy
 
     if (download == 'true') {
       doc.save('Contrato_GGlobals.pdf');
-    } else {
-      doc.output('dataurlnewwindow');
     }
 
     if (post) {

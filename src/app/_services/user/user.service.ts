@@ -165,4 +165,12 @@ export class UserService {
     return this.http.get('http://192.168.137.1:3000/user/' + id + '/services/', this.httpOptions);
   }
 
+  getCompaniesByUserId(id){
+    return this.http.get('http://192.168.137.1:3000/users/' + id + '/companies/', this.httpOptions);
+  }
+
+  getPaymentsByCompanyId(id) {
+    return this.http.get('http://192.168.137.1:3000/companies/' + id + '/payments/', this.httpOptions);
+  }
+
 }
