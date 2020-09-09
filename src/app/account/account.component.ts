@@ -38,7 +38,7 @@ export class AccountComponent implements OnInit {
 
   open(content, data) {
     this.selected = data;
-    console.log(this.selected['id_company']);
+    console.log(this.selected);
     this.userService.getPaymentsByCompanyId(this.selected['id_company']).subscribe(response => {
       this.payments = response;
       console.log(this.payments);

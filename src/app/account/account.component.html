@@ -32,19 +32,45 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="card-category">{{company.name_service}}
-                                                <h5 class="card-category">Precio del servicio ${{company.price}}</h5>
-                                            </h5>
-                                            <h5 class="card-category">Fecha de contrato {{company.upload_date}}
-                                                <a href="http://192.168.137.1:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
-                                                    <i class="now-ui-icons files_single-copy-04"></i>
-                                                </a>
-                                            </h5>
-                                            <h5 class="card-category">Historial de pagos
-                                                <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="open(acept, company)">
-                                                    <i class="now-ui-icons files_single-copy-04"></i>
-                                                </button>
-                                            </h5>
+
+                                            <table class="table align-items-center table-flush">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">Servicio</th>
+                                                        <th scope="col" class="text-center">Precio del servicio</th>
+                                                        <th scope="col" class="text-center">Fecha de contratacion</th>
+                                                        <th scope="col" class="text-center">Contrato</th>
+                                                        <th scope="col" class="text-center">Historial de pagos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body text-center">
+                                                                    <b class="mb-0 text-sm">{{company.name_service}}</b>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <b style="color: green;">${{company.price}}</b>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span class="mr-2">{{company.upload_date}}</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="http://192.168.137.1:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
+                                                                <i class="now-ui-icons files_paper"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="open(acept, company)">
+                                                                <i class="now-ui-icons files_single-copy-04"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -64,14 +90,13 @@
 
 <ng-template #acept let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Solicitud de descuento del Ejecutivo </h4>
+        <h4 class="modal-title" id="modal-basic-title">Historial de Pagos</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <!-- Dark table -->
-
         <table class="table align-items-center table-flush">
             <thead>
                 <tr>
@@ -84,15 +109,15 @@
             </thead>
             <tbody>
                 <tr *ngFor="let payment of payments" class="pointer">
-                    <th scope="row">
+                    <td scope="row">
                         <div class="media align-items-center">
                             <div class="media-body text-center">
-                                <span class="mb-0 text-sm">{{payment.description}}</span>
+                                <b class="mb-0 text-sm">{{payment.description}}</b>
                             </div>
                         </div>
-                    </th>
+                    </td>
                     <td class="text-center">
-                        {{payment.value}}
+                        ${{payment.value}}
                     </td>
                     <td class="text-center">
                         <span class="badge badge-success badge-dot">
@@ -100,7 +125,7 @@
                         </span>
                     </td>
                     <td class="text-center">
-                        <span class="mr-2">{{payment.update_time | date: 'yyyy:mm:dd'}}</span>
+                        <span class="mr-2">{{payment.update_time | date: 'yyyy-mm-dd'}}</span>
                     </td>
                     <td class="text-center">
                         <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">

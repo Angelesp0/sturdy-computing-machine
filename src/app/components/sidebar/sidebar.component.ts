@@ -44,7 +44,7 @@ export const ROUTES_cliente: RouteInfo[] = [
   { path: '/material',          title: 'Servicios',    icon: 'design_image',          class: '' },
   // { path: '/users',             title: 'Usuarios',     icon: 'users_single-02',       class: '' },
   // { path: '/companies',         title: 'Empresas',     icon: 'shopping_shop',         class: '' },
-  { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
+  // { path: '/icons', title: 'Icons',  icon: 'education_atom', class: '' },
 
   { path: '/user-profile',      title: 'User Profile', icon: 'business_badge',        class: '' },
   { path: '/login',             title: 'Login',        icon: 'sport_user-run',        class: '' },
