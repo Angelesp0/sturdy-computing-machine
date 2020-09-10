@@ -140,6 +140,7 @@ export class PaymentsComponent implements OnInit {
       this.showNotification('top', 'right', 2);
       this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.id_company, this.idCompanyServ, data.id ).subscribe((response) => {
         console.log(response);
+        localStorage.setItem('id_payment', response['id_table']);
         this.id_payment = response['id_table'];
         this.totalValue = response['value'];
         this.commission = (this.totalValue * 0.20);
@@ -280,6 +281,7 @@ export class PaymentsComponent implements OnInit {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.id_company, this.idCompanyServ, this.id_company).subscribe((response) => {
       localStorage.removeItem('payment');
+      localStorage.setItem('id_payment', response['id_table']);
       this.id_payment = response['id_table'];
       this.totalValue = response['value'];
       this.commission = (this.totalValue * 0.20);

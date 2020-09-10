@@ -17,8 +17,14 @@
                                     <div class="card card-chart">
                                         <div class="card-header">
                                             <h5 class="card-category">{{company.company}}</h5>
-                                            <h4 class="card-title"> <img src="http://192.168.137.1:3000/files/{{company.img}}" alt="Avatar" style="width:80px"> {{company.razon}}
-                                            </h4>
+                                            <div *ngIf="company.img; else elseBlock">
+                                                <h4 class="card-title"> <img src="http://192.168.137.1:3000/files/{{company.img}}" alt="Avatar" style="width:80px"> {{company.razon}}
+                                                </h4>
+                                            </div>
+                                            <ng-template #elseBlock>
+                                                <h4 class="card-title"> <img src="http://192.168.137.1:3000/files/default.png" alt="Avatar" style="width:80px"> {{company.razon}}
+                                                </h4>
+                                            </ng-template>
                                             <div ngbDropdown>
                                                 <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
                                                     <i class="now-ui-icons loader_gear"></i>
@@ -128,9 +134,9 @@
                         <span class="mr-2">{{payment.update_time | date: 'yyyy-mm-dd'}}</span>
                     </td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret">
+                        <a href="http://192.168.137.1:3000/files/{{payment.name}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
                             <i class="now-ui-icons files_single-copy-04"></i>
-                        </button>
+                        </a>
                     </td>
                 </tr>
             </tbody>

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
           break;
         case 3:
-          this.router.navigateByUrl('/material');
+          this.router.navigateByUrl('/account');
           break;
 
         default:

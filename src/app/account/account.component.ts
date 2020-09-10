@@ -27,26 +27,19 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.currentUser.subscribe(x => this.currentUser = x);
-
     this.id_user = this.currentUser['user'].id_user;
-    console.log(this.id_user);
     this.userService.getCompaniesByUserId(this.id_user).subscribe(response => {
       this.companies = response;
-      console.log(this.companies);
     });
   }
 
   open(content, data) {
     this.selected = data;
-    console.log(this.selected);
     this.userService.getPaymentsByCompanyId(this.selected['id_company']).subscribe(response => {
       this.payments = response;
-      console.log(this.payments);
     });
     this.modalService.open(content, { size: 'lg' });
-
   }
   Confirmar() {
   }
-
 }

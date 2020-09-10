@@ -25,6 +25,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
   cliente = new Image();
   value: any;
   recibo: any;
+  id_payment: any;
   email: any;
   contratoName: any;
   reciboName: any;
@@ -482,10 +483,12 @@ export class JsPDFComponent implements OnInit, OnDestroy
       } else {
         doc.save('RCE.pdf');
       }
-    }
+    } 
 
     if (post) {
-      this.adminService.postReceipt(this.id, identificador, date, doc.output('blob')).subscribe(response => {
+      const id_payment = localStorage.getItem('id_payment');
+      console.log(id_payment);
+      this.adminService.postReceipt(this.id, identificador, date, id_payment, doc.output('blob')).subscribe(response => {
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
           localStorage.setItem('rec', response[0]['name']);
           localStorage.setItem(post, 'no');
@@ -601,6 +604,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     }
     this.id = this.activatedRoute.snapshot.params['id_company'];
     this.value = localStorage.getItem('value');
+    this.id_payment = localStorage.getItem('id_payment');
     this.firmas = await this.adminService.getFirm().toPromise();
     this.mario = this.firmas[0]['name'];
     this.yadira = this.firmas[1]['name'];
@@ -617,7 +621,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
         this.pdfSrc = `http://192.168.137.1:3000/files/${localStorage.getItem('cont')}`;
       }
     } else {
-      await this.receipt('false', 'post'); 
+      await this.receipt('false', 'post');
       if (this.inf.id_service == 1) {
         await this.rif('false', 'post');
       }
