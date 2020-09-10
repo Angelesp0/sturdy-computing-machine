@@ -1,6 +1,8 @@
 import { Component, OnInit, Type, Input } from '@angular/core';
 import { CompanyService } from './../_services/company/company.service';
-import { Company } from '../../../../gglobals-ionic/gglobals/src/app/models/company';
+// import { Company } from '../../../../gglobals-ionic/gglobals/src/app/models/company';
+
+import { Company } from '../models/company';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject  } from 'rxjs';

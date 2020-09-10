@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company } from '../../../../../gglobals-ionic/gglobals/src/app/models/company';
+// import { Company } from '../../../../../gglobals-ionic/gglobals/src/app/models/company';
+import { Company } from '../../models/company';
 import { CompanyService } from './../../_services/company/company.service';
-import { User } from '../../../../../gglobals-ionic/gglobals/src/app/models/user';
+// import { User } from '../../../../../gglobals-ionic/gglobals/src/app/models/user';
+import { User } from '../../models/user';
+
 import { UserService } from '../../_services/user/user.service';
 import { CompanyServices } from './../../models/company_services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

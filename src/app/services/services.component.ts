@@ -1,7 +1,8 @@
 import { Component, OnInit, Type, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from './../_services/admin/admin.service';
-import { Service } from '../../../../gglobals-ionic/gglobals/src/app/models/service';
+// import { Service } from '../../../../gglobals-ionic/gglobals/src/app/models/service';
+import { Service } from '../models/service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject  } from 'rxjs';
 import { map  } from 'rxjs/operators';
