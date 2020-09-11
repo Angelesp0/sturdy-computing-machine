@@ -26,6 +26,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { CustomDatePipe } from './pipe/customDatePipe';
 import { JsPDFComponent } from './companies/js-pdf/js-pdf.component';
 import { AddMediaComponent } from './companies/add-company/add-media/add-media.component';
+import { FileSelectDirective } from 'ng2-file-upload';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PaymentsComponent } from './companies/payments/payments.component';
 import { NgxPayPalModule } from 'ngx-paypal';
@@ -39,6 +40,7 @@ import { AccountComponent } from './account/account.component';
 
 @NgModule({
   imports: [
+    FileSelectDirective,
     MatTabsModule,
     MatDividerModule,
     NgxPayPalModule,
