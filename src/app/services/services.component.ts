@@ -7,7 +7,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject  } from 'rxjs';
 import { map  } from 'rxjs/operators';
 import { Response } from '@angular/http';
-
+ 
 // Agregar Usuario
 @Component({
   selector: 'ngbd-modal-confirm-autofocus',

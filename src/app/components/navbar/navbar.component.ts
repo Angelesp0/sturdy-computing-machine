@@ -8,7 +8,7 @@ import { UserService } from './../../_services/user/user.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
-import Chart from 'chart.js';
+import * as Chart from 'chart.js';
 
 
 @Component({

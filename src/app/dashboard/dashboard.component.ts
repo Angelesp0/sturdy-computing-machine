@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import * as Chartist from 'chartist';
 import { AdminService } from '../_services/admin/admin.service';
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartOptions, ChartType, ChartDataSets, ChartLegendItem } from 'chart.js';
 
 
 
@@ -60,12 +60,11 @@ export class DashboardComponent implements OnInit {
       bodySpacing: 4,
       xPadding: 12,
       mode: 'nearest',
-      intersect: 0,
+      intersect: false,
       position: 'nearest'
     },
     legend: {
         position: 'bottom',
-        fillStyle: '#FFF',
         display: false
     },
     scales: {
@@ -100,6 +99,12 @@ export class DashboardComponent implements OnInit {
         }]
     }
   };
+
+  public lineBigDashboardChartItem: ChartLegendItem = {
+    fillStyle: '#FFF',
+  };
+
+
   public lineBigDashboardChartLabels: Array<any> = ['ENERO', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
   public lineBigDashboardChartColors: Array<any>;
   public gradientChartOptionsConfiguration: any;
