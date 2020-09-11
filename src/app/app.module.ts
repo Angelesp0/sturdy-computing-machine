@@ -40,6 +40,7 @@ import { AccountComponent } from './account/account.component';
 
 @NgModule({
   imports: [
+    FileSelectDirective,
     MatTabsModule,
     MatDividerModule,
     NgxPayPalModule,
@@ -57,7 +58,7 @@ import { AccountComponent } from './account/account.component';
     ToastrModule.forRoot()
   ],
   declarations: [
-    FileSelectDirective,
+    // FileSelectDirective,
     CustomDatePipe,
     ModalEditarServicio,
     ModalNuevoServicio,
