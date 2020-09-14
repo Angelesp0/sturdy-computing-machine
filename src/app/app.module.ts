@@ -19,7 +19,7 @@ import { CompaniesComponent, ModalEditarEmpresa } from './companies/companies.co
 import { ServicesComponent, ModalEditarServicio, ModalNuevoServicio } from './services/services.component';
 import { AddCompanyComponent } from './companies/add-company/add-company.component';
 
-import { DataTablesModule } from 'angular-datatables';
+import { DataTablesModule } from 'angular-datatables'; 
 import {MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule,  } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';

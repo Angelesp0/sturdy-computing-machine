@@ -1,4 +1,4 @@
-import { Component, OnInit, Type, Input  } from '@angular/core';
+import { Component, OnInit, Type, Input, OnDestroy  } from '@angular/core';
 import { UserService } from './../_services/user/user.service';
 import { User } from './../models/user';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -95,15 +95,13 @@ export class NgbdModalConfirmAutofocus implements OnInit {
       const arrayDeCadenas = this.data.last_name.split(espacio);
 
       const nombre  = this.data.first_name.slice(0, 2).toUpperCase();
-      const apellido = arrayDeCadenas[0].toUpperCase().slice(0, 2);
-      const apellido2 = arrayDeCadenas[1].toUpperCase().slice(0, 2);
+      const apellido = (arrayDeCadenas)[0].toUpperCase().slice(0, 2);
+      const apellido2 = (arrayDeCadenas[1]).toUpperCase().slice(0, 2);
 
       const nombre1  = this.data.first_name.slice(0, 1).toUpperCase();
       const apellido3 = arrayDeCadenas[0].toUpperCase();
       const apellido4 = arrayDeCadenas[1].toUpperCase().slice(0, 1);
-
-
-
+      
       this.data.password = 'GG' + nombre + apellido + apellido2;
       this.data.role = 0;
       this.data.username = nombre1 + apellido3 + apellido4;
@@ -224,7 +222,7 @@ const MODALS: {[name: string]: Type<any>} = {
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   withAutofocus = `<button type="button" ngbAutofocus class="btn btn-danger"
   (click)="modal.close('Ok click')">Ok</button>`;
   users: any;

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { jsPDF } from "jspdf";
-import 'jspdf-autotable';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 //import * as autoTable from 'jspdf-autotable';
 
 import { AdminService } from '../../_services/admin/admin.service';
@@ -327,7 +327,7 @@ export class JsPDFComponent implements OnInit, OnDestroy
     const prestador = new Image();
     const testigo2 = new Image();
     const logo = new Image();
-    const columns = ['Año', 'Mes', 'Total',  'Estado'];
+    const columns = [['Año', 'Mes', 'Total',  'Estado']];
     const data = [[
     this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, "PAGADO"]];
     const value2: number = +this.value;
@@ -504,7 +504,13 @@ export class JsPDFComponent implements OnInit, OnDestroy
     doc.addImage(cliente, 'PNG', 243, 350, 130, 45);
     doc.text(` ${date}                                                 `, 130, 348, );
     // ======================================================================================================================= //
-    // doc.autoTable(columns, data, { margin: { top: 470 }, styles: { halign: 'center' }, theme: 'grid'});
+    autoTable(doc, {
+      head: columns,
+      body: data,
+      margin:  { top: 470 },
+      styles: { halign: 'center' },
+      theme: 'grid'
+ });
     // ======================================================================================================================= //
     doc.setFontSize(11.5);
     doc.text(`Aviso de Privacidad Simplificado` ,240, 620,  {maxWidth: 540, align: 'justify'});
