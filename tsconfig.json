@@ -1,4 +1,5 @@
 {
+  ///////////////////////////////////////////// npm ci
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
