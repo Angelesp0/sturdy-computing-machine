@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
   ingresar() {
     this.authService.login(this.data.email, this.data.password).subscribe((res) => {
+      console.log(this.data.email, ' + ', this.data.password);
       const data = res;
       switch (data['user']['role_id_role']) {
         case 1:
