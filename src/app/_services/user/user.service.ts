@@ -14,7 +14,7 @@ const headers = new HttpHeaders();
 export class UserService {
 
   // tslint:disable-next-line: variable-name
-  base_path = 'http://192.168.137.1:3000/users';
+  base_path = 'http://192.168.2.18:3000/users';
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -55,14 +55,14 @@ export class UserService {
   }
 
   getUsers() {
-      return this.http.get('http://192.168.137.1:3000/users', this.httpOptions);
+      return this.http.get('http://192.168.2.18:3000/users', this.httpOptions);
   }
   getExecutive() {
-    return this.http.get('http://192.168.137.1:3000/executive', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/executive', this.httpOptions);
 }
 
   getUser(id) {
-    return this.http.get('http://192.168.137.1:3000/users/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/users/' + id, this.httpOptions);
   }
 
   updateItem(id, item) {
@@ -112,7 +112,7 @@ export class UserService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>('http://192.168.137.1:3000/auth', { username, password })
+    return this.http.post<any>('http://192.168.2.18:3000/auth', { username, password })
         .pipe(
           map(
             user => {
@@ -142,35 +142,35 @@ export class UserService {
     // this.http is the injected HttpClient
     const uploadData = new FormData();
     uploadData.append('file', image, image.name);
-    return this.http.post('http://192.168.137.1:3000/subir', uploadData)  ;
+    return this.http.post('http://192.168.2.18:3000/subir', uploadData)  ;
   }
 
   getImg(id) {
-    return this.http.get('http://192.168.137.1:3000/imagenes/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/imagenes/' + id, this.httpOptions);
   }
 
   getdocuments(id){
-    return this.http.get('http://192.168.137.1:3000/user/files/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/user/files/' + id, this.httpOptions);
   }
 
   getDocumentsByIdCompany(id){
-    return this.http.get('http://192.168.137.1:3000/company/files/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/company/files/' + id, this.httpOptions);
   }
 
   getServices(){
-    return this.http.get('http://192.168.137.1:3000/services', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/services', this.httpOptions);
   }
 
   getServicesByUserId(id){
-    return this.http.get('http://192.168.137.1:3000/user/' + id + '/services/', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/user/' + id + '/services/', this.httpOptions);
   }
 
   getCompaniesByUserId(id){
-    return this.http.get('http://192.168.137.1:3000/users/' + id + '/companies/', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/users/' + id + '/companies/', this.httpOptions);
   }
 
   getPaymentsByCompanyId(id) {
-    return this.http.get('http://192.168.137.1:3000/companies/' + id + '/payments/', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/companies/' + id + '/payments/', this.httpOptions);
   }
 
 }
