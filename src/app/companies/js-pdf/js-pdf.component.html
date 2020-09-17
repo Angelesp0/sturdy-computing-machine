@@ -12,8 +12,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row justify-content-center ">
-                        <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+                    <div style='position: relative; height: 100%;'>
+                        <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;" [fit-to-page]="true"></pdf-viewer>
                     </div>
                     <br>
                     <br>
@@ -40,10 +40,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row justify-content-center">
-                        <pdf-viewer [src]="recibov" [render-text]="true" style="display: block;"></pdf-viewer>
+                    <div style='position: relative; height: 100%;'>
+                        <pdf-viewer [src]="recibov" [render-text]="true" style="display: block;" [fit-to-page]="true"></pdf-viewer>
                     </div>
-                    <br>
                     <br>
                     <h5 class="title">Enviar</h5>
                     <div class="row justify-content-center">
@@ -55,7 +54,6 @@
                             </button>
                         </div>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>

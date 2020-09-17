@@ -68,6 +68,12 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    const canvas = document.querySelector("canvas");
+    const parentWidth = $(canvas).parent().outerWidth().toString();
+
+    canvas.setAttribute("width", parentWidth);
+
+this.signaturePad = new SignaturePad(canvas);
     this.maplatlang();
     this.buttons();
     this.id = this.activatedRoute.snapshot.params["id_company"];
