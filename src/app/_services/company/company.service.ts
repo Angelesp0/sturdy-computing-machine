@@ -15,7 +15,7 @@ const headers = new HttpHeaders();
 export class CompanyService {
 
   // tslint:disable-next-line: variable-name
-  base_path = 'http://192.168.137.1:3000/companies';
+  base_path = 'http://192.168.2.18:3000/companies';
 
   constructor(private http: HttpClient) { }
 
@@ -42,15 +42,15 @@ export class CompanyService {
   }
 
   getCompanies() {
-      return this.http.get('http://192.168.137.1:3000/companies', this.httpOptions);
+      return this.http.get('http://192.168.2.18:3000/companies', this.httpOptions);
   }
 
   getCompany(id) {
-    return this.http.get('http://192.168.137.1:3000/companies/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/companies/' + id, this.httpOptions);
   }
 
   getAdmin() {
-    return this.http.get('http://192.168.137.1:3000/admin', this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/admin', this.httpOptions);
   }
 
   updateCompany(id, item) {
@@ -120,7 +120,7 @@ export class CompanyService {
 
   company_has_service(item) {
     return this.http
-      .post('http://192.168.137.1:3000/company_services', item)
+      .post('http://192.168.2.18:3000/company_services', item)
       .pipe(
         catchError(this.handleError)
       );
@@ -129,7 +129,7 @@ export class CompanyService {
   active_payment(id_company, services_id_service) {
     console.log(id_company, services_id_service);
     return this.http
-    .put('http://192.168.137.1:3000/company_services/' + id_company, {services_id_service} )
+    .put('http://192.168.2.18:3000/company_services/' + id_company, {services_id_service} )
     .pipe(
       catchError(this.handleError)
     );
@@ -138,7 +138,7 @@ export class CompanyService {
   register_payment(value, description, status, update_time, id_company, company_has_services_id_companys, id?): Observable<Payment> {
     console.log(company_has_services_id_companys);
     return this.http
-    .post<Payment>('http://192.168.137.1:3000/payment/' + id_company , {id, value, description, status, update_time, company_has_services_id_companys})
+    .post<Payment>('http://192.168.2.18:3000/payment/' + id_company , {id, value, description, status, update_time, company_has_services_id_companys})
     .pipe(
       catchError(this.handleError)
     );
@@ -146,12 +146,12 @@ export class CompanyService {
 
   register_comition(amount, date, status, payments_id_payments, users_id_user): Observable<Commission> {
     return this.http
-    .post<Commission>('http://192.168.137.1:3000/commission/', {amount, date, status, payments_id_payments, users_id_user})
+    .post<Commission>('http://192.168.2.18:3000/commission/', {amount, date, status, payments_id_payments, users_id_user})
     .pipe(
       catchError(this.handleError)
     );
   }
   getcompanyHasService(id) {
-    return this.http.get('http://192.168.137.1:3000/companies/services/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.18:3000/companies/services/' + id, this.httpOptions);
 }
 }
