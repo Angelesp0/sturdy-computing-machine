@@ -34,6 +34,7 @@ import { CollectComponent } from './collect/collect.component';
 import { MaterialComponent } from './material/material.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AccountComponent } from './account/account.component';
+import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
 
 
 
@@ -81,7 +82,15 @@ import { AccountComponent } from './account/account.component';
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })
