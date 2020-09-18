@@ -20,10 +20,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   ingresar() {
-    console.log('hola')
+    console.log('hola');
     this.authService.login(this.data.email, this.data.password).subscribe((res) => {
-      console.log(res);
-      console.log(this.data.email, ' + ', this.data.password);
+
       const data = res;
       console.log(data['user'].role_id_role);
       switch (data['user'].role_id_role) {

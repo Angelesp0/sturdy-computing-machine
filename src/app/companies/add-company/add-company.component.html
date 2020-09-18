@@ -46,12 +46,22 @@
                                     </div>
                                 </select>
                             </div>
-                            <div class="col-md">
-                                <label>Ejecutivos<strong><span class="text-danger">*</span></strong></label>
-                                <select formControlName="executive" name="executive" class="form-control" inputmode="text" [(ngModel)]="this.ejecutivo.users_id_user" [ngClass]="{ 'is-invalid': submitted && f.executive.errors }">
+                            <div *ngIf="ejecutive; else elseBlock">
+                                <div class="col-md">
+                                    <label>Ejecutivos<strong><span class="text-danger">*</span></strong></label>
+                                    <input formControlName="executive" name="executive" class="form-control" inputmode="text" [(ngModel)]="this.ejecutivo.users_id_user" placeholder="{{currentUser.user.first_name}} {{currentUser.user.last_name}}" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <ng-template #elseBlock>
+                                <div class="col-md">
+                                    <label>Ejecutivos<strong><span class="text-danger">*</span></strong></label>
+                                    <select formControlName="executive" name="executive" class="form-control" inputmode="text" [(ngModel)]="this.ejecutivo.users_id_user" [ngClass]="{ 'is-invalid': submitted && f.executive.errors }">
                                     <option [value]="exec.id_user" *ngFor="let exec of executive">{{exec.first_name}} {{exec.last_name}}</option>
                                 </select>
-                            </div>
+                                </div>
+                            </ng-template>
+
                         </div>
                         <div class="row">
                             <div class="col-md">

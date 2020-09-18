@@ -72,6 +72,9 @@ export class AddCompanyComponent implements OnInit {
     "Antes de abrir","Despues de abrir","Ambas",
     "Ninguna"
   ];
+  ejecutive: any;
+  currentUser: any;
+
 
   constructor(
     private userService: UserService,
@@ -85,13 +88,16 @@ export class AddCompanyComponent implements OnInit {
       this.ejecutivo = new Company();
     }
     create() {
-      localStorage.setItem('ejecutivo', this.ejecutivo.users_id_user);
+      if (this.ejecutive === 2) {
+        localStorage.setItem('ejecutivo', this.currentUser.user.id_user);
+      } else {
+        localStorage.setItem('ejecutivo', this.ejecutivo.users_id_user);
+      }
       this.data.status = 1;
       this.companyService.createCompany(this.data).subscribe((response) => {
       const id_company = response['newInf']['company_id_company'];
       localStorage.setItem('id_company', id_company);
       this.id_company = id_company;
-      console.log(this.service1);
 
       if (this.service1 == 1) {
         const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -150,6 +156,11 @@ export class AddCompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.currentUser.user.role_id_role === 2) {
+      this.ejecutive = 2;
+    }
+
     this.registerCompany = this.formBuilder.group({
       company: ['', Validators.required],
       razon: ['', Validators.required],
@@ -186,6 +197,7 @@ export class AddCompanyComponent implements OnInit {
     this.userService.getUsers().subscribe((response) => this.name = response);
     this.userService.getExecutive().subscribe((response) => this.executive = response);
   }
+
   get f() { return this.registerCompany.controls; }
 
 

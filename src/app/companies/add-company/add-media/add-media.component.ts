@@ -22,11 +22,15 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
   previewImg2: SafeUrl;
   previewImg3: SafeUrl;
   previewImg4: SafeUrl;
+  previewImg5: SafeUrl;
+
   file: File;
   file1: File;
   file2: File;
   file3: File;
   file4: File;
+  file5: File;
+
   id: number;
   image: any;
   private selectedFile: File;
@@ -48,7 +52,10 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     });
   uploader4 = new FileUploader({
     maxFileSize: 1024 * 1024 * 1
-    });
+  });
+  uploader5 = new FileUploader({
+    maxFileSize: 1024 * 1024 * 1
+  });
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -179,7 +186,16 @@ this.signaturePad = new SignaturePad(canvas);
         }
         this.uploader4.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
         }
-
+        // ============================================5===================================== //
+        this.uploader5.onAfterAddingFile = (file) => {
+          this.previewImg5 = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
+        };
+        this.uploader5.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
+        };
+        this.uploader5.onCompleteAll = () => {
+        };
+        this.uploader5.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
+        };
   }
 
   register() {
@@ -189,6 +205,8 @@ this.signaturePad = new SignaturePad(canvas);
     this.adminService.postImg2(  this.id, this.file2).subscribe(res => console.log(res));
     this.adminService.postImg3(  this.id, this.file3).subscribe(res => console.log(res));
     this.adminService.postImg4(  this.id, this.file4).subscribe(res => console.log(res));
+    this.adminService.postImg5(  this.id, this.file5).subscribe(res => console.log(res));
+
     this.adminService.firma(     this.id, this.firma).subscribe(res => console.log(res));
     this.adminService.locatio(  this.lat, this.lng, 'localizacion de prueba', this.id).subscribe(res => console.log(res));
     this.router.navigate([`/payment/${this.id}`]);
@@ -213,6 +231,10 @@ this.signaturePad = new SignaturePad(canvas);
   public onFileSelected4(event: EventEmitter<File[]>) {
     const file: File = event[0];
     this.file4 = file;
+  }
+  public onFileSelected5(event: EventEmitter<File[]>) {
+    const file: File = event[0];
+    this.file5 = file;
   }
 
   clear() {
@@ -289,6 +311,6 @@ this.signaturePad = new SignaturePad(canvas);
     }
     // cast to a File
     return <File>blob;
-}
+  }
 
 }

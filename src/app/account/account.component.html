@@ -42,34 +42,34 @@
                                             <table class="table align-items-center table-flush table-responsive">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" class="text-center">Servicio</th>
-                                                        <th scope="col" class="text-center">Precio del servicio</th>
-                                                        <th scope="col" class="text-center">Fecha de contratacion</th>
-                                                        <th scope="col" class="text-center">Contrato</th>
-                                                        <th scope="col" class="text-center">Historial de pagos</th>
+                                                        <th class="col" class="text-center">Servicio</th>
+                                                        <th class="col" class="text-center">Precio del servicio</th>
+                                                        <th class="col" class="text-center">Fecha de contratacion</th>
+                                                        <th class="col" class="text-center">Contrato</th>
+                                                        <th class="col" class="text-center">Historial de pagos</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td scope="row">
-                                                            <div class="media align-items-center">
+                                                            <div class="media align-items-center col">
                                                                 <div class="media-body text-center">
                                                                     <b class="mb-0 text-sm">{{company.name_service}}</b>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center col">
                                                             <b style="color: green;">${{company.price}}</b>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center col">
                                                             <span class="mr-2">{{company.upload_date}}</span>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center col">
                                                             <a href="http://192.168.2.18:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
                                                                 <i class="now-ui-icons files_paper"></i>
                                                             </a>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center col">
                                                             <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="open(acept, company)">
                                                                 <i class="now-ui-icons files_single-copy-04"></i>
                                                             </button>

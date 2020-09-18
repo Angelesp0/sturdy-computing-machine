@@ -123,7 +123,8 @@ export class PaymentsComponent implements OnInit {
     },
     style: {
       label: 'paypal',
-      layout: 'vertical'
+      layout: 'vertical',
+      color: 'blue'
     },
     onApprove: (data, actions) => {
       this.showNotification('top', 'right', 1);
@@ -225,18 +226,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   setdiscount() {
-
     this.sendRequest(this.discount);
-/*
-    if (localStorage.getItem('Rif')) {
-      const descuento = (this.item.unit_amount.value * this.discount);
-      this.item.unit_amount.value = (this.item.unit_amount.value - descuento);
-      console.log(this.item.unit_amount.value);
-    }
-    if (localStorage.getItem('Pf')) {
-      this.item.unit_amount.value = ((this.item.unit_amount.value * this.discount) - this.item.unit_amount.value);
-      console.log(this.item.unit_amount.value);
-    }*/
     console.log(this.discount);
   }
 
@@ -276,11 +266,15 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  cash() {
+  cash(terminal?) {
     localStorage.setItem('value', this.item.unit_amount.value );
+    if (terminal) {
+      localStorage.setItem('payment', 'terminal');
+    } else {
+      localStorage.setItem('payment', 'cash');
+    }
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.id_company, this.idCompanyServ, this.id_company).subscribe((response) => {
-      localStorage.removeItem('payment');
       localStorage.setItem('id_payment', response['id_table']);
       this.id_payment = response['id_table'];
       this.totalValue = response['value'];

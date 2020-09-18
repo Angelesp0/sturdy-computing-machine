@@ -72,8 +72,11 @@
                             <ngx-paypal [config]="payPalConfig"></ngx-paypal>
                         </div>
                         <div class="col">
-                            <button class="btn btn-outline-primary" (click)="cash()">
+                            <button class="btn btn-block btn-info" (click)="cash()">
                                 <div>Pago En Efectivo</div>
+                            </button>
+                            <button class="btn btn-block btn-success" (click)="cash('terminal')">
+                                <div>Terminal</div>
                             </button>
                         </div>
                     </div>

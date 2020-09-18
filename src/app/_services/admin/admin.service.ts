@@ -156,6 +156,20 @@ export class AdminService {
       );
   }
 
+  postImg5(id, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'perfil');
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.2.18:3000/companies/img', uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
   firma(id, file) {
     const uploadData = new FormData();
     uploadData.append('file', file);

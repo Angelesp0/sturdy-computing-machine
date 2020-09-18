@@ -650,6 +650,9 @@ export class JsPDFComponent implements OnInit, OnDestroy
     if (localStorage.getItem('payment') === 'card') {
       this.methodPayment = 'TRANSFERENCIA';
     }
+    if (localStorage.getItem('payment') === 'terminal') {
+      this.methodPayment = 'TRANSFERENCIA';
+    }
     this.id = this.activatedRoute.snapshot.params['id_company'];
     this.value = localStorage.getItem('value');
     this.id_payment = localStorage.getItem('id_payment');
