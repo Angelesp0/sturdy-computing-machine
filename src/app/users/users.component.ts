@@ -8,6 +8,7 @@ import { map  } from 'rxjs/operators';
 import { Response } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from './../_helpers/must-match.validator';
+import { ToastrService } from 'ngx-toastr';
 
 // Agregar Usuario
 @Component({
@@ -57,23 +58,13 @@ import { MustMatch } from './../_helpers/must-match.validator';
               <div *ngIf="f.cp.errors.minlength">Codigo Postal must be at least 5 characters</div>
           </div>
         </div>
-        <!--
-          <div class="col-md-12" class="form-group">
-          <label>Contraseña</label>
-          <input formControlName="password" name="password" inputmode="text" class="form-control" placeholder="Contraseña" [(ngModel)]="this.data.password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"  >
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Contraseña is required</div>
-            <div *ngIf="f.password.errors.minlength">Contraseña must be at least 6 characters</div>
-          </div>
-          </div>
-        -->
         <div class="col-md-12" class="form-group">
           <label>Email</label>
-          <input formControlName="email" name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email">
+          <input [ngModelOptions]="{standalone: true}" name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email">
         </div>
       <p><strong>Estas por agregar un nuevo usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
       <div class="form-group">
-        <button type="submit" ngbAutofocus class="btn btn-danger" (click)="create()">Ok</button>
+        <button type="submit" ngbAutofocus class="btn btn-danger">Ok</button>
       </div>
     </form>
   </div>
@@ -87,6 +78,7 @@ export class NgbdModalConfirmAutofocus implements OnInit {
     public modal: NgbActiveModal,
     private userService: UserService,
     public router: Router,
+    public toastr: ToastrService,
     private formBuilder: FormBuilder) {
       this.data = new User();
     }
@@ -106,17 +98,21 @@ export class NgbdModalConfirmAutofocus implements OnInit {
       this.data.role = 0;
       this.data.username = nombre1 + apellido3 + apellido4;
       this.userService.createItem(this.data).subscribe((response) => {
+        this.showNotification('top', 'right', 1);
         this.modal.close('Ok click');
       });
     }
     onSubmit() {
       this.submitted = true;
+      console.log(this.registerForm);
       // stop here if form is invalid
       if (this.registerForm.invalid) {
+        this.showNotification('top', 'right', 3);
           return;
+      } else {
+        this.create();
+
       }
-      alert('Usuario Creado Exitosamente');
-      this.create();
   }
     ngOnInit() {
       this.registerForm = this.formBuilder.group({
@@ -125,11 +121,53 @@ export class NgbdModalConfirmAutofocus implements OnInit {
         direction: ['', Validators.required],
         colony: ['', Validators.required],
         cp: ['', [Validators.required, Validators.minLength(5)]],
-        email: ['', [Validators.required, Validators.email]],
-        password:  ['', [Validators.required, Validators.minLength(6)]],
       });
   }
   get f() { return this.registerForm.controls; }
+
+  showNotification(from, align, notification, message?) {
+
+    switch (notification) {
+      case 1:
+      this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span>Usuario registrado', '', {
+         timeOut: 1000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-info alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 2:
+      this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span>Ingresando...', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-success alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 3:
+      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Datos incompletos', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-warning alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 4:
+      this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> No se pudo guardar el usuario', '', {
+         timeOut: 8000,
+         enableHtml: true,
+         closeButton: true,
+         toastClass: 'alert alert-danger alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+       break;
+      default:
+      break;
+    }
+  }
 
 }
 
@@ -194,11 +232,11 @@ export class ModalEditar {
   constructor(
     public modal: NgbActiveModal,
     private userService: UserService,
+    public toastr: ToastrService,
     public router: Router) {
       this.data = new User();
     }
     ngOnInit() {
-      console.log(this.fromParent);
       this.userService.getUser(this.fromParent).subscribe(response => {
         this.data = response;
       });
@@ -206,8 +244,52 @@ export class ModalEditar {
     update() {
       this.userService.updateItem(this.fromParent, this.data).subscribe(response => {
         this.data = response;
+        this.showNotification('top', 'right', 1);
         this.modal.close('Ok click');
       });
+    }
+    showNotification(from, align, notification, message?) {
+
+      switch (notification) {
+        case 1:
+        this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span>Usuario Editado', '', {
+           timeOut: 1000,
+           closeButton: true,
+           enableHtml: true,
+           toastClass: 'alert alert-info alert-with-icon',
+           positionClass: 'toast-' + from + '-' +  align
+         });
+        break;
+        case 2:
+        this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span>Ingresando...', '', {
+           timeOut: 8000,
+           closeButton: true,
+           enableHtml: true,
+           toastClass: 'alert alert-success alert-with-icon',
+           positionClass: 'toast-' + from + '-' +  align
+         });
+        break;
+        case 3:
+        this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Datos incompletos', '', {
+           timeOut: 8000,
+           closeButton: true,
+           enableHtml: true,
+           toastClass: 'alert alert-warning alert-with-icon',
+           positionClass: 'toast-' + from + '-' +  align
+         });
+        break;
+        case 4:
+        this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> No se pudo guardar el usuario', '', {
+           timeOut: 8000,
+           enableHtml: true,
+           closeButton: true,
+           toastClass: 'alert alert-danger alert-with-icon',
+           positionClass: 'toast-' + from + '-' +  align
+         });
+         break;
+        default:
+        break;
+      }
     }
 }
 

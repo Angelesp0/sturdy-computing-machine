@@ -5,6 +5,8 @@ import { Company } from '../../models/company';
 import { CompanyService } from './../../_services/company/company.service';
 // import { User } from '../../../../../gglobals-ionic/gglobals/src/app/models/user';
 import { User } from '../../models/user';
+import { ToastrService } from 'ngx-toastr';
+
 
 import { UserService } from '../../_services/user/user.service';
 import { CompanyServices } from './../../models/company_services';
@@ -80,7 +82,8 @@ export class AddCompanyComponent implements OnInit {
     private userService: UserService,
     private companyService: CompanyService,
     public router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
     ) {
       this.data = new Company();
       this.users = new User();
@@ -115,6 +118,7 @@ export class AddCompanyComponent implements OnInit {
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
+          this.showNotification('top', 'right', 1);
           localStorage.setItem('pay', response['id']);
           console.log(response);
           localStorage.setItem('Rif', 'True');
@@ -136,6 +140,8 @@ export class AddCompanyComponent implements OnInit {
         this.service.end_date = endDate;
 
         this.companyService.company_has_service(this.service).subscribe((response) => {
+          this.showNotification('top', 'right', 1);
+
           localStorage.setItem('pay', response['id']);
           console.log(response);
           localStorage.setItem('Pf', 'True');
@@ -147,12 +153,16 @@ export class AddCompanyComponent implements OnInit {
     }
     onSubmit() {
       this.submitted = true;
+      console.log('submit');
       // stop here if form is invalid
       if (this.registerCompany.invalid) {
+        console.log('invalid ' + this.registerCompany.invalid)
+        this.showNotification('top', 'right', 2);
           return;
+      } else {
+        console.log('valid');
+        this.create();
       }
-      alert('Usuario Creado Exitosamente');
-      this.create();
   }
 
   ngOnInit(): void {
@@ -165,10 +175,10 @@ export class AddCompanyComponent implements OnInit {
       company: ['', Validators.required],
       razon: ['', Validators.required],
       rfc: ['', Validators.required],
+      first_name: ['', Validators.required],
       users_id_user: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
-      direction: ['', Validators.required],
       colony: ['', Validators.required],
       street: ['', Validators.required],
       street3: ['', Validators.required],
@@ -179,7 +189,6 @@ export class AddCompanyComponent implements OnInit {
       tel: ['', [Validators.required, Validators.minLength(10)]],
       contact_name: ['', Validators.required],
       job: ['', Validators.required],
-      first_name: ['', Validators.required],
       contact_tel: ['', [Validators.required, Validators.minLength(10)]],
       contact_email: ['', [Validators.required, Validators.email]],
       distribution: ['', Validators.required],
@@ -189,13 +198,48 @@ export class AddCompanyComponent implements OnInit {
       main_activity: ['', Validators.required],
       employees: ['', [Validators.required, Validators.minLength(1)]],
       female_employees: ['', [Validators.required, Validators.minLength(1)]],
-      attention_area: ['', Validators.required],
-      type_street: ['', Validators.required],
+
       executive: ['', Validators.required],
     });
 
     this.userService.getUsers().subscribe((response) => this.name = response);
     this.userService.getExecutive().subscribe((response) => this.executive = response);
+  }
+
+  showNotification(from, align, notification) {
+
+
+    switch (notification) {
+      case 1:
+      this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> Empresa registrada' , '', {
+         timeOut: 1000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-info alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 2:
+      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Datos incompletos', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-warning alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 3:
+      this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> Error al crear la empresa', '', {
+         timeOut: 8000,
+         enableHtml: true,
+         closeButton: true,
+         toastClass: 'alert alert-danger alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+       break;
+      default:
+      break;
+    }
   }
 
   get f() { return this.registerCompany.controls; }
