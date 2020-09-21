@@ -3,13 +3,18 @@ import * as Chartist from 'chartist';
 import { AdminService } from '../_services/admin/admin.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartOptions, ChartType, ChartDataSets, ChartLegendItem } from 'chart.js';
+import { map  } from 'rxjs/operators';
+import { Subject  } from 'rxjs';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  providers: [NgbModalConfig, NgbModal]
+
 })
 export class DashboardComponent implements OnInit {
   public contratosTotales: any;
@@ -18,10 +23,13 @@ export class DashboardComponent implements OnInit {
   public data3: any;
   public value: any = 0;
   public datos: any;
-
-
+  users: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  extractData: any;
   public num: number;
   data: any;
+  array: any = [];
 
   public gradientStroke;
   public chartColor;
@@ -217,9 +225,25 @@ export class DashboardComponent implements OnInit {
       }
     }
 
-  constructor(public adminService: AdminService) { }
+  constructor(
+    public adminService: AdminService,
+    private modalService: NgbModal
+    ) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+    };
+    this.adminService.getCommission().subscribe(response => {
+      this.dtTrigger.next();
+      this.users  = response;
+    });
+
+
+
+
+
+
     this.chartColor = '#FFFFFF';
     this.canvas = document.getElementById('bigDashboardChart');
     this.ctx = this.canvas.getContext('2d');
@@ -553,6 +577,7 @@ export class DashboardComponent implements OnInit {
     // obtener el total de ejecutivos
     this.adminService.getExecutive().subscribe(response => {
     this.data3 = response;
+    this.commission();
     let data = [];
     let executive = [];
 
@@ -587,7 +612,6 @@ export class DashboardComponent implements OnInit {
           }*/
         });
       }
-      console.log(data);
 
       this.lineChartGradientsNumbersData = [
         {
@@ -601,7 +625,7 @@ export class DashboardComponent implements OnInit {
           data: [10,20]
         }
       ];
-      console.log(executive);
+      // console.log(executive);
       this.lineChartGradientsNumbersLabels = executive;
 
     });
@@ -615,6 +639,25 @@ export class DashboardComponent implements OnInit {
      }
     ];
     // this.lineChartGradientsNumbersLabels = ['January', 'November', 'December'];
+  }
+
+  commission() {
+    for (let id_user of this.data3) {
+      let suma = 0;
+      let ejecutivo = this.users.filter(user => user.users_id_user === id_user.id_user);
+      ejecutivo.forEach(function(elemento, indice) {
+        suma += elemento["amount"];
+    });
+      ejecutivo.push(suma);
+      this.array.push(ejecutivo);
+
+    }
+    console.log(this.array);
+    //console.log(this.array[0][0]['amount']);
+  }
+
+  open(content, data) {
+    this.modalService.open(content, { size: 'sm' });
   }
 
 

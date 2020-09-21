@@ -278,4 +278,16 @@ export class AdminService {
   getExecutiveSales(id) {
     return this.http.get('http://192.168.2.18:3000/dashboard/executive/' + id, this.httpOptions);
   }
+
+  getCommission() {
+    return this.http.get('http://192.168.137.1:3000/dashboard/commission', this.httpOptions);
+  }
+
+  putCommission(id) {
+    return this.http.put('http://192.168.137.1:3000/commission/' + id, this.httpOptions);
+  }
+
+
+
+
 }
