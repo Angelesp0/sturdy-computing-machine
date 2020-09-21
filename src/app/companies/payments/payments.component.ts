@@ -285,10 +285,10 @@ export class PaymentsComponent implements OnInit {
       });
     });
     this.companyService.active_payment(this.id_company, this.id_service).subscribe((responsee) => {
-      console.log('Active_payment');
+      this.showNotification('top', 'right', 2);
       this.router.navigate([`/generatepdf/${this.id_company}`]);
       console.log(responsee);
-      if (localStorage.getItem('Rif')) {
+    if (localStorage.getItem('Rif')) {
         localStorage.removeItem('Rif');
         // logged in so return true
         return true;

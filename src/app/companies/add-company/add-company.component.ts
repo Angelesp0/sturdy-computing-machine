@@ -156,7 +156,7 @@ export class AddCompanyComponent implements OnInit {
       console.log('submit');
       // stop here if form is invalid
       if (this.registerCompany.invalid) {
-        console.log('invalid ' + this.registerCompany.invalid)
+        console.log('invalid ' + this.registerCompany.invalid);
         this.showNotification('top', 'right', 2);
           return;
       } else {
@@ -175,7 +175,7 @@ export class AddCompanyComponent implements OnInit {
       company: ['', Validators.required],
       razon: ['', Validators.required],
       rfc: ['', Validators.required],
-      first_name: ['', Validators.required],
+      // first_name: ['', Validators.required],
       users_id_user: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
@@ -198,7 +198,6 @@ export class AddCompanyComponent implements OnInit {
       main_activity: ['', Validators.required],
       employees: ['', [Validators.required, Validators.minLength(1)]],
       female_employees: ['', [Validators.required, Validators.minLength(1)]],
-
       executive: ['', Validators.required],
     });
 
@@ -212,7 +211,7 @@ export class AddCompanyComponent implements OnInit {
     switch (notification) {
       case 1:
       this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> Empresa registrada' , '', {
-         timeOut: 1000,
+         timeOut: 8000,
          closeButton: true,
          enableHtml: true,
          toastClass: 'alert alert-info alert-with-icon',

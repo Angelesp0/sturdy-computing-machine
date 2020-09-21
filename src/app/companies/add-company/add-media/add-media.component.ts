@@ -5,6 +5,7 @@ import {FileUploader} from 'ng2-file-upload';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AdminService } from '../../../_services/admin/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 declare const google: any;
 
@@ -61,7 +62,9 @@ export class AddMediaComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer,
     private adminService: AdminService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
+
   ) {
       this.marker = new Marker();
   }
@@ -206,9 +209,9 @@ this.signaturePad = new SignaturePad(canvas);
     this.adminService.postImg3(  this.id, this.file3).subscribe(res => console.log(res));
     this.adminService.postImg4(  this.id, this.file4).subscribe(res => console.log(res));
     this.adminService.postImg5(  this.id, this.file5).subscribe(res => console.log(res));
-
     this.adminService.firma(     this.id, this.firma).subscribe(res => console.log(res));
     this.adminService.locatio(  this.lat, this.lng, 'localizacion de prueba', this.id).subscribe(res => console.log(res));
+    this.showNotification('top', 'right', 1);
     this.router.navigate([`/payment/${this.id}`]);
   }
 
@@ -311,6 +314,42 @@ this.signaturePad = new SignaturePad(canvas);
     }
     // cast to a File
     return <File>blob;
+  }
+
+  showNotification(from, align, notification) {
+
+
+    switch (notification) {
+      case 1:
+      this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> Datos guardados con exito' , '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-info alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 2:
+      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Datos incompletos', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-warning alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 3:
+      this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> Error al crear la empresa', '', {
+         timeOut: 8000,
+         enableHtml: true,
+         closeButton: true,
+         toastClass: 'alert alert-danger alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+       break;
+      default:
+      break;
+    }
   }
 
 }

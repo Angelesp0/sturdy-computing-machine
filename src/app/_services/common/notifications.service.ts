@@ -38,6 +38,7 @@ export class NotificationsService {
       'Algo malo a pasado; porfavor intentalo de nuevo mas tarde.');
   }
 
+
   getNotifications(id_addressee) {
       return this.http.get(this.base_path + id_addressee, this.httpOptions);
   }
@@ -49,8 +50,11 @@ export class NotificationsService {
         catchError(this.handleError)
       );
   }
-  getNotificationsById(id_addressee, id_notifications) {
-    return this.http.get(this.base_path + id_addressee + '/' + id_notifications , this.httpOptions);
+  getNotificationsById(id_addressee, id_notifications): Observable<any> {
+    return this.http.get(this.base_path + id_addressee + '/' + id_notifications , this.httpOptions).pipe(
+      catchError(this.handleError)
+
+    );
   }
 
   updateNotification(id, data) {

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 //import * as autoTable from 'jspdf-autotable';
-
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../../_services/admin/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Email } from '../../models/email';
@@ -39,7 +39,8 @@ export class JsPDFComponent implements OnInit, OnDestroy
   constructor(
    private adminService: AdminService,
    private activatedRoute: ActivatedRoute,
-   private router: Router
+   private router: Router,
+   private toastr: ToastrService
 
   ) {
     this.email = new Email();
@@ -619,6 +620,9 @@ export class JsPDFComponent implements OnInit, OnDestroy
     if (post) {
       this.adminService.postAcuse(this.id, doc.output('blob')).subscribe(response => {
         localStorage.setItem('ac', response['nombre']);
+        this.adminService.sendEmail(this.email).subscribe(
+          response => this.showNotification('top', 'right', 2),
+          error => this.showNotification('top', 'right', 4));
       });
     }
   }
@@ -688,7 +692,9 @@ export class JsPDFComponent implements OnInit, OnDestroy
    /////////////////////////////////////////////////// numeros
   }
 
-  async sendemail() {
+  sendemail() {
+    this.acuse(this.email.email, 'false', 'post');
+
     this.email.razon = this.inf.company;
     this.email.rfc = this.inf.rfc;
     this.email.servicio = this.inf.name_service;
@@ -704,9 +710,6 @@ export class JsPDFComponent implements OnInit, OnDestroy
     this.email.contrato = localStorage.getItem('cont');
     this.email.recibo = localStorage.getItem('rec');
     this.email.acuse = localStorage.getItem('ac');
-    this.acuse(this.email.email, 'false', 'post');
-    await this.adminService.sendEmail(this.email).subscribe();
-    console.log('esperar');
   }
 
   ngOnDestroy() {
@@ -721,4 +724,48 @@ export class JsPDFComponent implements OnInit, OnDestroy
     localStorage.removeItem('pay');
 
   }
+
+  showNotification(from, align, notification) {
+    switch (notification) {
+      case 1:
+      this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> La transacción se aprobó, pero no se autorizó.', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-info alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 2:
+      this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span>Email enviado', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-success alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 3:
+      this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> El Pago se Cancelo, Favor de re-intentar', '', {
+         timeOut: 8000,
+         closeButton: true,
+         enableHtml: true,
+         toastClass: 'alert alert-warning alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+      break;
+      case 4:
+      this.toastr.error('<span class="now-ui-icons ui-1_bell-53"></span> Email no enviado, favor de re-intentar', '', {
+         timeOut: 8000,
+         enableHtml: true,
+         closeButton: true,
+         toastClass: 'alert alert-danger alert-with-icon',
+         positionClass: 'toast-' + from + '-' +  align
+       });
+       break;
+      default:
+      break;
+    }
+  }
+
 }
