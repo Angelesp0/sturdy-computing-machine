@@ -286,6 +286,19 @@ export class AdminService {
   putCommission(id) {
     return this.http.put('http://192.168.137.1:3000/commission/' + id, this.httpOptions);
   }
+  getDocuments(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id, this.httpOptions);
+  }
+  getImages(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/img', this.httpOptions);
+  }
+
+  getExterior(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/exterior', this.httpOptions);
+  }
+
+
+  
 
 
 

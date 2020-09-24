@@ -322,7 +322,8 @@ export class CompaniesComponent implements OnInit {
   data: any;
   constructor(
     private _modalService: NgbModal,
-    public companyService: CompanyService
+    public companyService: CompanyService,
+    public router: Router
     ) {
       this.data = new Company();
      }
@@ -347,6 +348,11 @@ export class CompaniesComponent implements OnInit {
   open(name: string, id?: number) {
     const modalRef = this._modalService.open(MODALS[name]);
     modalRef.componentInstance.fromParent = id;
+  }
+
+  document(id) {
+      this.router.navigate(['/documents/' + id]);
+      console.log(id);
   }
 
 }

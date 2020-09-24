@@ -35,6 +35,8 @@ import { MaterialComponent } from './material/material.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AccountComponent } from './account/account.component';
 import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
+import { DocumentsComponent } from './companies/documents/documents.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -44,6 +46,7 @@ import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
     FileUploadModule ,
     MatTabsModule,
     MatDividerModule,
+    MatExpansionModule,
     NgxPayPalModule,
     PdfViewerModule,
     ReactiveFormsModule,
@@ -78,7 +81,8 @@ import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
     PaymentsComponent,
     CollectComponent,
     MaterialComponent,
-    AccountComponent
+    AccountComponent,
+    DocumentsComponent
 
   ],
   providers: [

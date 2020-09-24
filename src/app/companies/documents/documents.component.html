@@ -1,0 +1,107 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Gestoria Empresarial Global Service</h5>
+                    <p class="category">Mas contenido en nuestra pagina web
+                        <a href="https://gglobals.com.mx/">GGlobal Service</a>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+
+                        <img src="http://192.168.2.33:3000/files/{{exterior[0].nombre}}">
+                    </div>
+                    <br>
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Imagen Interna de la empresa
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Ver Imagen
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>This is the primary content of the panel.</p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    INE Empresario
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Ver Imagen
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>This is the primary content of the panel.</p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Comprobante de domicilio
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Ver Imagen
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>This is the primary content of the panel.</p>
+                        </mat-expansion-panel>
+                        <!--<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Self aware panel
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>I'm visible because I am open</p>
+                        </mat-expansion-panel>-->
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Gestoria Empresarial Global Service</h5>
+                    <p class="category">Mas contenido en nuestra pagina web
+                        <a href="https://gglobals.com.mx/">GGlobal Service</a>
+                    </p>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered table-sm row-border hover">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <!--<th>Servicio</th>-->
+                                    <th>Archivo</th>
+                                    <th>Recibo</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of documents" class="pointer">
+                                    <td>{{ document.update_time | date: 'MMMM y' }}</td>
+                                    <td class=" text-primary">{{ document.status }}</td>
+                                    <!--<td (click)="open('editar', company.id_company)">{{ company.service }}</td>-->
+                                    <td><button class="btn btn-block btn-success" (click)="document(document.id_company)">Subir archivo</button></td>
+                                    <td><a class="btn btn-block btn-outline-primary" target="_blank" href="http://192.168.2.33:3000/files/{{document.name}}">Ver </a ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

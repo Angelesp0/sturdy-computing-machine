@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div class="col-md">
-                                <label>Razon Social</label>
+                                <label>Razon Social<strong><span class="text-danger">*</span></strong></label>
                                 <input formControlName="razon" name="razon" inputmode="text" class="form-control" [(ngModel)]="this.data.razon" [ngClass]="{ 'is-invalid': submitted && f.razon.errors }">
                                 <div *ngIf="submitted && f.razon.errors" class="invalid-feedback">
                                     <div *ngIf="f.razon.errors.required">La Razon social es requerida</div>

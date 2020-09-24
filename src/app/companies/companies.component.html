@@ -29,6 +29,7 @@
                                     <th>Ciudad</th>
                                     <th>Telefono</th>
                                     <th>CP</th>
+                                    <th>Documents</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,6 +42,7 @@
                                     <td (click)="open('editar', company.id_company)">{{company.city}} </td>
                                     <td (click)="open('editar', company.id_company)">{{company.tel}}</td>
                                     <td (click)="open('editar', company.id_company)">{{company.cp}}</td>
+                                    <td><button class="btn btn-outline-primary" (click)="document(company.id_company)">hola </button></td>
                                 </tr>
                             </tbody>
                         </table>
