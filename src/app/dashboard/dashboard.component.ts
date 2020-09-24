@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild, Input  } from '@angular/core';
 import * as Chartist from 'chartist';
 import { AdminService } from '../_services/admin/admin.service';
 import { BaseChartDirective } from 'ng2-charts';
@@ -24,12 +24,15 @@ export class DashboardComponent implements OnInit {
   public value: any = 0;
   public datos: any;
   users: any;
+  id_ejecutivo: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   extractData: any;
   public num: number;
   data: any;
   array: any = [];
+  @Input() fromParent;
+
 
   public gradientStroke;
   public chartColor;
@@ -233,6 +236,28 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
+      language: {
+        processing:     "Procesando...",
+        search:         "Buscar&nbsp;:",
+         lengthMenu:    "Total _MENU_ elementos",
+        info:           "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+        infoEmpty:      "Mostrando 0 a 0 de 0 elementos",
+        infoFiltered:   "(Filtrado de _MAX_ entradas totales)",
+        infoPostFix:    "",
+        loadingRecords: "Carga en curso...",
+        zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        emptyTable:     "No hay datos disponibles en la tabla",
+        paginate: {
+            first:      "primero",
+            previous:   "anterior",
+            next:       "Próximo",
+            last:       "Último"
+        },
+        aria: {
+            sortAscending:  ": activar para ordenar la columna en orden ascendente",
+            sortDescending: ": activar para ordenar la columna en orden descendente"
+        }
+    },
     };
     this.adminService.getCommission().subscribe(response => {
       this.dtTrigger.next();
@@ -656,8 +681,17 @@ export class DashboardComponent implements OnInit {
     //console.log(this.array[0][0]['amount']);
   }
 
-  open(content, data) {
-    this.modalService.open(content, { size: 'sm' });
+  actualizarComision() {
+    console.log(this.id_ejecutivo);
+    this.adminService.putCommission(this.id_ejecutivo).subscribe(response => console.log(response));
+  }
+
+  open(content, id?: number) {
+    console.log(id);
+    this.id_ejecutivo = id;
+    const modalRef = this.modalService.open(content, { size: 'sm' });
+    modalRef.componentInstance.fromParent = id;
+
   }
 
 
