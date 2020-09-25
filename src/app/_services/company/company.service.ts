@@ -127,7 +127,6 @@ export class CompanyService {
   }
 
   active_payment(id_company, services_id_service) {
-    console.log(id_company, services_id_service);
     return this.http
     .put('http://192.168.2.18:3000/company_services/' + id_company, {services_id_service} )
     .pipe(
@@ -136,7 +135,6 @@ export class CompanyService {
   }
 
   register_payment(value, description, status, update_time, id_company, company_has_services_id_companys, id?): Observable<Payment> {
-    console.log(company_has_services_id_companys);
     return this.http
     .post<Payment>('http://192.168.2.18:3000/payment/' + id_company , {id, value, description, status, update_time, company_has_services_id_companys})
     .pipe(

@@ -90,12 +90,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let document of documents" class="pointer">
+                                <tr *ngFor="let document of documents; let i = index" class="pointer">
                                     <td>{{ document.update_time | date: 'MMMM y' }}</td>
                                     <td class=" text-primary">{{ document.status }}</td>
                                     <!--<td (click)="open('editar', company.id_company)">{{ company.service }}</td>-->
-                                    <td><button class="btn btn-block btn-success" (click)="document(document.id_company)">Subir archivo</button></td>
-                                    <td><a class="btn btn-block btn-outline-primary" target="_blank" href="http://192.168.2.33:3000/files/{{document.name}}">Ver </a ></td>
+                                    <td *ngIf="statements[i]; else elseBlock">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{statements[i].url}}{{statements[i].name}}">Ver </a >
+                                    </td>
+                                    <ng-template #elseBlock>
+                                        <td>
+                                            <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar archivo</button>
+                                            <button class="btn btn-outline-success" (click)="postStatements()">Subir</button>
+                                        </td>
+                                    </ng-template>
+                                    <td><a class="btn btn-block btn-info" target="_blank" href="http://192.168.2.33:3000/files/{{document.name}}">Ver </a ></td>
                                 </tr>
                             </tbody>
                         </table>

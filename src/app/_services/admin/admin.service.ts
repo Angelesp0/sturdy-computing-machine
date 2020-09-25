@@ -222,9 +222,11 @@ export class AdminService {
   }
 
   getInfContract(id) {
+    console.log('getInfContract');
     return this.http.get('http://192.168.2.18:3000/contract/' + id, this.httpOptions);
   }
   getContract(id) {
+
     return this.http.get('http://192.168.2.18:3000/getcontract/' + id, this.httpOptions);
   }
 
@@ -297,10 +299,21 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/documents/' + id + '/exterior', this.httpOptions);
   }
 
+  postStatements(id, date, file) {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('date', date);
 
-  
-
-
+    return this.http
+      .post('http://192.168.137.1:3000/documents/statements/' + id, uploadData)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+  getStatements(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/statements/' + id, this.httpOptions);
+  }
 
 
 }

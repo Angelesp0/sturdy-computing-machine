@@ -238,7 +238,7 @@ this.signaturePad = new SignaturePad(canvas);
   public onFileSelected5(event: EventEmitter<File[]>) {
     const file: File = event[0];
     this.file5 = file;
-  }
+  } 
 
   clear() {
     this.signaturePad.clear();
