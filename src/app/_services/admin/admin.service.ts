@@ -222,7 +222,7 @@ export class AdminService {
   }
 
   getInfContract(id) {
-    console.log('getInfContract');
+    console.log('getInfContract' + id);
     return this.http.get('http://192.168.2.18:3000/contract/' + id, this.httpOptions);
   }
   getContract(id) {

@@ -45,6 +45,7 @@ export class CollectComponent implements OnInit {
   id: number;
   reciboName: any;
   methodPayment: any;
+  id_payment: any;
 
 
   constructor(
@@ -126,12 +127,17 @@ export class CollectComponent implements OnInit {
       });
     },
     onClientAuthorization: (data) => {
-       this.adminService.getInfContract(this.company).subscribe(response => this.inf = response);
+       this.adminService.getInfContract(this.company).subscribe(response => {
+         this.inf = response
+         console.log(response);
+        });
 
       this.showNotification('top', 'right', 2);
       this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
+        this.id_payment = response['id_table'];
       });
       this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
+        this.receipt('false', 'post');
         console.log(responsee);
       });
       // this.showSuccess = true;
@@ -244,12 +250,19 @@ export class CollectComponent implements OnInit {
   }
 
   cash() {
+    this.adminService.getInfContract(this.company).subscribe(response => {
+      this.inf = response
+      console.log(response);
+     });
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.company, this.idCompanyServ, this.id_company).subscribe((response) => {
       console.log(response);
+      this.id_payment = response['id_table'];
+
     });
     this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
       console.log(responsee);
+      this.receipt('false', 'post');
     });
   }
 
@@ -275,6 +288,7 @@ export class CollectComponent implements OnInit {
     console.log(a);
 
 
+    // error con el this.info
 
     if (this.inf.id_service == 1) {
        service = 'RCR-' + (this.recibo[0]['id_receipt'] + 1);
@@ -465,12 +479,12 @@ export class CollectComponent implements OnInit {
     } 
 
     if (post) {
-      const id_payment = localStorage.getItem('id_payment');
-      console.log(id_payment);
-      this.adminService.postReceipt(this.company, identificador, date, id_payment, doc.output('blob')).subscribe(response => {
+      console.log(post);
+
+
+      this.adminService.postReceipt(this.company, identificador, date, this.id_payment, doc.output('blob')).subscribe(response => {
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
-          localStorage.setItem('rec', response[0]['name']);
-          localStorage.setItem(post, 'no');
+          console.log(response);
         });
       });
     }
