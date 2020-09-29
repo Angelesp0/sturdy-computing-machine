@@ -26,7 +26,14 @@
                                     Ver Imagen
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <p>This is the primary content of the panel.</p>
+                            <div class="row">
+                                <div class="col">
+                                    <img src="http://192.168.2.33:3000/files/{{interior[0].nombre}}">
+                                </div>
+                                <div class="col">
+                                    <img src="http://192.168.2.33:3000/files/{{interior[0].nombre}}">
+                                </div>
+                            </div>
                         </mat-expansion-panel>
 
                         <mat-expansion-panel>
@@ -38,7 +45,14 @@
                                     Ver Imagen
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <p>This is the primary content of the panel.</p>
+                            <div class="row">
+                                <div class="col">
+                                    <img src="http://192.168.2.33:3000/files/{{ineF[0].nombre}}">
+                                </div>
+                                <div class="col">
+                                    <img src="http://192.168.2.33:3000/files/{{ineP[0].nombre}}">
+                                </div>
+                            </div>
                         </mat-expansion-panel>
 
                         <mat-expansion-panel>
@@ -50,7 +64,13 @@
                                     Ver Imagen
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <p>This is the primary content of the panel.</p>
+                            <div class="row justify-content-md-center">
+
+                                <div class="col col-lg-4">
+                                    <img src="http://192.168.2.33:3000/files/{{comprobante[0].nombre}}">
+                                </div>
+                            </div>
+
                         </mat-expansion-panel>
                         <!--<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                             <mat-expansion-panel-header>

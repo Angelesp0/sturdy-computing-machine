@@ -15,8 +15,14 @@ export class DocumentsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   id: any;
   documents: any;
+
   images: any;
   exterior: any;
+  interior: any;
+  ineF: any;
+  ineP: any;
+  comprobante: any;
+
   panelOpenState = false;
   file: any;
   todayDate: Date = new Date();
@@ -50,9 +56,13 @@ export class DocumentsComponent implements OnInit {
       this.documents  = response;
     });
 
-    //this.adminService.getDocuments(this.id).subscribe(response => this.documents = response);
+    // this.adminService.getDocuments(this.id).subscribe(response => this.documents = response);
     this.adminService.getExterior(this.id).subscribe(response => this.exterior = response);
     this.adminService.getImages(this.id).subscribe(response => this.images = response);
+    this.adminService.getInterior(this.id).subscribe(response => this.interior = response);
+    this.adminService.getIneFrontal(this.id).subscribe(response => this.ineF = response);
+    this.adminService.getInePosterior(this.id).subscribe(response => this.ineP = response);
+    this.adminService.getComprobante(this.id).subscribe(response => this.comprobante = response);
 
     // ============================================5===================================== //
     this.uploader.onAfterAddingFile = (file) => {

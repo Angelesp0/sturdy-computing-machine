@@ -299,6 +299,23 @@ export class AdminService {
     return this.http.get('http://192.168.137.1:3000/documents/' + id + '/exterior', this.httpOptions);
   }
 
+  getInterior(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/interior', this.httpOptions);
+  }
+
+  getIneFrontal(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/inefrontal', this.httpOptions);
+  }
+
+  getInePosterior(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/ineposterior', this.httpOptions);
+  }
+
+  getComprobante(id) {
+    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/comprobante', this.httpOptions);
+  }
+
+
   postStatements(id, date, file) {
     const uploadData = new FormData();
     uploadData.append('file', file);
@@ -311,6 +328,8 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
+  
+
   getStatements(id) {
     return this.http.get('http://192.168.137.1:3000/documents/statements/' + id, this.httpOptions);
   }
