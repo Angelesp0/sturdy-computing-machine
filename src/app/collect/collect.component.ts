@@ -5,6 +5,7 @@ import { CompanyService } from '../_services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Payment } from '../models/register_paiment';
 import { AdminService } from '../_services/admin/admin.service';
+
 import * as nl from 'numeros_a_letras';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -24,7 +25,7 @@ export class CollectComponent implements OnInit {
   id_company: number;
   id_service: number;
   idCompanyServ: number;
-
+  payments: any;
   name: string;
   value: any;
   endMonth: any;
@@ -56,10 +57,9 @@ export class CollectComponent implements OnInit {
   ) { }
   item: any;
 
-
   async ngOnInit() {
     this.firmas = await this.adminService.getFirm().toPromise();
-    console.log(this.firmas);
+    // console.log(this.firmas);
     this.mario = this.firmas[0]['name'];
     this.yadira = this.firmas[1]['name'];
     const contrato1 = await this.adminService.getLastContract().toPromise();
@@ -128,7 +128,7 @@ export class CollectComponent implements OnInit {
     },
     onClientAuthorization: (data) => {
        this.adminService.getInfContract(this.company).subscribe(response => {
-         this.inf = response
+         this.inf = response;
          console.log(response);
         });
 
@@ -202,6 +202,11 @@ export class CollectComponent implements OnInit {
   }
 
   getService(newValue) {
+    console.log(newValue);
+    this.companyService.getPaymentsByCompanyId(newValue).subscribe(response => {
+      console.log(response);
+      this.payments = response
+    });
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
       console.log(response);
        this.services = Array.of(response);
@@ -209,7 +214,6 @@ export class CollectComponent implements OnInit {
        this.value = response['value'];
        this.id_service = response['id_service'];
        this.idCompanyServ = response['id_companys'];
-
        const datePayment = new Date(response['end_date']);
        this.endMonth = datePayment.getMonth() + 1;
        this.endDay = datePayment.getDate();
@@ -251,7 +255,7 @@ export class CollectComponent implements OnInit {
 
   cash() {
     this.adminService.getInfContract(this.company).subscribe(response => {
-      this.inf = response
+      this.inf = response;
       console.log(response);
      });
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -276,13 +280,13 @@ export class CollectComponent implements OnInit {
     const logo = new Image();
     const columns = [['Año', 'Mes', 'Total',  'Estado']];
     const data = [[
-    this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, "PAGADO"]];
+    this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.value, 'PAGADO']];
     const value2: number = +this.value;
     const value3 = nl(value2);
     const a = this.value; // valor en pesos
 
     const b = parseFloat(this.value);
-    const c: number = a-b;
+    const c: number = a - b;
     let service: any;
     let identificador: any;
     console.log(a);
@@ -290,31 +294,34 @@ export class CollectComponent implements OnInit {
 
     // error con el this.info
 
+    // tslint:disable-next-line: triple-equals
     if (this.inf.id_service == 1) {
        service = 'RCR-' + (this.recibo[0]['id_receipt'] + 1);
        identificador = 'CR-' + this.contrato;
        console.log(identificador);
     }
+    // tslint:disable-next-line: triple-equals
     if (this.inf.id_service == 2) {
       service = 'RCE-' + (this.recibo[0]['id_receipt'] + 1);
       identificador = 'CE-' + this.contrato;
       console.log(identificador);
     }
 
-    cliente.src = `http://192.168.2.18:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://192.168.2.27:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.2.18:3000/files/${this.yadira}`;
+    prestador.src = `http://192.168.2.27:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.2.18:3000/files/${this.mario}`;
+    testigo2.src = `http://192.168.2.27:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.2.18:3000/files/Logo.png`;
+    logo.src = `http://192.168.2.27:3000/files/Logo.png`;
     logo.alt = 'alt';
-    console.log(this.inf.nombre)
-    console.log(this.yadira)
-    console.log(this.inf)
+
+    console.log(this.inf.nombre);
+    console.log(this.yadira);
+    console.log(this.inf);
 
 
 
@@ -324,7 +331,7 @@ export class CollectComponent implements OnInit {
     doc.addImage(logo, 'PNG', 50, 20, 130, 45);
     doc.setFontSize(10);
 
-    doc.text('E-Mail:  servicioconta@gglobals.com.mx ',190, 40, );
+    doc.text('E-Mail:  servicioconta@gglobals.com.mx ', 190, 40, );
     doc.text('Gestoria Empresarial Global Service, S.C.', 390, 40, );
     doc.text('RFC :          GEG-110121-U13', 390, 50, );
 
@@ -339,71 +346,71 @@ export class CollectComponent implements OnInit {
 
 
     doc.setFontSize(16);
-    doc.setFont('helvetica',"bold");
+    doc.setFont('helvetica', 'bold');
     // doc.setFontType();
     doc.text('R E C I B O   D E   P A G O', 210, 120);
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
 // ======================================================================================================================= //
     doc.setFontSize(11.5);
     doc.text(`Recibimos de :                                                                                                                  No. recibo :`, 40, 150,  );
     doc.text(`                            _______________________________________________________                      _________ `, 40, 153,  );
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
     // doc.setFontType("normal")
     doc.text(` ${(this.inf.first_name).toUpperCase()} ${(this.inf.last_name).toUpperCase()} `, 200, 148, );
     doc.text(` ${service}`, 500, 148, );
 
-    
+
 // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
-    doc.text(`La cantidad de :`,40, 175,  );
+    doc.text(`La cantidad de :`, 40, 175,  );
     doc.text(`                              __________________________________________________________________________ `, 40, 178);
-    //doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    // doc.setFontType("normal")
+    doc.setFont('Arial', 'normal');
     doc.text(` $${(a)}       ${(value3).toUpperCase()} PESOS ${c}/100 MXN`, 200, 173, );
 // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
     doc.text(`Concepto :                                         Forma de pago :                                              RFC :`, 40, 200,  );
     doc.text(`                    __________________                                  _____________________              ________________`, 40, 203,  );
     // doc.setFontType("normal");
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(` MENSUALIDAD                                         ${this.methodPayment}`, 105, 198, );
     doc.text(`${(this.inf.rfc).toUpperCase()}`, 470, 198, );
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Razon social :`, 40, 225,  );
     doc.text(`                          ____________________________________________________________________________ `, 40, 228,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(` ${(this.inf.main_activity).toUpperCase()} `, 150, 223, );
     // ======================================================================================================================= //
-    //doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    // doc.setFontType("bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Actividad :                                                           Calle :`, 40, 250,  );
     doc.text(`                      ___________________________                ___________________________________________ `, 40, 253,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(`${(this.inf.main_activity).toUpperCase()}`, 130, 248, );
     doc.text(`${(this.inf.street).toUpperCase()}`, 310, 248, );
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Numero :                  Colonia :                                                                                                Cp :`, 40, 275,  );
     doc.text(`                  _______                  ______________________________________________            ____________ `, 40, 278,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(` ${this.inf.num_ext}`, 95, 273, );
     doc.text(`${(this.inf.colony).toUpperCase()}`, 200, 273, );
@@ -412,44 +419,44 @@ export class CollectComponent implements OnInit {
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Entre calles :                                                                               Y :`, 40, 300,  );
     doc.text(`                         _____________________________________         ___________________________________ `, 40, 303,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(`${(this.inf.street).toUpperCase()}`, 110, 298, );
     doc.text(`${(this.inf.street).toUpperCase()}`, 350, 298, );
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Calle posterior :                                                                                                 No. contrato :`, 40, 325,  );
     doc.text(`                              ______________________________________________                            ______________ `, 40, 328,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     doc.text(` ${(this.inf.street).toUpperCase()}`, 120, 323, );
     doc.text(`${identificador}`, 490, 323, );
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`Fecha de pago :                                                                       `, 40, 350,  );
     doc.text(`                            _____________ `, 40, 353,  );
     // doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    doc.setFont('Arial', 'normal');
 
     // ======================================================================================================================= //
     // doc.setFontType("bold");
-    doc.setFont('Arial',"bold");
+    doc.setFont('Arial', 'bold');
 
     doc.text(`_____________________________________ `, 200, 395,  );
-    //doc.setFontType("normal")
-    doc.setFont('Arial',"normal");
+    // doc.setFontType("normal")
+    doc.setFont('Arial', 'normal');
 
     doc.text(`            GESTORIA EMPRESARIAL `, 210, 415,  );
     doc.text(`               GLOBAL SERVICE S.C`, 210, 430,  );
@@ -465,24 +472,26 @@ export class CollectComponent implements OnInit {
  });
     // ======================================================================================================================= //
     doc.setFontSize(11.5);
-    doc.text(`Aviso de Privacidad Simplificado` ,240, 620,  {maxWidth: 540, align: 'justify'});
+    doc.text(`Aviso de Privacidad Simplificado` , 240, 620,  {maxWidth: 540, align: 'justify'});
     doc.setFontSize(9);
-    doc.text(`Gestoria Empresarial Global Service SC, implementa las medidas de seguridad y mecanismos tecnicos necesarios para la proteccion de datos personales y sencibles, procurando siempre la integridad de dichos datos evitando asi el daño, perdida, o el uso, acceso a tratamiento no autorizado por los titulares, la vulnerabilidad surgida por la alteracion de los mismos sera informada por Gestoria Empresarial Global Service SC, en la brevedad posible a los titulares, a fin de que se puedan tomar medidas pertinentes a la defensa de sus derechos tal como lo señala el articulo 20 de la ley, Gestoria Empresarial Global Service SC, por consucto de sus representantes legales, directivos o personal a cargo se compromete a guardar confidencialidad respuecto a los datos de los titulares, confidencialidad que subsistira aun despues de terminada la relacion con Gestoria Empresarial Global Service SC, teniendo asi prohinido el acceso de personas no autorizadas y utilizar los datos personales de los titulares para los fines distintos establecidos de manera contractual o a los establecidos en el presente aviso de privacidad, para visualizar nuestro abiso de privacidad vigente, visitar la pagina de https://gglobals.com.mx/aviso-de-privacidad/` ,40, 640,  {maxWidth: 540, align: 'justify'});
+    doc.text(`Gestoria Empresarial Global Service SC, implementa las medidas de seguridad y mecanismos tecnicos necesarios para la proteccion de datos personales y sencibles, procurando siempre la integridad de dichos datos evitando asi el daño, perdida, o el uso, acceso a tratamiento no autorizado por los titulares, la vulnerabilidad surgida por la alteracion de los mismos sera informada por Gestoria Empresarial Global Service SC, en la brevedad posible a los titulares, a fin de que se puedan tomar medidas pertinentes a la defensa de sus derechos tal como lo señala el articulo 20 de la ley, Gestoria Empresarial Global Service SC, por consucto de sus representantes legales, directivos o personal a cargo se compromete a guardar confidencialidad respuecto a los datos de los titulares, confidencialidad que subsistira aun despues de terminada la relacion con Gestoria Empresarial Global Service SC, teniendo asi prohinido el acceso de personas no autorizadas y utilizar los datos personales de los titulares para los fines distintos establecidos de manera contractual o a los establecidos en el presente aviso de privacidad, para visualizar nuestro abiso de privacidad vigente, visitar la pagina de https://gglobals.com.mx/aviso-de-privacidad/` , 40, 640,  {maxWidth: 540, align: 'justify'});
 
 
+    // tslint:disable-next-line: triple-equals
     if (download == 'true') {
       if (this.inf.name_service === 'Contabilidad Rif') {
         doc.save('RCR.pdf');
       } else {
         doc.save('RCE.pdf');
       }
-    } 
+    }
 
     if (post) {
       console.log(post);
 
 
       this.adminService.postReceipt(this.company, identificador, date, this.id_payment, doc.output('blob')).subscribe(response => {
+        // tslint:disable-next-line: no-shadowed-variable
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
           console.log(response);
         });
@@ -493,4 +502,5 @@ export class CollectComponent implements OnInit {
   openPD() {
     this.receipt('true');
   }
+
 }

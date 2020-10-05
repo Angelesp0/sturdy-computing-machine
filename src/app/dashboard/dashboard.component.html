@@ -37,7 +37,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Ventas 2019</h5>
-                    <h4 class="card-title">Contaduria</h4>
+                    <h4 class="card-title">Contabilidad</h4>
                     <div ngbDropdown>
                         <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
               <i class="now-ui-icons loader_gear"></i>
@@ -180,15 +180,22 @@
                                     <th>Nombre</th>
                                     <th>Contratos</th>
                                     <th>Total a pagar</th>
+                                    <th>Historial</th>
+
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let user of array" class="pointer">
-                                    <td> <img src="http://192.168.2.18:3000/files/{{user[0].img}}" alt="Avatar" style="width:60px"></td>
+                                    <td> <img src="http://192.168.2.27:3000/files/{{user[0].img}}" alt="Avatar" style="width:60px"></td>
                                     <td class=" text-primary" (click)="open(acept, user[0].users_id_user )">{{ user[0].first_name }} {{ user[0].last_name }}</td>
                                     <td>{{user.length-1}}</td>
                                     <td>$ {{user[user.length - 1] | number}}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="openHistory(history, user[0].users_id_user )">
+                                            <i class="now-ui-icons files_single-copy-04"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -213,6 +220,56 @@
     <div class="modal-footer">
         <button (click)="actualizarComision()" (click)="c('Save click')" ngbAutofocus class="btn btn-danger">Ok</button>
 
+        <button type="button" class="btn btn-light" (click)="c('Save click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #history let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Historial de Pagos</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- Dark table -->
+        <table class="table align-items-center table-flush">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Fecha</th>
+                    <th scope="col" class="text-center">Valor</th>
+                    <th scope="col" class="text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let payment of payments" class="pointer">
+                    <td scope="row">
+                        <div class="media align-items-center">
+                            <div class="media-body text-center">
+                                <b class="mb-0 text-sm">{{payment.date |date: 'dd/MM/y'}}</b>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        ${{payment.amount}}
+                    </td>
+
+                    <td *ngIf=" payment.status === 'cobrado'; else elseBlock">
+                        <span class="badge badge-success badge-dot">
+                            <i class="bg-warning"></i> {{payment.status}}
+                        </span></td>
+                    <ng-template #elseBlock>
+                        <td>
+                            <span class="badge badge-warning badge-dot">
+                                <i class="bg-warning"></i> {{payment.status}}
+                            </span>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="c('Save click')">Close</button>
     </div>
 </ng-template>

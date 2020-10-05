@@ -33,6 +33,13 @@ File: scss
 Login register and recover password Page
 ******************/
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .login-register {
     background-size: cover;
     background-repeat: no-repeat;

@@ -314,7 +314,7 @@ const MODALS: {[name: string]: Type<any>} = {
   styleUrls: ['./companies.component.css']
 })
 export class CompaniesComponent implements OnInit {
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
   withAutofocus = `<button type="button" ngbAutofocus class="btn btn-danger"
   (click)="modal.close('Ok click')">Ok</button>`;
@@ -329,8 +329,27 @@ export class CompaniesComponent implements OnInit {
      }
 
   ngOnInit(): void {
+
+    ///los botones no funcionan
     this.dtOptions = {
-      pagingType: 'full_numbers',
+        pagingType: 'full_numbers',
+        // Declare the use of the extension in the dom parameter
+        dom: 'Bfrtip',
+        // Configure the buttons
+        buttons: [
+            'columnsToggle',
+            'colvis',
+            'copy',
+            'print',
+            'excel',
+            {
+            text: 'Some button',
+            key: '1',
+            action: function (e, dt, node, config) {
+                alert('Button activated');
+            }
+            }
+        ]
     };
     this.companyService.getCompanies().pipe(map(this.extractData)).subscribe(response => {
       this.dtTrigger.next();

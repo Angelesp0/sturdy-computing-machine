@@ -23,11 +23,11 @@ export class DashboardComponent implements OnInit {
   public data3: any;
   public value: any = 0;
   public datos: any;
+  public payments: any;
   users: any;
   id_ejecutivo: any;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
-  extractData: any;
   public num: number;
   data: any;
   array: any = [];
@@ -211,7 +211,7 @@ export class DashboardComponent implements OnInit {
 
     // events
     public chartClicked(e: any): void {
-      console.log(e);
+      // console.log(e);
     }
     public chartHovered(e: any): void {
       // console.log(e);
@@ -233,7 +233,7 @@ export class DashboardComponent implements OnInit {
     private modalService: NgbModal
     ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
       language: {
@@ -256,10 +256,11 @@ export class DashboardComponent implements OnInit {
         aria: {
             sortAscending:  ": activar para ordenar la columna en orden ascendente",
             sortDescending: ": activar para ordenar la columna en orden descendente"
-        }
-    },
+        },
+        responsive: true
+      }
     };
-    this.adminService.getCommission().subscribe(response => {
+    this.adminService.getCommission().pipe(map(this.extractData)).subscribe(response => {
       this.dtTrigger.next();
       this.users  = response;
     });
@@ -665,6 +666,10 @@ export class DashboardComponent implements OnInit {
     ];
     // this.lineChartGradientsNumbersLabels = ['January', 'November', 'December'];
   }
+  private extractData(res: Response) {
+    const body = res;
+    return body || {};
+  }
 
   commission() {
     for (let id_user of this.data3) {
@@ -677,21 +682,28 @@ export class DashboardComponent implements OnInit {
       this.array.push(ejecutivo);
 
     }
-    console.log(this.array);
-    //console.log(this.array[0][0]['amount']);
+    // console.log(this.array);
+    // console.log(this.array[0][0]['amount']);
   }
 
   actualizarComision() {
-    console.log(this.id_ejecutivo);
-    this.adminService.putCommission(this.id_ejecutivo).subscribe(response => console.log(response));
+    // console.log(this.id_ejecutivo);
+    this.adminService.putCommission(this.id_ejecutivo).subscribe(/*response => console.log(response)*/);
   }
 
   open(content, id?: number) {
-    console.log(id);
+    // console.log(id);
     this.id_ejecutivo = id;
     const modalRef = this.modalService.open(content, { size: 'sm' });
     modalRef.componentInstance.fromParent = id;
+  }
 
+  openHistory(content, id) {
+    this.adminService.getCommissionById(id).subscribe(response => {
+      // console.log(response);
+      this.payments = response;
+    });
+    this.modalService.open(content, { size: 'md' });
   }
 
 

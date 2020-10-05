@@ -47,6 +47,45 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col-7">
+                            <table class="table align-items-center table-flush table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="col" class="text-center">Fecha</th>
+                                        <th class="col" class="text-center">Valor</th>
+                                        <th class="col" class="text-center">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let payment of payments" class="pointer">
+                                        <td scope="row">
+                                            <div class="media align-items-center">
+                                                <div class="media-body text-center">
+                                                    <b class="mb-0 text-sm">{{payment.update_time |date: 'dd/MM/y'}}</b>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            ${{payment.value}}
+                                        </td>
+
+                                        <td *ngIf=" payment.status === 'cobrado'; else elseBlock">
+                                            <span class="badge badge-success badge-dot">
+                                                <i class="bg-warning"></i> {{payment.status}}
+                                            </span></td>
+                                        <ng-template #elseBlock>
+                                            <td>
+                                                <span class="badge badge-warning badge-dot">
+                                                    <i class="bg-warning"></i> {{payment.status}}
+                                                </span>
+                                            </td>
+                                        </ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
