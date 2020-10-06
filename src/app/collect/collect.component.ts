@@ -22,6 +22,9 @@ export class CollectComponent implements OnInit {
   services: any;
   service: any;
   todayDate: Date = new Date();
+  contratDate;
+  record = [];
+
   id_company: number;
   id_service: number;
   idCompanyServ: number;
@@ -47,6 +50,7 @@ export class CollectComponent implements OnInit {
   reciboName: any;
   methodPayment: any;
   id_payment: any;
+  arrayfinal = [];
 
 
   constructor(
@@ -121,15 +125,15 @@ export class CollectComponent implements OnInit {
     },
     onApprove: (data, actions) => {
       this.showNotification('top', 'right', 1);
-      console.log('onApprove: la transacción se aprobó, pero no se autorizó', data, actions);
+      // console.log('onApprove: la transacción se aprobó, pero no se autorizó', data, actions);
       actions.order.get().then(details => {
-        console.log('onApprove: puede obtener todos los detalles del pedido en onApprove:', details);
+        // console.log('onApprove: puede obtener todos los detalles del pedido en onApprove:', details);
       });
     },
     onClientAuthorization: (data) => {
        this.adminService.getInfContract(this.company).subscribe(response => {
          this.inf = response;
-         console.log(response);
+         // console.log(response);
         });
 
       this.showNotification('top', 'right', 2);
@@ -138,20 +142,20 @@ export class CollectComponent implements OnInit {
       });
       this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
         this.receipt('false', 'post');
-        console.log(responsee);
+        // console.log(responsee);
       });
       // this.showSuccess = true;
     },
     onCancel: (data, actions) => {
       this.showNotification('top', 'right', 3);
-      console.log('OnCancel', data, actions);
+      // console.log('OnCancel', data, actions);
     },
     onError: err => {
       this.showNotification('top', 'right', 4);
-      console.log('OnError', err);
+      // console.log('OnError', err);
     },
     onClick: (data, actions) => {
-      console.log('onClick', data, actions);
+      // console.log('onClick', data, actions);
     },
   };
   }
@@ -202,13 +206,70 @@ export class CollectComponent implements OnInit {
   }
 
   getService(newValue) {
-    console.log(newValue);
+    const todayMonth: Date = new Date();
+    this.adminService.getContract(newValue).subscribe( response => {
+      this.contratDate = new Date (response['upload_date']);
+      // console.log(this.contratDate.getMonth() + 1);
+      // console.log(todayMonth.getMonth() + 1);
+    });
     this.companyService.getPaymentsByCompanyId(newValue).subscribe(response => {
-      console.log(response);
-      this.payments = response
+      const payments = response;
+      // console.log(response);
+      this.payments = response;
+      for (let index = (this.contratDate.getMonth() + 1); index <= (todayMonth.getMonth() + 1); index++) {
+        // [{…}, {…}, {…}]
+        // 0: {date: 7}
+        const array = {
+          'date': index,
+         };
+         this.record.push(array);
+         // console.log(index);
+      }
+
+      for (let index = 0; index <= this.payments.length; index++) {
+        // console.log(this.payments);
+                 // index = 3
+        // console.log(index);
+
+        ///////////////////////////////////////////////////////////
+        if (this.payments[index]) {
+          const element = new Date(this.payments[index]['update_time']);
+          const resultado = this.record.find( pago => pago.date === element.getMonth() + 1);
+          if (resultado) {
+            // console.log('hay datos');
+            const array = {
+              'date': resultado.date,
+              'value': (this.payments[index]['value']),
+              'status': (this.payments[index]['status'])
+             };
+            this.arrayfinal.push(array);
+          } else {
+            // console.log('no hay registro de pago', );
+            const array = {
+              'date': element.getMonth() + 1,
+              'value': this.payments[index]['value'],
+              'status': 'por pagar'
+             };
+            this.arrayfinal.push(array);
+          }
+        } else {
+          // console.log('no hay datos del pago');
+
+          const array = {
+            'date': index + this.contratDate.getMonth() + 1,
+            'value': this.payments[2]['value'],
+            'status': 'POR PAGAR'
+           };
+          this.arrayfinal.push(array);
+        }
+      }
+
+
+
+       // console.log(this.arrayfinal);
     });
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
-      console.log(response);
+      // console.log(response);
        this.services = Array.of(response);
        this.name = response['name_service'];
        this.value = response['value'];
@@ -256,16 +317,16 @@ export class CollectComponent implements OnInit {
   cash() {
     this.adminService.getInfContract(this.company).subscribe(response => {
       this.inf = response;
-      console.log(response);
+      // console.log(response);
      });
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.company, this.idCompanyServ, this.id_company).subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       this.id_payment = response['id_table'];
 
     });
     this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
-      console.log(responsee);
+      // console.log(responsee);
       this.receipt('false', 'post');
     });
   }
@@ -289,7 +350,7 @@ export class CollectComponent implements OnInit {
     const c: number = a - b;
     let service: any;
     let identificador: any;
-    console.log(a);
+    // console.log(a);
 
 
     // error con el this.info
@@ -298,13 +359,13 @@ export class CollectComponent implements OnInit {
     if (this.inf.id_service == 1) {
        service = 'RCR-' + (this.recibo[0]['id_receipt'] + 1);
        identificador = 'CR-' + this.contrato;
-       console.log(identificador);
+       // console.log(identificador);
     }
     // tslint:disable-next-line: triple-equals
     if (this.inf.id_service == 2) {
       service = 'RCE-' + (this.recibo[0]['id_receipt'] + 1);
       identificador = 'CE-' + this.contrato;
-      console.log(identificador);
+      // console.log(identificador);
     }
 
     cliente.src = `http://192.168.2.27:3000/files/${this.inf.nombre}`;
@@ -319,9 +380,9 @@ export class CollectComponent implements OnInit {
     logo.src = `http://192.168.2.27:3000/files/Logo.png`;
     logo.alt = 'alt';
 
-    console.log(this.inf.nombre);
-    console.log(this.yadira);
-    console.log(this.inf);
+    // console.log(this.inf.nombre);
+    // console.log(this.yadira);
+    // console.log(this.inf);
 
 
 
@@ -487,13 +548,13 @@ export class CollectComponent implements OnInit {
     }
 
     if (post) {
-      console.log(post);
+      // console.log(post);
 
 
       this.adminService.postReceipt(this.company, identificador, date, this.id_payment, doc.output('blob')).subscribe(response => {
         // tslint:disable-next-line: no-shadowed-variable
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
-          console.log(response);
+          // console.log(response);
         });
       });
     }
