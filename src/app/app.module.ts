@@ -37,6 +37,7 @@ import { AccountComponent } from './account/account.component';
 import { BasicAuthInterceptor } from './_helpers/basic-auth.interceptor';
 import { DocumentsComponent } from './companies/documents/documents.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule, MAT_CHECKBOX_DEFAULT_OPTIONS} from '@angular/material/checkbox';
 
 
 
@@ -59,7 +60,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     RouterModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatCheckboxModule
   ],
   declarations: [
     // FileSelectDirective,
@@ -94,6 +96,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
       provide: HTTP_INTERCEPTORS,
       useClass: BasicAuthInterceptor,
       multi: true
+    }, {
+      provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: 'check'
     }
   ],
   bootstrap: [AppComponent],

@@ -55,6 +55,8 @@
                                         <th class="col" class="text-center">Fecha</th>
                                         <th class="col" class="text-center">Valor</th>
                                         <th class="col" class="text-center">Estado</th>
+                                        <th class="col" class="text-center">Seleccionar</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +64,7 @@
                                         <td scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body text-center">
-                                                    <b class="mb-0 text-sm">{{payment.date }}</b>
+                                                    <b class="mb-0 text-sm">{{payment.date | date: 'MM/y'}}</b>
                                                 </div>
                                             </div>
                                         </td>
@@ -80,6 +82,8 @@
                                                 </span>
                                             </td>
                                         </ng-template>
+                                        <td class="text-center">
+                                            <input class="form-check-input" type="checkbox" name="miDataInterior" (change)="$event.target.checked ? agregar(payment) : quitar(payment)">
                                     </tr>
                                     <!-- <tr *ngFor="let payment of payments" class="pointer">
                                         <td scope="row">

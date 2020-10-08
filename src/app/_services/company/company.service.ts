@@ -156,4 +156,8 @@ export class CompanyService {
   getPaymentsByCompanyId(id) {
     return this.http.get('http://192.168.2.27:3000/companies/' + id + '/payments/', this.httpOptions);
   }
+
+  updatePayment(id) {
+    return this.http.put('http://192.168.2.27:3000/payment/collect/' + id, this.httpOptions);
+  }
 }

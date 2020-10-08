@@ -24,7 +24,7 @@ import { DataTablesModule } from 'angular-datatables';
     FormsModule,
     ChartsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   declarations: [
     DashboardComponent,
