@@ -64,7 +64,7 @@
                                         <td scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body text-center">
-                                                    <b class="mb-0 text-sm">{{payment.date | date: 'MM/y'}}</b>
+                                                    <b class="mb-0 text-sm">{{payment.date }}</b>
                                                 </div>
                                             </div>
                                         </td>
@@ -74,13 +74,21 @@
                                         <td class="text-center align-items-center" *ngIf=" payment.status === 'COMPLETED'; else elseBlock">
                                             <span class="badge badge-success badge-do text-center">
                                                 <i class="bg-warning"></i> {{payment.status}}
-                                            </span></td>
+                                            </span>
+                                        </td>
                                         <ng-template #elseBlock>
-                                            <td class="text-center align-items-center">
-                                                <span class="badge badge-warning badge-dot text-center">
+                                            <td class="text-center align-items-center" *ngIf=" payment.status === 'POR PAGAR'; else elseBlock1">
+                                                <span class="badge badge-danger badge-do text-center">
                                                     <i class="bg-warning"></i> {{payment.status}}
                                                 </span>
                                             </td>
+                                            <ng-template #elseBlock1>
+                                                <td class="text-center align-items-center">
+                                                    <span class="badge badge-warning badge-dot text-center">
+                                                        <i class="bg-warning"></i> {{payment.status}}
+                                                    </span>
+                                                </td>
+                                            </ng-template>
                                         </ng-template>
                                         <td class="text-center">
                                             <input class="form-check-input" type="checkbox" name="miDataInterior" (change)="$event.target.checked ? agregar(payment) : quitar(payment)">

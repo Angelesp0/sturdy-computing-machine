@@ -147,11 +147,14 @@ export class CollectComponent implements OnInit {
     },
     onClientAuthorization: (data) => {
        this.adminService.getInfContract(this.company).subscribe(response => {
+         console.log(response);
          this.inf = response;
         });
         this.miDataInterior.forEach(element => {
-          if (element['id']) {
-            this.companyService.updatePayment(element['id']).subscribe(response => console.log(response));
+          console.log(element);
+          console.log(data.update_time.split('T')[0]);
+          /*if (element['id_payments']) {
+            this.companyService.updatePayment(element['id_payments']).subscribe(response => console.log(response));
           } else {
             console.log('else', element);
             this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
@@ -160,7 +163,7 @@ export class CollectComponent implements OnInit {
               this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
               this.receipt('false', 'post');
               });
-          }
+          }*/
       });
       this.showNotification('top', 'right', 2);
       // this.showSuccess = true;
@@ -246,52 +249,6 @@ export class CollectComponent implements OnInit {
            };
            this.arrayPayments.push(array);
         }
-
-         // this.record.push(array);
-         // console.log('arrayPayments' , this.arrayPayments);
-
-/*
-        // index = 2
-        // this.payments = [{…}, {…}]
-        /*
-          description: "Servicio: RIF"
-          id_payments: 171
-          name: "file-1601408841747.pdf"
-          status: "COMPLETED"
-          update_time: "2020-07-29T06:00:00.000Z"
-          value: 315
-          // Si existen pagos con el index
-        if (this.payments[index]) {
-          const element = new Date(this.payments[index]['update_time']);
-          const resultado = this.record.find( pago => pago.date === element.getMonth() + 1);
-          if (resultado) {
-            const array = {
-              'id': this.payments[index]['id_payments'],
-              'date': resultado.date,
-              'value': (this.payments[index]['value']),
-              'status': (this.payments[index]['status'])
-             };
-            this.arrayfinal.push(array);
-          } else {
-            const array = {
-              'id': this.payments[index]['id_payments'],
-              'date': element.getMonth() + 1,
-              'value': this.payments[index]['value'],
-              'status': 'por pagar'
-             };
-            this.arrayfinal.push(array);
-          }
-        // Si no existen pagos con el index
-        } else {
-          const array = {
-            'date': index + this.contratDate.getMonth() + 1,
-            'value': this.payments[0]['value'],
-            'status': 'POR PAGAR'
-           };
-          this.arrayfinal.push(array);
-        }
-        console.log('arrayfinal', this.arrayfinal);
-      */
       }
 
       for (let index = (this.contratDate.getMonth() + 1), i = 0; index <= (todayMonth.getMonth() + 1); index++, i++) {
@@ -299,47 +256,37 @@ export class CollectComponent implements OnInit {
           'date': index,
          };
          this.record.push(array);
-        // console.log('index' , index);
-        // this.record = [{…}, {…}, {…}, {…}]
-        // 0: {date: 7}
+      }
 
-        // con el  index tengo que sacar el mes al que falta su registro
-
-        if (this.payments[i]) {
-          const element = new Date(this.payments[i]['update_time']);
-          const resultado = this.arrayPayments.find( pago => pago.index === element.getMonth() + 1);
+      this.record.forEach(day => {
+        // console.log(day['date']);
+          const resultado = this.arrayPayments.find( pago => pago.index === day['date']);
+          console.log(resultado);
           if (resultado) {
+            const d = new Date(resultado['date']);
+            const date = d.getFullYear() + '-' + (d.getMonth() + 1);
             const array = {
-              'id': this.payments[i]['id_payments'],
-              'date': resultado.date,
-              'value': (this.payments[i]['value']),
-              'status': (this.payments[i]['status'])
+              'id': resultado['index'],
+              'date': date,
+              'value': resultado['value'],
+              'status': resultado['status'],
+              'id_payments': resultado['id_payments']
              };
             this.arrayfinal.push(array);
+            // si tenemos pagos
           } else {
             const array = {
-              'id': this.payments[i]['id_payments'],
-              'date': element.getMonth() + 1,
-              'value': this.payments[i]['value'],
-              'status': 'por pagar'
+              'id': day['date'],
+              'date': todayMonth.getFullYear() + '-' + day['date'],
+              'value': this.payments[0]['value'],
+              'status': 'POR PAGAR',
+              'id_payments': 0
              };
             this.arrayfinal.push(array);
           }
-        // Si no existen pagos con el index
-        } else {
-          console.log(index);
-          let date = todayMonth.getFullYear() + '-' + index + '-0' ;
-          console.log(date);
-          const array = {
-            'date': date,
-            'value': this.payments[0]['value'],
-            'status': 'POR PAGAR'
-           };
-          this.arrayfinal.push(array);
-        }
-        // console.log('arrayfinal', this.arrayfinal);
+          console.log(this.arrayfinal);
+      });
 
-      }
     });
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
       // console.log(response);
