@@ -90,8 +90,18 @@
                                                 </td>
                                             </ng-template>
                                         </ng-template>
-                                        <td class="text-center">
-                                            <input class="form-check-input" type="checkbox" name="miDataInterior" (change)="$event.target.checked ? agregar(payment) : quitar(payment)">
+                                        <td class="text-center" *ngIf="payment.status == 'COMPLETED' || payment.status == 'PENDING' else elseBlock2">
+                                            <input disabled class="form-check-input" type="checkbox" name="miDataInterior" (change)="$event.target.checked ? agregar(payment) : quitar(payment)">
+                                        </td>
+
+                                        <ng-template #elseBlock2>
+                                            <td class="text-center">
+
+                                                <input class="form-check-input" type="checkbox" name="miDataInterior" (change)="$event.target.checked ? agregar(payment) : quitar(payment)">
+                                            </td>
+
+                                        </ng-template>
+
                                     </tr>
                                     <!-- <tr *ngFor="let payment of payments" class="pointer">
                                         <td scope="row">

@@ -53,6 +53,7 @@ export class CollectComponent implements OnInit {
   checked = false;
 
   arrayfinal = [];
+  vaciar = [];
 
   miDataInterior = [];
 
@@ -66,6 +67,7 @@ export class CollectComponent implements OnInit {
 
   agregar(data: string) {
     this.miDataInterior.push(data);
+    console.log(this.miDataInterior);
   }
 
   quitar(data) {
@@ -152,10 +154,30 @@ export class CollectComponent implements OnInit {
         });
         this.miDataInterior.forEach(element => {
           console.log(element);
-          console.log(data.update_time.split('T')[0]);
+
+          const payment_day = element['date'] + '-' + this.todayDate.getDate();
+          console.log(data.update_time.split('T')[0] );
+
+          this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, payment_day, this.company, this.idCompanyServ, data.id,  data.update_time.split('T')[0]).subscribe((response) => {
+            this.id_payment = response['id_table'];
+            console.log('registrar pago');
+          });
+          this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
+            console.log('activar pago');
+            this.receipt('false', 'post');
+          });
+
+
+          // necesitamos agregar la fecha a la cual se registraran los datos ya que si se paga el mes de mayo, se tiene que registrar en mayo (posible campo nuevo en bd)
+          // luego es necesario efectuar un if para ver cuantos meses pagaremos y pagar y generar el resivo por los meses pagados
+
+
           /*if (element['id_payments']) {
             this.companyService.updatePayment(element['id_payments']).subscribe(response => console.log(response));
           } else {
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             console.log('else', element);
             this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
               this.id_payment = response['id_table'];
@@ -163,7 +185,8 @@ export class CollectComponent implements OnInit {
               this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
               this.receipt('false', 'post');
               });
-          }*/
+          }
+          */
       });
       this.showNotification('top', 'right', 2);
       // this.showSuccess = true;
@@ -231,7 +254,17 @@ export class CollectComponent implements OnInit {
     }
   }
 
+
+
   getService(newValue) {
+    this.arrayfinal = [];
+    this.payments = [];
+    this.record = [];
+    this.arrayPayments = [];
+    this.value = null;
+
+
+
     const todayMonth: Date = new Date();
     this.adminService.getContract(newValue).subscribe( response => this.contratDate = new Date (response['upload_date']));
     this.companyService.getPaymentsByCompanyId(newValue).subscribe(response => {
@@ -257,6 +290,7 @@ export class CollectComponent implements OnInit {
          };
          this.record.push(array);
       }
+      console.log(this.record);
 
       this.record.forEach(day => {
         // console.log(day['date']);
@@ -273,6 +307,7 @@ export class CollectComponent implements OnInit {
               'id_payments': resultado['id_payments']
              };
             this.arrayfinal.push(array);
+            console.log('1');
             // si tenemos pagos
           } else {
             const array = {
@@ -283,8 +318,8 @@ export class CollectComponent implements OnInit {
               'id_payments': 0
              };
             this.arrayfinal.push(array);
+            console.log('2');
           }
-          console.log(this.arrayfinal);
       });
 
     });
