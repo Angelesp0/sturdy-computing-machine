@@ -67,7 +67,6 @@ export class CollectComponent implements OnInit {
 
   agregar(data: string) {
     this.miDataInterior.push(data);
-    console.log(this.miDataInterior);
   }
 
   quitar(data) {
@@ -96,6 +95,7 @@ export class CollectComponent implements OnInit {
   }
 
   payment(newValue) {
+    console.log(this.value);
       // logged in so return true
       this.item = {
         name: this.name,
@@ -201,7 +201,9 @@ export class CollectComponent implements OnInit {
       // console.log('OnError', err);
     },
     onClick: (data, actions) => {
-      this.item.unit_amount.value = this.item.unit_amount.value * this.miDataInterior.length;
+      console.log(this.item.unit_amount.value);
+
+      // this.item.unit_amount.value = this.item.unit_amount.value * this.miDataInterior.length;
       console.log(this.miDataInterior.length);
 
       // console.log('onClick', data, actions);
@@ -261,7 +263,7 @@ export class CollectComponent implements OnInit {
     this.payments = [];
     this.record = [];
     this.arrayPayments = [];
-    this.value = null;
+    // tengo que resetear el valor de this.value
 
 
 
@@ -295,7 +297,6 @@ export class CollectComponent implements OnInit {
       this.record.forEach(day => {
         // console.log(day['date']);
           const resultado = this.arrayPayments.find( pago => pago.index === day['date']);
-          console.log(resultado);
           if (resultado) {
             const d = new Date(resultado['date']);
             const date = d.getFullYear() + '-' + (d.getMonth() + 1);
@@ -307,7 +308,6 @@ export class CollectComponent implements OnInit {
               'id_payments': resultado['id_payments']
              };
             this.arrayfinal.push(array);
-            console.log('1');
             // si tenemos pagos
           } else {
             const array = {
@@ -318,12 +318,12 @@ export class CollectComponent implements OnInit {
               'id_payments': 0
              };
             this.arrayfinal.push(array);
-            console.log('2');
           }
       });
 
     });
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
+      console.log('value', response['value']);
       // console.log(response);
        this.services = Array.of(response);
        this.name = response['name_service'];
