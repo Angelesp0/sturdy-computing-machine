@@ -225,7 +225,6 @@ export class AdminService {
     return this.http.get('http://192.168.2.27:3000/contract/' + id, this.httpOptions);
   }
   getContract(id) {
-
     return this.http.get('http://192.168.2.27:3000/getcontract/' + id, this.httpOptions);
   }
 

@@ -24,7 +24,7 @@ export class CollectComponent implements OnInit {
   todayDate: Date = new Date();
   contratDate;
   record = [];
-  arrayPayments = []
+  arrayPayments = [];
   id_company: number;
   id_service: number;
   idCompanyServ: number;
@@ -91,21 +91,21 @@ export class CollectComponent implements OnInit {
 
     this.companyService.getCompanies().subscribe(response => this.companies = response);
     this.initConfig();
-
   }
 
   payment(newValue) {
     console.log(this.value);
-      // logged in so return true
-      this.item = {
-        name: this.name,
-        quantity: '1',
-        category: 'DIGITAL_GOODS',
-        unit_amount: {
-          currency_code: 'MXN',
-          value: this.value,
-        }
-      };
+    this.item = [];
+    // logged in so return true
+    this.item = {
+      name: this.name,
+      quantity: '1',
+      category: 'DIGITAL_GOODS',
+      unit_amount: {
+        currency_code: 'MXN',
+        value: this.value,
+      }
+    };
   }
 
   private initConfig(): void {
@@ -149,35 +149,29 @@ export class CollectComponent implements OnInit {
     },
     onClientAuthorization: (data) => {
        this.adminService.getInfContract(this.company).subscribe(response => {
-         console.log(response);
          this.inf = response;
         });
         this.miDataInterior.forEach(element => {
           console.log(element);
-
           const payment_day = element['date'] + '-' + this.todayDate.getDate();
           console.log(data.update_time.split('T')[0] );
-
-          this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, payment_day, this.company, this.idCompanyServ, data.id,  data.update_time.split('T')[0]).subscribe((response) => {
+          this.companyService.register_payment(element.value, data.purchase_units[0].description, data.status, payment_day, this.company, this.idCompanyServ, data.id,  data.update_time.split('T')[0]).subscribe((response) => {
             this.id_payment = response['id_table'];
-            console.log('registrar pago');
-          });
-          this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
-            console.log('activar pago');
+            console.log(response['id_table']);
+            // ahora el payment_id_payments es diferente pero no se ejecuta el post
             this.receipt('false', 'post');
+
+            console.log('registrar pago', response);
           });
-
-
+          // payments_id_payments problema misma id
+          this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
+          });
           // necesitamos agregar la fecha a la cual se registraran los datos ya que si se paga el mes de mayo, se tiene que registrar en mayo (posible campo nuevo en bd)
           // luego es necesario efectuar un if para ver cuantos meses pagaremos y pagar y generar el resivo por los meses pagados
-
-
           /*if (element['id_payments']) {
             this.companyService.updatePayment(element['id_payments']).subscribe(response => console.log(response));
           } else {
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
             console.log('else', element);
             this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
               this.id_payment = response['id_table'];
@@ -193,7 +187,7 @@ export class CollectComponent implements OnInit {
     },
     onCancel: (data, actions) => {
       this.showNotification('top', 'right', 3);
-      this.item.unit_amount.value = this.item.unit_amount.value / this.miDataInterior.length;
+      this.value = this.value / this.miDataInterior.length;
       // console.log('OnCancel', data, actions);
     },
     onError: err => {
@@ -201,7 +195,8 @@ export class CollectComponent implements OnInit {
       // console.log('OnError', err);
     },
     onClick: (data, actions) => {
-      console.log(this.item.unit_amount.value);
+      this.value = this.value * this.miDataInterior.length;
+      this.payment(0);
 
       // this.item.unit_amount.value = this.item.unit_amount.value * this.miDataInterior.length;
       console.log(this.miDataInterior.length);
@@ -263,14 +258,12 @@ export class CollectComponent implements OnInit {
     this.payments = [];
     this.record = [];
     this.arrayPayments = [];
+    this.miDataInterior = [];
     // tengo que resetear el valor de this.value
-
-
 
     const todayMonth: Date = new Date();
     this.adminService.getContract(newValue).subscribe( response => this.contratDate = new Date (response['upload_date']));
     this.companyService.getPaymentsByCompanyId(newValue).subscribe(response => {
-      console.log('getPaymentsByCompanyId ', response);
       this.payments = response;
       for (let index = 0; index <= this.payments.length; index++) {
         if (this.payments[index]) {
@@ -323,7 +316,6 @@ export class CollectComponent implements OnInit {
 
     });
     this.companyService.getcompanyHasService(newValue).subscribe(response => {
-      console.log('value', response['value']);
       // console.log(response);
        this.services = Array.of(response);
        this.name = response['name_service'];
@@ -378,7 +370,6 @@ export class CollectComponent implements OnInit {
     this.companyService.register_payment(this.item.unit_amount.value, this.item.name, 'PENDING', date, this.company, this.idCompanyServ, this.id_company).subscribe((response) => {
       // console.log(response);
       this.id_payment = response['id_table'];
-
     });
     this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
       // console.log(responsee);
@@ -387,6 +378,7 @@ export class CollectComponent implements OnInit {
   }
 
   receipt(download?: any, post?: any) {
+    console.log('recibo');
 
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     const endDate = this.todayDate.getFullYear() + 1 + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -603,10 +595,11 @@ export class CollectComponent implements OnInit {
     }
 
     if (post) {
-      // console.log(post);
+      console.log('post');
 
 
       this.adminService.postReceipt(this.company, identificador, date, this.id_payment, doc.output('blob')).subscribe(response => {
+        console.log('pstReceipt', response);
         // tslint:disable-next-line: no-shadowed-variable
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
           // console.log(response);
