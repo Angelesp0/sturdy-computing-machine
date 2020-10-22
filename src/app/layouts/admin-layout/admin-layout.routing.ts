@@ -19,6 +19,8 @@ import { CollectComponent } from '../../collect/collect.component';
 import { MaterialComponent } from '../../material/material.component';
 import { AccountComponent } from '../../account/account.component';
 import { DocumentsComponent } from '../../companies/documents/documents.component';
+import { VerificationComponent } from '../../verification/verification.component';
+
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -40,5 +42,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'payment',                    component: CollectComponent },
     { path: 'material',                   component: MaterialComponent },
     { path: 'account',                    component: AccountComponent },
-    { path: 'documents/:id_company',      component: DocumentsComponent }
+    { path: 'documents/:id_company',      component: DocumentsComponent },
+    { path: 'verification',               component: VerificationComponent }
 ];

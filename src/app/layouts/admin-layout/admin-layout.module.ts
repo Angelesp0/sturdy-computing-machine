@@ -15,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { DataTablesModule } from 'angular-datatables';
+import { VerificationComponent } from '../../verification/verification.component';
+
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { DataTablesModule } from 'angular-datatables';
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot(),
+    ReactiveFormsModule
   ],
   declarations: [
     DashboardComponent,
@@ -35,6 +38,7 @@ import { DataTablesModule } from 'angular-datatables';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    VerificationComponent
   ]
 })
 

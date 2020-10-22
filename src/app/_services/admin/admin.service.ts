@@ -281,39 +281,39 @@ export class AdminService {
   }
 
   getCommission() {
-    return this.http.get('http://192.168.137.1:3000/dashboard/commission', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/dashboard/commission', this.httpOptions);
   }
 
   putCommission(id) {
-    return this.http.put('http://192.168.137.1:3000/commission/' + id, this.httpOptions);
+    return this.http.put('http://192.168.2.27:3000/commission/' + id, this.httpOptions);
   }
 
   getDocuments(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id, this.httpOptions);
   }
 
   getImages(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/img', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/img', this.httpOptions);
   }
 
   getExterior(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/exterior', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/exterior', this.httpOptions);
   }
 
   getInterior(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/interior', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/interior', this.httpOptions);
   }
 
   getIneFrontal(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/inefrontal', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/inefrontal', this.httpOptions);
   }
 
   getInePosterior(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/ineposterior', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/ineposterior', this.httpOptions);
   }
 
   getComprobante(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/' + id + '/comprobante', this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/' + id + '/comprobante', this.httpOptions);
   }
 
   postStatements(id, date, file) {
@@ -322,7 +322,7 @@ export class AdminService {
     uploadData.append('date', date);
 
     return this.http
-      .post('http://192.168.137.1:3000/documents/statements/' + id, uploadData)
+      .post('http://192.168.2.27:3000/documents/statements/' + id, uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -330,11 +330,11 @@ export class AdminService {
   }
 
   getStatements(id) {
-    return this.http.get('http://192.168.137.1:3000/documents/statements/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/documents/statements/' + id, this.httpOptions);
   }
 
   getCommissionById(id) {
-    return this.http.get('http://192.168.137.1:3000/commission/' + id, this.httpOptions);
+    return this.http.get('http://192.168.2.27:3000/commission/' + id, this.httpOptions);
   }
 
 

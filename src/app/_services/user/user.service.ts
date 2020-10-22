@@ -149,28 +149,37 @@ export class UserService {
     return this.http.get('http://192.168.2.27:3000/imagenes/' + id, this.httpOptions);
   }
 
-  getdocuments(id){
+  getdocuments(id) {
     return this.http.get('http://192.168.2.27:3000/user/files/' + id, this.httpOptions);
   }
 
-  getDocumentsByIdCompany(id){
+  getDocumentsByIdCompany(id) {
     return this.http.get('http://192.168.2.27:3000/company/files/' + id, this.httpOptions);
   }
 
-  getServices(){
+  getServices() {
     return this.http.get('http://192.168.2.27:3000/services', this.httpOptions);
   }
 
-  getServicesByUserId(id){
+  getServicesByUserId(id) {
     return this.http.get('http://192.168.2.27:3000/user/' + id + '/services/', this.httpOptions);
   }
 
-  getCompaniesByUserId(id){
+  getCompaniesByUserId(id) {
     return this.http.get('http://192.168.2.27:3000/users/' + id + '/companies/', this.httpOptions);
   }
 
   getPaymentsByCompanyId(id) {
     return this.http.get('http://192.168.2.27:3000/companies/' + id + '/payments/', this.httpOptions);
+  }
+
+  getVerification() {
+    return this.http.get('http://192.168.2.27:3000/verification', this.httpOptions);
+  }
+
+  putVerification(id) {
+    console.log(id);
+    return this.http.put('http://192.168.2.27:3000/verification/' + id, this.httpOptions);
   }
 
 }

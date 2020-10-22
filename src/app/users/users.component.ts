@@ -222,7 +222,7 @@ export class NgbdModalConfirmAutofocus implements OnInit {
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button" ngbAutofocus class="btn btn-danger" (click) ="update()">Ok</button>
+    <button type="button" ngbAutofocus class="btn btn-danger" (click) ="update()" >Ok</button>
   </div>
   `
 })

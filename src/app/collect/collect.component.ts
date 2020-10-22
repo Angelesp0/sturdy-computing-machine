@@ -152,38 +152,24 @@ export class CollectComponent implements OnInit {
          this.inf = response;
         });
         this.miDataInterior.forEach(element => {
-          console.log(element);
           const payment_day = element['date'] + '-' + this.todayDate.getDate();
           console.log(data.update_time.split('T')[0] );
           this.companyService.register_payment(element.value, data.purchase_units[0].description, data.status, payment_day, this.company, this.idCompanyServ, data.id,  data.update_time.split('T')[0]).subscribe((response) => {
-            this.id_payment = response['id_table'];
-            console.log(response['id_table']);
-            // ahora el payment_id_payments es diferente pero no se ejecuta el post
-            this.receipt('false', 'post');
+            // console.log('1');
 
-            console.log('registrar pago', response);
+            this.id_payment = response['id_table'];
+            // ahora el payment_id_payments es diferente pero no se ejecuta el post
+            // ahora se ejecuta el post pero no todas las veces
+            // no ha fallado hasta ahora
+
+            this.receipt('false', 'post');
           });
           // payments_id_payments problema misma id
           this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
+            // console.log('4');
           });
-          // necesitamos agregar la fecha a la cual se registraran los datos ya que si se paga el mes de mayo, se tiene que registrar en mayo (posible campo nuevo en bd)
-          // luego es necesario efectuar un if para ver cuantos meses pagaremos y pagar y generar el resivo por los meses pagados
-          /*if (element['id_payments']) {
-            this.companyService.updatePayment(element['id_payments']).subscribe(response => console.log(response));
-          } else {
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            console.log('else', element);
-            this.companyService.register_payment(data.purchase_units[0].amount.value, data.purchase_units[0].description, data.status, data.update_time.split('T')[0], this.company, this.idCompanyServ, data.id ).subscribe((response) => {
-              this.id_payment = response['id_table'];
-              });
-              this.companyService.active_payment(this.company, this.id_service).subscribe((responsee) => {
-              this.receipt('false', 'post');
-              });
-          }
-          */
       });
       this.showNotification('top', 'right', 2);
-      // this.showSuccess = true;
     },
     onCancel: (data, actions) => {
       this.showNotification('top', 'right', 3);
@@ -378,7 +364,7 @@ export class CollectComponent implements OnInit {
   }
 
   receipt(download?: any, post?: any) {
-    console.log('recibo');
+    console.log('2');
 
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     const endDate = this.todayDate.getFullYear() + 1 + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -577,7 +563,7 @@ export class CollectComponent implements OnInit {
       margin:  { top: 470 },
       styles: { halign: 'center' },
       theme: 'grid'
- });
+    });
     // ======================================================================================================================= //
     doc.setFontSize(11.5);
     doc.text(`Aviso de Privacidad Simplificado` , 240, 620,  {maxWidth: 540, align: 'justify'});
@@ -595,11 +581,11 @@ export class CollectComponent implements OnInit {
     }
 
     if (post) {
-      console.log('post');
+      // console.log('3');
 
 
       this.adminService.postReceipt(this.company, identificador, date, this.id_payment, doc.output('blob')).subscribe(response => {
-        console.log('pstReceipt', response);
+        console.log('pstReceipt', response['payments_id_payments']);
         // tslint:disable-next-line: no-shadowed-variable
         this.adminService.getReceiptById(response['id_receipt']).subscribe( response => {
           // console.log(response);
