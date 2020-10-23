@@ -27,9 +27,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   ingresar() {
-    console.log('hola');
-    this.authService.login(this.data.email, this.data.password).subscribe((res) => {
-      console.log(res.erro);
+    try {
+      this.authService.login(this.data.email, this.data.password).subscribe((res) => {
       if (res.erro) {
         this.showNotification('top', 'right', 2);
       } else {
@@ -54,6 +53,9 @@ export class LoginComponent implements OnInit {
           break;
       }
     });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   showNotification(from, align, notification) {
