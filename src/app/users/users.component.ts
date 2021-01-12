@@ -309,7 +309,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   (click)="modal.close('Ok click')">Ok</button>`;
   users: any;
   data: any;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject();
 
   constructor(
@@ -323,6 +323,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
+      dom: 'Bfrtip',
+      buttons: [
+        'copy',
+        'print',
+        'csv',
+        'excel',
+        'pdf'
+      ]
     };
     this.userService.getUsers().pipe(map(this.extractData)).subscribe(response => {
       this.dtTrigger.next();
