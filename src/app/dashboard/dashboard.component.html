@@ -187,7 +187,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let user of array" class="pointer">
-                                    <td> <img src="http://192.168.100.71:3000/files/{{user[0].img}}" alt="Avatar" style="width:60px"></td>
+                                    <td> <img src="http://201.107.4.85:3000/files/{{user[0].img}}" alt="Avatar" style="width:60px"></td>
                                     <td class=" text-primary" (click)="open(acept, user[0].users_id_user )">{{ user[0].first_name }} {{ user[0].last_name }}</td>
                                     <td>{{user.length-1}}</td>
                                     <td>$ {{user[user.length - 1] | number}}</td>

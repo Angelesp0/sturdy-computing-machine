@@ -58,22 +58,22 @@ export class JsPDFComponent implements OnInit, OnDestroy {
     const identificador = 'CE-' + this.contrato;
 
 
-    cliente.src = `http://192.168.100.71:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://201.107.4.85:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.100.71:3000/files/${this.yadira}`;
+    prestador.src = `http://201.107.4.85:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.100.71:3000/files/${this.mario}`;
+    testigo2.src = `http://201.107.4.85:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://201.107.4.85:3000/files/Logo.png`;
     logo.alt = 'alt';
 
-    sparador.src = `http://192.168.100.71:3000/files/separador.png`;
+    sparador.src = `http://201.107.4.85:3000/files/separador.png`;
     sparador.alt = 'alt';
 
-    fb.src = `http://192.168.100.71:3000/files/facebook.png`;
+    fb.src = `http://201.107.4.85:3000/files/facebook.png`;
     fb.alt = 'alt';
 
     const doc = new jsPDF('p', 'pt', 'letter');
@@ -176,7 +176,7 @@ export class JsPDFComponent implements OnInit, OnDestroy {
         this.contratoName = response['nombre'];
         this.adminService.getContract(this.id).subscribe( response => {
           localStorage.setItem('cont', response['nombre']);
-          this.pdfSrc = `http://192.168.100.71:3000/files/${response['nombre']}`;
+          this.pdfSrc = `http://201.107.4.85:3000/files/${response['nombre']}`;
         });
       });
     }
@@ -196,22 +196,22 @@ export class JsPDFComponent implements OnInit, OnDestroy {
     const identificador = 'CR-' + this.contrato;
 
 
-    cliente.src = `http://192.168.100.71:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://201.107.4.85:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.100.71:3000/files/${this.yadira}`;
+    prestador.src = `http://201.107.4.85:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.100.71:3000/files/${this.mario}`;
+    testigo2.src = `http://201.107.4.85:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://201.107.4.85:3000/files/Logo.png`;
     logo.alt = 'alt';
 
-    sparador.src = `http://192.168.100.71:3000/files/separador.png`;
+    sparador.src = `http://201.107.4.85:3000/files/separador.png`;
     sparador.alt = 'alt';
 
-    fb.src = `http://192.168.100.71:3000/files/facebook.png`;
+    fb.src = `http://201.107.4.85:3000/files/facebook.png`;
     fb.alt = 'alt';
 
     const doc = new jsPDF('p', 'pt', 'letter');
@@ -314,7 +314,7 @@ export class JsPDFComponent implements OnInit, OnDestroy {
       this.adminService.postContract(this.id, date, doc.output('blob')).subscribe(response => {
         this.contratoName = response['nombre'];
         localStorage.setItem('cont', response['nombre']);
-        this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://192.168.100.71:3000/files/${response['nombre']}`);
+        this.adminService.getContract(this.id).subscribe( response => this.pdfSrc = `http://201.107.4.85:3000/files/${response['nombre']}`);
       });
     }
   }
@@ -353,16 +353,16 @@ export class JsPDFComponent implements OnInit, OnDestroy {
 
     }
 
-    cliente.src = `http://192.168.100.71:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://201.107.4.85:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.100.71:3000/files/${this.yadira}`;
+    prestador.src = `http://201.107.4.85:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.100.71:3000/files/${this.mario}`;
+    testigo2.src = `http://201.107.4.85:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://201.107.4.85:3000/files/Logo.png`;
     logo.alt = 'alt';
 
 
@@ -534,7 +534,7 @@ export class JsPDFComponent implements OnInit, OnDestroy {
           localStorage.setItem('rec', response[0]['name']);
           localStorage.setItem(post, 'no');
           this.reciboName = response[0]['name'];
-          this.recibov = `http://192.168.100.71:3000/files/${response[0]['name']}`;
+          this.recibov = `http://201.107.4.85:3000/files/${response[0]['name']}`;
         });
       });
     }
@@ -574,19 +574,19 @@ export class JsPDFComponent implements OnInit, OnDestroy {
 
     }
 
-    cliente.src = `http://192.168.100.71:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://201.107.4.85:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.100.71:3000/files/${this.yadira}`;
+    prestador.src = `http://201.107.4.85:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.100.71:3000/files/${this.mario}`;
+    testigo2.src = `http://201.107.4.85:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://201.107.4.85:3000/files/Logo.png`;
     logo.alt = 'alt';
 
-    magua.src = `http://192.168.100.71:3000/files/images/magua.png`;
+    magua.src = `http://201.107.4.85:3000/files/images/magua.png`;
     magua.alt = 'alt';
 
 
@@ -759,7 +759,7 @@ export class JsPDFComponent implements OnInit, OnDestroy {
           localStorage.setItem('rec', response[0]['name']);
           localStorage.setItem(post, 'no');
           this.reciboName = response[0]['name'];
-          this.recibov = `http://192.168.100.71:3000/files/${response[0]['name']}`;
+          this.recibov = `http://201.107.4.85:3000/files/${response[0]['name']}`;
         });
       });
     }
@@ -775,13 +775,13 @@ export class JsPDFComponent implements OnInit, OnDestroy {
 
     const arrayDeCadenas = this.inf.last_name.split(espacio);
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://201.107.4.85:3000/files/Logo.png`;
     logo.alt = 'alt';
 
-    sparador.src = `http://192.168.100.71:3000/files/separador.png`;
+    sparador.src = `http://201.107.4.85:3000/files/separador.png`;
     sparador.alt = 'alt';
 
-    fb.src = `http://192.168.100.71:3000/files/facebook.png`;
+    fb.src = `http://201.107.4.85:3000/files/facebook.png`;
     fb.alt = 'alt';
 
     const doc = new jsPDF('p', 'pt', 'letter');
@@ -894,12 +894,12 @@ export class JsPDFComponent implements OnInit, OnDestroy {
     console.log(this.inf);
     this.contrato = contrato1[0]['id_files'];
     if (localStorage.getItem('post')) {
-      this.recibov = `http://192.168.100.71:3000/files/${localStorage.getItem('rec')}`;
+      this.recibov = `http://201.107.4.85:3000/files/${localStorage.getItem('rec')}`;
       if (this.inf.id_service == 1) {
-        this.pdfSrc = `http://192.168.100.71:3000/files/${localStorage.getItem('cont')}`;
+        this.pdfSrc = `http://201.107.4.85:3000/files/${localStorage.getItem('cont')}`;
       }
       if (this.inf.id_service == 2) {
-        this.pdfSrc = `http://192.168.100.71:3000/files/${localStorage.getItem('cont')}`;
+        this.pdfSrc = `http://201.107.4.85:3000/files/${localStorage.getItem('cont')}`;
       }
     } else {
       if (this.methodPayment === 'TRANSFERENCIA') {

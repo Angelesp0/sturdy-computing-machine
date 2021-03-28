@@ -323,14 +323,23 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      dom: 'Bfrtip',
-      buttons: [
-        'copy',
-        'print',
-        'csv',
-        'excel',
-        'pdf'
-      ]
+            // Declare the use of the extension in the dom parameter
+            dom: 'Bfrtip',
+            // Configure the buttons
+            buttons: [
+              'columnsToggle',
+              'colvis',
+              'copy',
+              'print',
+              'excel',
+              {
+                text: 'Some button',
+                key: '1',
+                action: function (e, dt, node, config) {
+                  alert('Button activated');
+                }
+              }
+            ]
     };
     this.userService.getUsers().pipe(map(this.extractData)).subscribe(response => {
       this.dtTrigger.next();
