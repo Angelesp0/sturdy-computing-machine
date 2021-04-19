@@ -13,7 +13,7 @@ const headers = new HttpHeaders();
 export class AdminService {
 
   // tslint:disable-next-line: variable-name
-  base_path = 'http://201.107.4.85:3000/services/';
+  base_path = 'http://192.168.100.71:3000/services/';
 
   constructor(private http: HttpClient) { }
 
@@ -73,7 +73,7 @@ export class AdminService {
     uploadData.append('img', file.name);
 
     return this.http
-      .post<Service>('http://201.107.4.85:3000/services1', uploadData)
+      .post<Service>('http://192.168.100.71:3000/services1', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -83,8 +83,39 @@ export class AdminService {
     // this.http is the injected HttpClient
     const uploadData = new FormData();
     uploadData.append('file', image, image.name);
-    return this.http.post('http://201.107.4.85:3000/subir', uploadData)  ;
+    return this.http.post('http://192.168.100.71:3000/subir', uploadData)  ;
   }
+
+  postCer(id, date, file) {
+    console.log('postCer');
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Cer');
+    uploadData.append('date', date);
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.100.71:3000/firma/cer', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  postKey(id, date, file) {
+    console.log('postCer');
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'Key');
+    uploadData.append('date', date);
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.100.71:3000/firma/key', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+   
 
   postImg(id, file) {
     const uploadData = new FormData();
@@ -93,7 +124,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -107,7 +138,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -121,7 +152,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -135,7 +166,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -149,7 +180,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -163,7 +194,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -177,7 +208,7 @@ export class AdminService {
     uploadData.append('company_id_company', id);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         catchError(this.handleError)
       );
@@ -191,7 +222,7 @@ export class AdminService {
     uploadData.append('upload_date', date);
 
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         catchError(this.handleError)
       );
@@ -203,7 +234,7 @@ export class AdminService {
     uploadData.append('category', 'Acuse');
     uploadData.append('company_id_company', id);
     return this.http
-      .post('http://201.107.4.85:3000/companies/img', uploadData)
+      .post('http://192.168.100.71:3000/companies/img', uploadData)
       .pipe(
         catchError(this.handleError)
       );
@@ -211,32 +242,32 @@ export class AdminService {
 
   locatio(lat, lng, label, company_id_company) {
     return this.http
-    .post('http://201.107.4.85:3000/companies/location', {lat, lng, label, company_id_company} )
+    .post('http://192.168.100.71:3000/companies/location', {lat, lng, label, company_id_company} )
     .pipe(
       catchError(this.handleError)
     );
   }
 
   getLocations() {
-    return this.http.get('http://201.107.4.85:3000/location/', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/location/', this.httpOptions);
   }
 
   getInfContract(id) {
-    return this.http.get('http://201.107.4.85:3000/contract/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/contract/' + id, this.httpOptions);
   }
   getContract(id) {
-    return this.http.get('http://201.107.4.85:3000/getcontract/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/getcontract/' + id, this.httpOptions);
   }
 
   getFirm() {
-    return this.http.get('http://201.107.4.85:3000/getfirm', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/getfirm', this.httpOptions);
   }
 
   getLastReceipt() {
-    return this.http.get('http://201.107.4.85:3000/receipt', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/receipt', this.httpOptions);
   }
   getReceiptById(id) {
-    return this.http.get('http://201.107.4.85:3000/receipt/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/receipt/' + id, this.httpOptions);
   }
 
   postReceipt(id, num, date, id_payment, file) {
@@ -247,73 +278,73 @@ export class AdminService {
     uploadData.append('payments_id_payments', id_payment);
     uploadData.append('upload_date', date);
     return this.http
-      .post('http://201.107.4.85:3000/receipt', uploadData)
+      .post('http://192.168.100.71:3000/receipt', uploadData)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   sendEmail(data) {
-    return this.http.post('http://201.107.4.85:3000/email', data)
+    return this.http.post('http://192.168.100.71:3000/email', data)
     .pipe(
       catchError(this.handleError)
     );
   }
 
   getLastContract() {
-    return this.http.get('http://201.107.4.85:3000/contractByIdCompany', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/contractByIdCompany', this.httpOptions);
   }
 
   getContracts() {
-    return this.http.get('http://201.107.4.85:3000/dashboard/contract', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/dashboard/contract', this.httpOptions);
   }
 
   getSales() {
-    return this.http.get('http://201.107.4.85:3000/dashboard/sales', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/dashboard/sales', this.httpOptions);
   }
 
   getExecutive() {
-    return this.http.get('http://201.107.4.85:3000/dashboard/executive', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/dashboard/executive', this.httpOptions);
   }
 
   getExecutiveSales(id) {
-    return this.http.get('http://201.107.4.85:3000/dashboard/executive/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/dashboard/executive/' + id, this.httpOptions);
   }
 
   getCommission() {
-    return this.http.get('http://201.107.4.85:3000/dashboard/commission', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/dashboard/commission', this.httpOptions);
   }
 
   putCommission(id) {
-    return this.http.put('http://201.107.4.85:3000/commission/' + id, this.httpOptions);
+    return this.http.put('http://192.168.100.71:3000/commission/' + id, this.httpOptions);
   }
 
   getDocuments(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id, this.httpOptions);
   }
 
   getImages(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/img', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/img', this.httpOptions);
   }
 
   getExterior(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/exterior', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/exterior', this.httpOptions);
   }
 
   getInterior(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/interior', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/interior', this.httpOptions);
   }
 
   getIneFrontal(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/inefrontal', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/inefrontal', this.httpOptions);
   }
 
   getInePosterior(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/ineposterior', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/ineposterior', this.httpOptions);
   }
 
   getComprobante(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/' + id + '/comprobante', this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/' + id + '/comprobante', this.httpOptions);
   }
 
   postStatements(id, date, file) {
@@ -322,7 +353,7 @@ export class AdminService {
     uploadData.append('date', date);
 
     return this.http
-      .post('http://201.107.4.85:3000/documents/statements/' + id, uploadData)
+      .post('http://192.168.100.71:3000/documents/statements/' + id, uploadData)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -330,11 +361,19 @@ export class AdminService {
   }
 
   getStatements(id) {
-    return this.http.get('http://201.107.4.85:3000/documents/statements/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/documents/statements/' + id, this.httpOptions);
   }
 
   getCommissionById(id) {
-    return this.http.get('http://201.107.4.85:3000/commission/' + id, this.httpOptions);
+    return this.http.get('http://192.168.100.71:3000/commission/' + id, this.httpOptions);
+  }
+  
+  getCer(id){
+    return this.http.get('http://192.168.100.71:3000/firma/cer/' + id, this.httpOptions)
+  }
+  
+  getKey(id){
+    return this.http.get('http://192.168.100.71:3000/firma/key/' + id, this.httpOptions)
   }
 
 

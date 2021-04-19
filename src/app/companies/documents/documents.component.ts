@@ -4,6 +4,7 @@ import { AdminService } from '../../_services/admin/admin.service';
 import { Subject  } from 'rxjs';
 import { map  } from 'rxjs/operators';
 import {FileUploader} from 'ng2-file-upload';
+import { CompanyService } from '../../_services/company/company.service';
 
 @Component({
   selector: 'app-documents',
@@ -15,13 +16,15 @@ export class DocumentsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   id: any;
   documents: any;
-
+  sat: any;
   images: any;
   exterior: any;
   interior: any;
   ineF: any;
   ineP: any;
   comprobante: any;
+  cer: false;
+  key: false;
 
   panelOpenState = false;
   file: any;
@@ -34,6 +37,7 @@ export class DocumentsComponent implements OnInit {
 
   constructor(
     public adminService: AdminService,
+    public companyService: CompanyService,
     private route: ActivatedRoute
     ) { }
 
@@ -42,7 +46,20 @@ export class DocumentsComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
     };
-    this.id = this.route.snapshot.params["id_company"];
+    this.id = this.route.snapshot.params["id_company"]
+    this.adminService.getCer(this.id).subscribe(response=> {
+      console.log(response);
+      this.cer = response[0];
+    })
+    this.adminService.getKey(this.id).subscribe(response=> {
+      console.log(response);
+      this.key = response[0];
+    })
+    this.companyService.getCompany(this.id).subscribe(response => {
+      this.sat = response["sat"];
+      console.log(this.sat);
+    })
+
     this.adminService.getStatements(this.id).subscribe(response => {
       console.log(response);
       this.statements = response
@@ -88,4 +105,19 @@ export class DocumentsComponent implements OnInit {
   postStatements() {
     this.adminService.postStatements(   this.id, this.date, this.file ).subscribe(res => console.log(res));
   }
+
+  postCer() {
+    this.adminService.postCer(this.id, this.date, this.file ).subscribe(res => console.log(res));
+  }
+
+  postKey() {
+    this.adminService.postKey(this.id, this.date, this.file ).subscribe(res => console.log(res));
+  }
+
+  
+
+  setSat() {
+    this.companyService.putSat(this.id, this.sat).subscribe(reponse => console.log(reponse))
+  }
+
 }

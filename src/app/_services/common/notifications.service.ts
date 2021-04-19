@@ -12,7 +12,7 @@ const headers = new HttpHeaders();
 export class NotificationsService {
 
   // tslint:disable-next-line: variable-name
-  base_path = 'http://201.107.4.85:3000/notifications/';
+  base_path = 'http://192.168.100.71:3000/notifications/';
 
   constructor(private http: HttpClient) { }
 
