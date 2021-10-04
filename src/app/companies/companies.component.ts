@@ -20,7 +20,7 @@ import { Response } from '@angular/http';
     </button>
   </div>
   <div class="modal-body">
-  <p><strong><span class="text-primary">DATOS GENERALES
+  <p><strong><span class="text-info">DATOS GENERALES
           </span></strong></p>
     <div class="row">
         <div class="col-md">
@@ -131,7 +131,7 @@ import { Response } from '@angular/http';
         </div>
     </div>
     <br>
-    <p><strong><span class="text-primary">DATOS DE CONTACTO DEL ESTABLECIMIENTO PARA NEGOCIOS
+    <p><strong><span class="text-info">DATOS DE CONTACTO DEL ESTABLECIMIENTO PARA NEGOCIOS
     </span></strong></p>
     <div class="row">
         <div class="col-md">
@@ -154,7 +154,7 @@ import { Response } from '@angular/http';
         </div>
     </div>
     <br>
-    <p><strong><span class="text-primary">PERFIL GENERAL DE LA EMPRESA
+    <p><strong><span class="text-info">PERFIL GENERAL DE LA EMPRESA
     </span></strong></p>
     <div class="row">
         <div class="col-md-2">
@@ -183,7 +183,7 @@ import { Response } from '@angular/http';
         </div>
     </div>
     <br>
-    <p><strong><span class="text-primary">ACTIVIDAD ECONOMICA
+    <p><strong><span class="text-info">ACTIVIDAD ECONOMICA
     </span></strong></p>
     <div class="row">
         <div class="col-md">
@@ -197,7 +197,7 @@ import { Response } from '@angular/http';
     </div>
 
     <br>
-    <p><strong><span class="text-primary">INFORMACIÓN ADICIONAL
+    <p><strong><span class="text-info">INFORMACIÓN ADICIONAL
     </span></strong></p>
     <div class="row">
         <div class="col-md">
@@ -239,7 +239,7 @@ import { Response } from '@angular/http';
         </div>
     </div>
     <br>
-    <p><strong><span class="text-primary">INFORMACIÓN COMERCIAL
+    <p><strong><span class="text-info">INFORMACIÓN COMERCIAL
     </span></strong></p>
     <div class="row">
         <div class="col-md">
@@ -274,7 +274,7 @@ import { Response } from '@angular/http';
         </div>
     </div>
     <br>
-    <p><strong>Estas por editar el usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
+    <p><strong>Estas por editar el usuario <span class="text-info">Verifica</span> la informacion</strong></p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
@@ -352,6 +352,7 @@ export class CompaniesComponent implements OnInit {
         ]
     };
     this.companyService.getCompanies().pipe(map(this.extractData)).subscribe(response => {
+        console.log(response);
       this.dtTrigger.next();
       this.companies  = response;
     });

@@ -376,5 +376,76 @@ export class AdminService {
     return this.http.get('http://192.168.100.71:3000/firma/key/' + id, this.httpOptions)
   }
 
+  getOpinion(id){
+    return this.http.get('http://192.168.100.71:3000/firma/opinion/' + id, this.httpOptions)
+  }
+
+  getConstancia(id){
+    return this.http.get('http://192.168.100.71:3000/firma/constancia/' + id, this.httpOptions)
+  }
+
+  getDeclaracion(id){
+    return this.http.get('http://192.168.100.71:3000/firma/declaracion/' + id, this.httpOptions)
+  }
+
+  getLinea(id){
+    return this.http.get('http://192.168.100.71:3000/firma/linea/' + id, this.httpOptions)
+  }
+
+  getFactura(id){
+    return this.http.get('http://192.168.100.71:3000/firma/factura/' + id, this.httpOptions)
+  }
+  getReceipt(id){
+    return this.http.get('http://192.168.100.71:3000/firma/receipt/' + id, this.httpOptions)
+  }
+
+  postConstancia(id, date, file) {
+    console.log('postConstancia');
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'constancia');
+    uploadData.append('date', date);
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.100.71:3000/firma/constancia', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  postOpinion(id, date, file) {
+    console.log('postConstancia');
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', 'constancia');
+    uploadData.append('date', date);
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.100.71:3000/firma/opinion', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  postArchivos(id, date, category, file) {
+    console.log('postArchivos');
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('category', category);
+    uploadData.append('date', date);
+    uploadData.append('company_id_company', id);
+
+    return this.http
+      .post('http://192.168.100.71:3000/firma/archivos', uploadData)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
+  
+
 
 }

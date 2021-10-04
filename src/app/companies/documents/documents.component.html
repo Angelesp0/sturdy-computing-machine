@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="text-center">
 
-                        <img src="http://192.168.100.71:3000/files/{{exterior[0].nombre}}">
+                        <!--<img src="http://192.168.100.71:3000/files/{{exterior[0].nombre}}">-->
                     </div>
                     <br>
                     <mat-accordion>
@@ -28,10 +28,10 @@
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div class="col">
-                                    <img src="http://192.168.100.71:3000/files/{{interior[0].nombre}}">
+                                    <!-- <img src="http://192.168.100.71:3000/files/{{interior[0].nombre}}">-->
                                 </div>
                                 <div class="col">
-                                    <img src="http://192.168.100.71:3000/files/{{interior[0].nombre}}">
+                                    <!-- <img src="http://192.168.100.71:3000/files/{{interior[0].nombre}}">-->
                                 </div>
                             </div>
                         </mat-expansion-panel>
@@ -47,10 +47,10 @@
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div class="col">
-                                    <img src="http://192.168.100.71:3000/files/{{ineF[0].nombre}}">
+                                    <!-- <img src="http://192.168.100.71:3000/files/{{ineF[0].nombre}}"> -->
                                 </div>
                                 <div class="col">
-                                    <img src="http://192.168.100.71:3000/files/{{ineP[0].nombre}}">
+                                    <!-- <img src="http://192.168.100.71:3000/files/{{ineP[0].nombre}}"> -->
                                 </div>
                             </div>
                         </mat-expansion-panel>
@@ -67,7 +67,7 @@
                             <div class="row justify-content-md-center">
 
                                 <div class="col col-lg-4">
-                                    <img src="http://192.168.100.71:3000/files/{{comprobante[0].nombre}}">
+                                    <!--<img src="http://192.168.100.71:3000/files/{{comprobante[0].nombre}}">-->
                                 </div>
                             </div>
 
@@ -115,8 +115,135 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        </mat-expansion-panel>
 
+
+
+
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Constancia de situacion fiscal
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Opinion de cumplimiento (32D)
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-2">
+                                    <label>Abril 2021<strong><span class="text-danger">*</span></strong></label>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="constancia; else cons">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{constancia['url']}}{{constancia['nombre']}}">Constancia</a >
+                                    </td>
+                                        <ng-template #cons>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Constancia</button>
+                                                <button class="btn btn-outline-success" (click)="postConstancia()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="opinion; else opin">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{opinion['url']}}{{opinion['nombre']}}">Descargar Opinion de cumplimiento</a >
+                                    </td>
+                                        <ng-template #opin>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Opin. cumplimiento</button>
+                                                <button class="btn btn-outline-success" (click)="postOpinion()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+
+                                <div class="col col-lg-2">
+                                    <label>Abril 2021 Extras<strong><span class="text-danger">*</span></strong></label>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="constancia; else cons1">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{constancia['url']}}{{constancia['nombre']}}">Constancia</a >
+                                    </td>
+                                        <ng-template #cons1>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Constancia</button>
+                                                <button class="btn btn-outline-success" (click)="postConstancia()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="opinion; else opin1">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{opinion['url']}}{{opinion['nombre']}}">Descargar Opinion de cumplimiento</a >
+                                    </td>
+                                        <ng-template #opin1>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Opin. cumplimiento</button>
+                                                <button class="btn btn-outline-success" (click)="postOpinion()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-2">
+                                    <label>Julio 2021<strong><span class="text-danger">*</span></strong></label>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="cer; else cons1">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{cer['url']}}{{cer['nombre']}}">Constancia</a >
+                                        </td>
+                                        <ng-template #cons1>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Constancia</button>
+                                                <button class="btn btn-outline-success" (click)="postCer()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="key; else opin1">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{key['url']}}{{key['nombre']}}">Descargar Opinion de cumplimiento </a >
+                                        </td>
+                                        <ng-template #opin1>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Opin. cumplimiento</button>
+                                                <button class="btn btn-outline-success" (click)="postKey()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                                
+                                <div class="col col-lg-2">
+                                    <label>Julio 2021 Extras<strong><span class="text-danger">*</span></strong></label>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="constancia; else cons2">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{constancia['url']}}{{constancia['nombre']}}">Constancia</a >
+                                    </td>
+                                        <ng-template #cons2>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Constancia</button>
+                                                <button class="btn btn-outline-success" (click)="postConstancia()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                                <div class="col col-lg-2">
+                                    <td *ngIf="opinion; else opin2">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{opinion['url']}}{{opinion['nombre']}}">Descargar Opinion de cumplimiento</a >
+                                    </td>
+                                        <ng-template #opin2>
+                                            <td>
+                                                <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                                <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Selec. Opin. cumplimiento</button>
+                                                <button class="btn btn-outline-success" (click)="postOpinion()">Subir</button>
+                                            </td>
+                                    </ng-template>
+                                </div>
+                            </div>
                         </mat-expansion-panel>
                         <!--<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                             <mat-expansion-panel-header>
@@ -137,15 +264,12 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">Gestoria Empresarial Global Service</h5>
-                    <p class="category">Mas contenido en nuestra pagina web
-                        <a href="https://gglobals.com.mx/">GGlobal Service</a>
-                                        </p>
+                    <p class="category">Mas contenido en nuestra pagina web<a href="https://gglobals.com.mx/">GGlobal Service</a></p>
                                 </div>
                                 <div class="card-body">
-
                                     <div class="table-responsive">
                                         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered table-sm row-border hover">
-                                            <thead class=" text-primary">
+                                            <thead class=" text-info">
                                                 <tr>
                                                     <th>Fecha</th>
                                                     <th>Estado</th>
@@ -158,38 +282,47 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let document of documents; let i = index" class="pointer">
-                                                    <td>{{ document.update_time | date: 'MMMM y' }}</td>
-                                                    <td class=" text-primary">{{ document.status }}</td>
+                                                    <td>{{ document.update_time }}</td>
+                                                    <td class=" text-info">{{ document.status }}</td>
                                                     <!--<td (click)="open('editar', company.id_company)">{{ company.service }}</td>-->
-                                                    <td *ngIf="statements[i]; else elseBlock">
-                                                        <a class="btn btn-block btn-info" target="_blank" href="{{statements[i].url}}{{statements[i].name}}">Ver declaracion</a >
+                                                    <td *ngIf="document['declaracion'] else declaracion1">
+                                                        <a class="btn btn-block btn-info" target="_blank" href="{{document['declaracion']['url']}}{{document['declaracion']['nombre']}}">Ver declaracion</a >
                                     </td>
-                                    <ng-template #elseBlock>
+                                    <ng-template #declaracion1>
                                         <td>
                                             <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
-                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar archivo</button>
-                                            <button class="btn btn-outline-success" (click)="postStatements()">Subir</button>
+                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar declaracion</button>
+                                            <button class="btn btn-outline-success" (click)="postArchivos('DECLARACION', document.update_time)">Subir</button>
                                         </td>
                                     </ng-template>
-                                    <td><a class="btn btn-block btn-info" target="_blank" href="http://192.168.100.71:3000/files/{{document.name}}">Ver recibo</a ></td>
-                                    <td *ngIf="statements[i]; else lineaDePago">
-                                        <a class="btn btn-block btn-info" target="_blank" href="{{statements[i].url}}{{statements[i].name}}">Ver pago</a >
+                                    <td *ngIf="document['recibo']; else recibo">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{document['recibo']['url']}}{{document['recibo']['name']}}">Ver recibo</a >
+                                    </td>
+                                    <ng-template #recibo>
+                                        <td>
+                                            <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar Recibo</button>
+                                            <button class="btn btn-outline-success" (click)="postArchivos('RECIBO', document.update_time)">Subir</button>
+                                        </td>
+                                    </ng-template>
+                                    <td *ngIf="document['linea']; else lineaDePago">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{document['linea']['url']}}{{document['linea']['nombre']}}">Ver Linea de pago</a >
                                     </td>
                                     <ng-template #lineaDePago>
                                         <td>
                                             <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
-                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar archivo</button>
-                                            <button class="btn btn-outline-success" (click)="postStatements()">Subir</button>
+                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar Linea de pago</button>
+                                            <button class="btn btn-outline-success" (click)="postArchivos('LINEA', document.update_time)">Subir</button>
                                         </td>
                                     </ng-template>
-                                    <td *ngIf="statements[i]; else facturaPublico">
-                                        <a class="btn btn-block btn-info" target="_blank" href="{{statements[i].url}}{{statements[i].name}}">Ver factura</a >
+                                    <td *ngIf="document['factura']; else facturaPublico">
+                                        <a class="btn btn-block btn-info" target="_blank" href="{{document['factura']['url']}}{{document['factura']['nombre']}}">Ver Factura</a >
                                     </td>
                                     <ng-template #facturaPublico>
                                         <td>
                                             <input #hiddenfileinput3 type="file" ng2FileSelect style="display: none" [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
-                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar archivo</button>
-                                            <button class="btn btn-outline-success" (click)="postStatements()">Subir</button>
+                                            <button class="btn btn-block btn-outline-success" (click)="hiddenfileinput3.click()">Seleccionar Factura</button>
+                                            <button class="btn btn-outline-success" (click)="postArchivos('FACTURA', document.update_time)">Subir</button>
                                         </td>
                                     </ng-template>
                                 </tr>

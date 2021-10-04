@@ -463,7 +463,7 @@ export class DashboardComponent implements OnInit {
     this.gradientStroke.addColorStop(1, this.chartColor);
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-    this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
+    this.gradientFill.addColorStop(1, 'rgba(146, 201, 240, 1)');
     this.lineChartData = [
         {
           label: 'Active Users',
@@ -478,9 +478,9 @@ export class DashboardComponent implements OnInit {
     ];
     this.lineChartColors = [
        {
-         borderColor: '#f96332',
+         borderColor: '#2CA8FF',
          pointBorderColor: '#FFF',
-         pointBackgroundColor: '#f96332',
+         pointBackgroundColor: '#2CA8FF',
          backgroundColor: this.gradientFill
        }
     ];

@@ -43,7 +43,7 @@ import { Response } from '@angular/http';
                 <input type="file" (change)="onFileChanged($event)" #fileInput>
                 </div>
     </div>
-      <p><strong>Estas por agregar un Servicio nuevo <span class="text-primary">Verifica</span> la informacion</strong></p>
+      <p><strong>Estas por agregar un Servicio nuevo <span class="text-info">Verifica</span> la informacion</strong></p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
@@ -101,7 +101,7 @@ export class ModalNuevoServicio {
                 <input name="direction" inputmode="numeric" class="form-control" placeholder="Direccion" [(ngModel)]="this.data.price">
         </div>
     </div>
-      <p><strong>Estas por editar el usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
+      <p><strong>Estas por editar el usuario <span class="text-info">Verifica</span> la informacion</strong></p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>

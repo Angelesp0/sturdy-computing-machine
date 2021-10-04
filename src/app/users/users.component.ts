@@ -62,7 +62,7 @@ import { ToastrService } from 'ngx-toastr';
           <label>Email</label>
           <input [ngModelOptions]="{standalone: true}" name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email">
         </div>
-      <p><strong>Estas por agregar un nuevo usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
+      <p><strong>Estas por agregar un nuevo usuario <span class="text-info">Verifica</span> la informacion</strong></p>
       <div class="form-group">
         <button type="submit" ngbAutofocus class="btn btn-danger">Ok</button>
       </div>
@@ -218,7 +218,7 @@ export class NgbdModalConfirmAutofocus implements OnInit {
                 <input name="email" inputmode="text" class="form-control" placeholder="Email" [(ngModel)]="this.data.email">
         </div>
     </div>
-      <p><strong>Estas por editar el usuario <span class="text-primary">Verifica</span> la informacion</strong></p>
+      <p><strong>Estas por editar el usuario <span class="text-info">Verifica</span> la informacion</strong></p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
