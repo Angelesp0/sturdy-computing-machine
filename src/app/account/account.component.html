@@ -18,11 +18,11 @@
                                         <div class="card-header">
                                             <h5 class="card-category">{{company.company}}</h5>
                                             <div *ngIf="company.img; else elseBlock">
-                                                <h4 class="card-title"> <img src="http://192.168.100.71:3000/files/{{company.img}}" alt="Avatar" style="width:80px"> {{company.razon}}
+                                                <h4 class="card-title"> <img src="http://74.208.71.98:3000/files/{{company.img}}" alt="Avatar" style="width:80px"> {{company.razon}}
                                                 </h4>
                                             </div>
                                             <ng-template #elseBlock>
-                                                <h4 class="card-title"> <img src="http://192.168.100.71:3000/files/default.png" alt="Avatar" style="width:80px"> {{company.razon}}
+                                                <h4 class="card-title"> <img src="http://74.208.71.98:3000/files/default.png" alt="Avatar" style="width:80px"> {{company.razon}}
                                                 </h4>
                                             </ng-template>
                                             <div ngbDropdown>
@@ -65,7 +65,7 @@
                                                             <span class="mr-2">{{company.upload_date}}</span>
                                                         </td>
                                                         <td class="text-center col">
-                                                            <a href="http://192.168.100.71:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
+                                                            <a href="http://74.208.71.98:3000/files/{{company.nombre}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
                                                                 <i class="now-ui-icons files_paper"></i>
                                                             </a>
                                                         </td>
@@ -134,7 +134,7 @@
                         <span class="mr-2">{{payment.update_time | date: 'yyyy-mm-dd'}}</span>
                     </td>
                     <td class="text-center">
-                        <a href="http://192.168.100.71ss:3000/files/{{payment.name}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
+                        <a href="http://74.208.71.98ss:3000/files/{{payment.name}}" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" target="_blank">
                             <i class="now-ui-icons files_single-copy-04"></i>
                         </a>
                     </td>

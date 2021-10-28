@@ -401,16 +401,16 @@ export class CollectComponent implements OnInit {
       // console.log(identificador);
     }
 
-    cliente.src = `http://192.168.100.71:3000/files/${this.inf.nombre}`;
+    cliente.src = `http://74.208.71.98:3000/files/${this.inf.nombre}`;
     cliente.alt = 'alt';
 
-    prestador.src = `http://192.168.100.71:3000/files/${this.yadira}`;
+    prestador.src = `http://74.208.71.98:3000/files/${this.yadira}`;
     prestador.alt = 'alt';
 
-    testigo2.src = `http://192.168.100.71:3000/files/${this.mario}`;
+    testigo2.src = `http://74.208.71.98:3000/files/${this.mario}`;
     testigo2.alt = 'alt';
 
-    logo.src = `http://192.168.100.71:3000/files/Logo.png`;
+    logo.src = `http://74.208.71.98:3000/files/Logo.png`;
     logo.alt = 'alt';
 
     // console.log(this.inf.nombre);

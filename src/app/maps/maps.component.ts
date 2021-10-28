@@ -132,7 +132,7 @@ export class MapsComponent implements OnInit {
       `<br><b>RFC: ${locations[i]['rfc']}</b>` +
       `<br><b>Telefono Empresa: ${locations[i]['tel']}</b>` +
       `<br><b>Responsable del registro: ${locations[i]['first_name']} ${locations[i]['last_name']}</b>` +
-      `<br><img height="80" src="http://192.168.100.71:3000/files/${locations[i]['nombre']}">` +
+      `<br><img height="80" src="http://74.208.71.98:3000/files/${locations[i]['nombre']}">` +
       '</div>' +
       '</div>';
         const lat = locations[i]['lat'];

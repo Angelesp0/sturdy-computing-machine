@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../_services/admin/admin.service';
 import { Subject  } from 'rxjs';
@@ -6,6 +6,7 @@ import { map  } from 'rxjs/operators';
 import {FileUploader} from 'ng2-file-upload';
 import { CompanyService } from '../../_services/company/company.service';
 import { ToastrService } from 'ngx-toastr';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-documents',
@@ -15,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 export class DocumentsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
   id: any;
   documents: any;
   sat: any;
@@ -44,190 +47,131 @@ export class DocumentsComponent implements OnInit {
     maxFileSize: 1024 * 1024 * 1
   });
   toggle = true;
+  server = 'http://74.208.71.98:3000/files/';
+  diferencia;
 
   constructor(
     public adminService: AdminService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+  ) {
+    let id = this.route.snapshot.params["id_company"]    
+      this.adminService.getReceipt(id).subscribe(response => this.recibo = response);
+      this.adminService.getDeclaracion(id).subscribe(response => this.declaracion = response);
+      this.adminService.getLinea(id).subscribe(response => this.linea = response);
+      this.adminService.getFactura(id).subscribe(response => this.factura = response);
+  }
 
-    ) {
-    let datea:any;
+  async ngOnInit() {
+    //////////////////////////////////////////////////////////////////
+
     this.date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
-    console.log('date',this.date)
-    this.documents  = [];
+    await this.forTabla();
+    this.dtTrigger.next();
+    this.rerender();
 
+    //////////////////////////////////////////////////////////////////
+
+
+
+
+    this.dtOptions = { pagingType: 'full_numbers'};
+    this.adminService.getCer(this.id).subscribe(response=> this.cer = response[0]);
+    this.adminService.getKey(this.id).subscribe(response=> this.key = response[0]);
+    this.companyService.getCompany(this.id).subscribe(response => this.sat = response["sat"]);
+    this.adminService.getOpinion(this.id).subscribe(response => this.opinion = response[0]);
+    this.adminService.getConstancia(this.id).subscribe(response => this.constancia = response[0]);
+    //this.adminService.getDocuments(this.id).subscribe(response => this.documents = response);
+    this.adminService.getExterior(this.id).subscribe(response => this.exterior =  this.server + response[0].nombre);
+    this.adminService.getImages(this.id).subscribe(response => this.images = response);
+    this.adminService.getInterior(this.id).subscribe(response => this.interior =  this.server + response[0].nombre);
+    this.adminService.getIneFrontal(this.id).subscribe(response => this.ineF =  this.server + response[0].nombre);
+    this.adminService.getInePosterior(this.id).subscribe(response => this.ineP =  this.server + response[0].nombre);
+    this.adminService.getComprobante(this.id).subscribe(response => this.comprobante =  this.server + response[0].nombre);
+    this.adminService.getStatements(this.id).subscribe(response => this.statements = response);
+    this.uploader.onAfterAddingFile = (file) => {};
+    this.uploader.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {};
+    this.uploader.onCompleteAll = () => console.log('Subir archivos');
+    this.uploader.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {};
+  }
+
+  forTabla(){
+    return new Promise<void>((resolve,reject)=>{
+    let documents  = [];
     this.id = this.route.snapshot.params["id_company"]    
-      this.adminService.getReceipt(this.id).subscribe(response => {
-        this.recibo = response;
 
-      console.log('recibo', response);
-      });
-      this.adminService.getDeclaracion(this.id).subscribe(response => {
-        this.declaracion = response;
-      console.log('declaracion', response);
-      });
-      this.adminService.getLinea(this.id).subscribe(response => {
-        this.linea = response;
-      console.log('linea',response);
-      });
-      this.adminService.getFactura(this.id).subscribe(response => {
-        this.factura = response;
-      console.log('factura',response);
-      });
-      /*this.adminService.getDocuments(this.id).pipe(map(this.extractData)).subscribe(response => {
-        this.dtTrigger.next(); 
-        this.primer_recibo=  new Date(response[0]['update_time']);
-        let meses = this.today.getMonth() - this.primer_recibo.getMonth();
-        let diferencia = this.monthDiff(this.primer_recibo, this.todayDate);
-        console.log('primer_recibo',this.primer_recibo);
-        console.log('todayDate',this.todayDate);
-        console.log('diferencia',diferencia);
-
-
-        for (let i = 0; i <= (diferencia+1); i++) {
-          datea =[];
-
-
-          datea.id = i+1;
-          let mes1 = this.primer_recibo.getFullYear() + '-' + (this.primer_recibo.getMonth() + i +1) + '-' + this.primer_recibo.getDate();
-          datea.update_time = mes1;
+    let datea:any;
+    this.adminService.getDocuments(this.id).pipe(map(this.extractData)).subscribe(response => {
+      this.primer_recibo=  new Date(response[0]['update_time']);
+      this.diferencia = this.monthDiff(this.primer_recibo, this.todayDate)+1;
+      for (let i = 0; i <=(this.diferencia+2); i++) {
+        datea =[];
+        datea.id = i+1;
+        datea.update_time = this.primer_recibo.getFullYear() + '-' + (this.primer_recibo.getMonth() + i +1) + '-' + this.primer_recibo.getDate();
           if (this.declaracion) {
-            datea.declaracion = this.declaracion[i];
-          } else { datea.declaracion=0}
+            try{
+              this.declaracion.forEach(declaracion => {
+                let newDate = new Date(declaracion.upload_date);
+                if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
+                  datea.declaracion = declaracion;
+                } else {
+                }
+              });
+            } catch(err){
+              console.log(err);
+            }
+          } else { 
+            datea.declaracion=[]
+          }
           if (this.linea){
-            datea.linea = this.linea[i];
-          } else { datea.linea=0}
+            try{
+              this.linea.forEach(linea => {
+                let newDate = new Date(linea.upload_date);
+                if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
+                  datea.linea = linea;
+                } else {
+                }
+              });
+            } catch(err){
+              console.log(err);
+            }
+          } else { 
+            datea.linea=[]
+          }
           if (this.factura){
-            datea.factura = this.factura[i];
-          } else { datea.factura=0}
+            try{
+              this.factura.forEach(factura => {
+                let newDate = new Date(factura.upload_date);
+                if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
+                  datea.factura = factura;
+                } else {
+                }
+              });
+            } catch(err){
+              console.log(err);
+            }  
+          } else { 
+            datea.factura=[]
+          }
           if (this.recibo){
             datea.recibo = this.recibo[i];
-          } else { datea.recibo=0}
-          this.documents.push(datea);
-        }
-      });*/
-
-
-      this.adminService.getDocuments(this.id).pipe(map(this.extractData)).subscribe(response => {
-        this.dtTrigger.next(); 
-        this.primer_recibo=  new Date(response[0]['update_time']);
-        let diferencia = this.monthDiff(this.primer_recibo, this.todayDate)+1;
-
-        for (let i = 0; i <=diferencia; i++) {
-          datea =[];
-          datea.id = i+1;
-          datea.update_time = this.primer_recibo.getFullYear() + '-' + (this.primer_recibo.getMonth() + i +1) + '-' + this.primer_recibo.getDate();
-            if (this.declaracion) {
-              try{
-                this.declaracion.forEach(declaracion => {
-                  let newDate = new Date(declaracion.upload_date);
-                  if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
-                    console.log(declaracion.id_firms)
-                    datea.declaracion = declaracion;
-                  } else {
-                  }
-                });
-              } catch(err){
-                console.log(err);
-              }
-            } else { 
-              datea.declaracion=[]
-            }
-            if (this.linea){
-              try{
-                this.linea.forEach(linea => {
-                  let newDate = new Date(linea.upload_date);
-                  if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
-                    datea.linea = linea;
-                  } else {
-                  }
-                });
-              } catch(err){
-                console.log(err);
-              }
-            } else { 
-              datea.linea=[]
-            }
-            if (this.factura){
-              try{
-                this.factura.forEach(factura => {
-                  let newDate = new Date(factura.upload_date);
-                  if(this.primer_recibo.getMonth()+ i +1 === newDate.getMonth() +1){
-                    datea.factura = factura;
-                  } else {
-                  }
-                });
-              } catch(err){
-                console.log(err);
-              }  
-            } else { 
-              datea.factura=[]
-            }
-            if (this.recibo){
-              datea.recibo = this.recibo[i];
   
-            } else { datea.recibo=[]}
-            this.documents.push(datea);
-            console.log(this.documents)
-          //}
-        }
-      });
-
-     }
-
-  ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-    };
-    this.adminService.getCer(this.id).subscribe(response=> {
-      this.cer = response[0];
-    })
-    this.adminService.getKey(this.id).subscribe(response=> {
-      this.key = response[0];
-    })
-    this.companyService.getCompany(this.id).subscribe(response => {
-      this.sat = response["sat"];
-    })
-    this.adminService.getOpinion(this.id).subscribe(response => this.opinion = response[0]);
-    
-    this.adminService.getConstancia(this.id).subscribe(response => this.constancia = response[0]);
-          // this.adminService.getDocuments(this.id).subscribe(response => this.documents = response);
-          this.adminService.getExterior(this.id).subscribe(response => this.exterior = response);
-          this.adminService.getImages(this.id).subscribe(response => this.images = response);
-          this.adminService.getInterior(this.id).subscribe(response => this.interior = response);
-          this.adminService.getIneFrontal(this.id).subscribe(response => this.ineF = response);
-          this.adminService.getInePosterior(this.id).subscribe(response => this.ineP = response);
-          this.adminService.getComprobante(this.id).subscribe(response => this.comprobante = response);
-
-    /*
-
-*/
-
-    this.adminService.getStatements(this.id).subscribe(response => {
-      this.statements = response
+          } else { 
+            datea.recibo=[]
+          }
+          documents.push(datea);
+          
+      }
+      this.documents = documents;
+      resolve();
     });
-
-    // crear tabla con las declaraciones  388
-    // Generar los recibos en el apartado de pagos
-
-    // ============================================5===================================== //
-    this.uploader.onAfterAddingFile = (file) => {
-    };
-    this.uploader.onCompleteItem =  (item:any, response:any, status:any, headers:any) => {
-    };
-    this.uploader.onCompleteAll = () => {
-      console.log('Subir archivos');
-    };
-    this.uploader.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {
-    };
-    console.log('data',this.documents);
+  });
 
   }
 
-  clickEvent(){
-    this.toggle = !this.toggle;
-  }
+  clickEvent(){ this.toggle = !this.toggle; }
+
   private extractData(res: Response) {
     const body = res;
     return body || {};
@@ -237,8 +181,9 @@ export class DocumentsComponent implements OnInit {
     const file: File = event[0];
     this.file = file;
   }
+
   postStatements() {
-    this.adminService.postStatements(   this.id, this.date, this.file ).subscribe(res => console.log(res));
+    this.adminService.postStatements(this.id, this.date, this.file ).subscribe(res => console.log(res));
   }
 
   postCer() {
@@ -256,12 +201,13 @@ export class DocumentsComponent implements OnInit {
   postConstancia() {
     this.adminService.postConstancia(this.id, this.date, this.file ).subscribe(res => console.log(res));
   }
+
   postOpinion() {
     this.adminService.postOpinion(this.id, this.date, this.file ).subscribe(res => console.log(res));
   }
 
   postArchivos(category, fecha) {
-    this.adminService.postArchivos(this.id, fecha, category, this.file).subscribe(res =>       this.showNotification('top', 'right', 2, category));
+    this.adminService.postArchivos(this.id, fecha, category, this.file).subscribe(res => this.showNotification('top', 'right', 2, category));
   }
 
   monthDiff(d1, d2) { 
@@ -315,5 +261,15 @@ export class DocumentsComponent implements OnInit {
       default:
       break;
     }
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then(async(dtInstance: DataTables.Api)  =>  {
+      // Destroy the table first
+      await this.forTabla();
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 }

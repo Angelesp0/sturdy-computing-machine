@@ -29,7 +29,7 @@ In order for you to easily be able to use the Now UI Dashboard Angular, we have 
 4. Run in terminal: ```npm install -g @angular/cli```
 5. Then: ```npm install```
 6. And: ```npm start```
-7. Navigate to [192.168.100.71:4200](192.168.100.71:4200)
+7. Navigate to [74.208.71.98:4200](74.208.71.98:4200)
 
 ### What's included
 
