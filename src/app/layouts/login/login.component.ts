@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
+    ////////////////////////////// se ejecuta al logearte //////////////////////////////
   ingresar() {
+      ////////////////////////////// verificamos las credenciales ingresadas //////////////////////////////
     try {
       this.authService.login(this.data.email, this.data.password).subscribe((res) => {
       if (res.erro) {
@@ -58,9 +60,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  ////////////////////////////// Muestra Notificaciones de registro exitoso o error //////////////////////////////
+
   showNotification(from, align, notification) {
-
-
     switch (notification) {
       case 1:
       this.toastr.info('<span class="now-ui-icons ui-1_bell-53"></span> Ingresando...', '', {

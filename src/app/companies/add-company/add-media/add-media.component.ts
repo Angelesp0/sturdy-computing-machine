@@ -89,6 +89,8 @@ this.signaturePad = new SignaturePad(canvas);
     this.id = this.activatedRoute.snapshot.params["id_company"];
   }
 
+      ////////////////////////////// Configuramos el mapa //////////////////////////////
+
   maplatlang() {
     let _this = this;
     const myLatlng = {lat: 28.658638071997842, lng: -106.06216647017715};
@@ -137,6 +139,10 @@ this.signaturePad = new SignaturePad(canvas);
       _this.lng = lng;
     });
   }
+
+      ////////////////////////////// Configuramos los botones de las imagenes //////////////////////////////
+          ////////////////////////////// se puede optimizar mas //////////////////////////////
+
 
   buttons() {
         // ================================================================================= //
@@ -201,6 +207,8 @@ this.signaturePad = new SignaturePad(canvas);
         };
   }
 
+      ////////////////////////////// Registra los datos en la BD //////////////////////////////
+
   register() {
     this.savePNG();
     this.adminService.postImg(   this.id, this.file ).subscribe(res => console.log(res));
@@ -239,6 +247,7 @@ this.signaturePad = new SignaturePad(canvas);
     const file: File = event[0];
     this.file5 = file;
   } 
+    ////////////////////////////// limpia la firma //////////////////////////////
 
   clear() {
     this.signaturePad.clear();
@@ -260,6 +269,8 @@ this.signaturePad = new SignaturePad(canvas);
       window.URL.revokeObjectURL(url);
     }
   }
+
+      ////////////////////////////// sirve para guardar la firma cambiando el formato //////////////////////////////
 
   dataURLToBlob(dataURL) {
     // Code taken from https://github.com/ebidel/filer.js

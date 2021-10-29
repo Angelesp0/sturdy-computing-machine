@@ -234,6 +234,8 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+      ////////////////////////////// Aqui cargamos configuraciones de las tablas //////////////////////////////
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       language: {
@@ -671,6 +673,7 @@ export class DashboardComponent implements OnInit {
     return body || {};
   }
 
+
   commission() {
     for (let id_user of this.data3) {
       let suma = 0;
@@ -686,6 +689,7 @@ export class DashboardComponent implements OnInit {
     // console.log(this.array[0][0]['amount']);
   }
 
+  ////////////////////////////// Sirve para actualizar el adeudo de la comision a un ejecutivo //////////////////////////////
   actualizarComision() {
     // console.log(this.id_ejecutivo);
     this.adminService.putCommission(this.id_ejecutivo).subscribe(/*response => console.log(response)*/);

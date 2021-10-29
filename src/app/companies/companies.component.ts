@@ -9,7 +9,9 @@ import { Subject  } from 'rxjs';
 import { map  } from 'rxjs/operators';
 import { Response } from '@angular/http';
 
-// Editar Usuario
+////////////////////////////// inicio Modal para editar una empresa //////////////////////////////
+//////////////////////////////            Sin terminar              //////////////////////////////
+
 @Component({
   selector: 'ngbd-modal-confirm-autofocus',
   template: `
@@ -307,6 +309,8 @@ export class ModalEditarEmpresa {
 const MODALS: {[name: string]: Type<any>} = {
   editar: ModalEditarEmpresa
 };
+////////////////////////////// fin Modal para editar una empresa //////////////////////////////
+
 
 @Component({
   selector: 'app-companies',

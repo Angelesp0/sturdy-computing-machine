@@ -45,6 +45,11 @@ export class JsPDFComponent implements OnInit, OnDestroy {
     this.email = new Email();
   }
 
+////////////////////////////// Todas estas funciones generan varios pdf que automaticamente se suben al servidor //////////////////////////////
+    ////////////////////////////// dependiendo del registro de la empresa (rif o PF) //////////////////////////////
+        ////////////////////////////// luego se envia por email el acuse con algunas contraseñas //////////////////////////////
+
+
    pf(download?: any, post?: any): void {
     const date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
     const endDate = this.todayDate.getFullYear() + 1 + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();

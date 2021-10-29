@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from './../_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
 
-// Agregar Usuario
-@Component({
+  ////////////////////////////// inicio Modal para agregar un usuario //////////////////////////////
+  @Component({
   selector: 'ngbd-modal-confirm-autofocus',
   template: `
   <div class="modal-header">
@@ -170,9 +170,11 @@ export class NgbdModalConfirmAutofocus implements OnInit {
   }
 
 }
+  ////////////////////////////// fin Modal para agregar un usuario //////////////////////////////
 
-// Editar Usuario
-@Component({
+
+    ////////////////////////////// inicio Modal para editar un usuario //////////////////////////////
+  @Component({
   selector: 'ngbd-modal-confirm-autofocus',
   template: `
   <div class="modal-header">
@@ -297,6 +299,7 @@ const MODALS: {[name: string]: Type<any>} = {
   autofocus: NgbdModalConfirmAutofocus,
   editar: ModalEditar
 };
+    ////////////////////////////// fin Modal para editar un usuario //////////////////////////////
 
 // Modulo Principal
 @Component({
@@ -318,7 +321,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     public router: Router
     ) {
       this.data = new User();
-     }
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -364,7 +367,5 @@ export class UsersComponent implements OnInit, OnDestroy {
     const modalRef = this._modalService.open(MODALS[name]);
     modalRef.componentInstance.fromParent = id;
   }
-
-
 
 }

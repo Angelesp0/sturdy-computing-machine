@@ -64,6 +64,10 @@ export class DocumentsComponent implements OnInit {
   }
 
   async ngOnInit() {
+  ////////////////////////////// Cargamos todos los elementos de la vista con una ruta para cada documento //////////////////////////////
+  ////////////////////////////// Esto es prioritario revisar los bugs //////////////////////////////
+
+
     //////////////////////////////////////////////////////////////////
 
     this.date = this.todayDate.getFullYear() + '-' + (this.todayDate.getMonth() + 1) + '-' + this.todayDate.getDate();
@@ -95,6 +99,9 @@ export class DocumentsComponent implements OnInit {
     this.uploader.onCompleteAll = () => console.log('Subir archivos');
     this.uploader.onWhenAddingFileFailed = (item: any, filter: any, options: any) => {};
   }
+
+  ////////////////////////////// Esta funcion genera una tabla con fechas //////////////////////////////
+  //////////// cuando subas un documento en la fecha seleccionada, el documento se subira con esa fecha //////////////////////
 
   forTabla(){
     return new Promise<void>((resolve,reject)=>{
@@ -182,6 +189,7 @@ export class DocumentsComponent implements OnInit {
     this.file = file;
   }
 
+  ////////////////////////////// Funcion para subir documentos //////////////////////////////
   postStatements() {
     this.adminService.postStatements(this.id, this.date, this.file ).subscribe(res => console.log(res));
   }
@@ -209,6 +217,8 @@ export class DocumentsComponent implements OnInit {
   postArchivos(category, fecha) {
     this.adminService.postArchivos(this.id, fecha, category, this.file).subscribe(res => this.showNotification('top', 'right', 2, category));
   }
+
+  ////////////////////////////// Aqui descubrimos la diferencia, entre el primer mes de registro y el actual + 2 meses //////////////////////////////
 
   monthDiff(d1, d2) { 
     var months; 

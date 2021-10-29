@@ -90,6 +90,9 @@ export class AddCompanyComponent implements OnInit {
       this.service = new CompanyServices();
       this.ejecutivo = new Company();
     }
+
+    ////////////////////////////// Registra algunos datos en la BD //////////////////////////////
+
     create() {
       if (this.ejecutive === 2) {
         localStorage.setItem('ejecutivo', this.currentUser.user.id_user);
