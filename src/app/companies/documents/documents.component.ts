@@ -57,7 +57,9 @@ export class DocumentsComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     let id = this.route.snapshot.params["id_company"]    
-      this.adminService.getReceipt(id).subscribe(response => this.recibo = response);
+      this.adminService.getReceipt(id).subscribe(response =>{
+        console.log(response);
+       this.recibo = response});
       this.adminService.getDeclaracion(id).subscribe(response => this.declaracion = response);
       this.adminService.getLinea(id).subscribe(response => this.linea = response);
       this.adminService.getFactura(id).subscribe(response => this.factura = response);
@@ -110,6 +112,7 @@ export class DocumentsComponent implements OnInit {
 
     let datea:any;
     this.adminService.getDocuments(this.id).pipe(map(this.extractData)).subscribe(response => {
+      console.log(response);
       this.primer_recibo=  new Date(response[0]['update_time']);
       this.diferencia = this.monthDiff(this.primer_recibo, this.todayDate)+1;
       for (let i = 0; i <=(this.diferencia+2); i++) {
